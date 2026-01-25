@@ -8,6 +8,7 @@ export const SectionContainer = styled.div`
   max-width: 1900px;
   margin: 0 auto;
   padding: 2rem 2rem;
+  position: relative;
 
   @media (max-width: 968px) {
     padding: 2rem 1.5rem;
@@ -145,7 +146,10 @@ export const SliderButton = styled.button`
   }
 
   @media (max-width: 480px) {
-    display: none;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    ${props => props.$right ? 'right: -10px;' : 'left: -10px;'}
   }
 `;
 
@@ -230,6 +234,17 @@ export const FilterInput = styled.input`
 
   &::placeholder {
     color: #999;
+  }
+
+  /* Hide spin buttons */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  &[type=number] {
+    -moz-appearance: textfield;
   }
 `;
 

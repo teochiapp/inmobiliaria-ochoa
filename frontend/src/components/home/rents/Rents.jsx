@@ -23,6 +23,7 @@ const rentProperties = [
         precio: '€1,200/mes',
         habitaciones: 2,
         baños: 2,
+        m2: 85,
         ubicacion: 'Cabo San Lucas, BCS'
     },
     {
@@ -32,6 +33,7 @@ const rentProperties = [
         precio: '€2,500/mes',
         habitaciones: 3,
         baños: 2,
+        m2: 250,
         ubicacion: 'Todos Santos, BCS'
     },
     {
@@ -41,6 +43,7 @@ const rentProperties = [
         precio: '€1,800/mes',
         habitaciones: 2,
         baños: 1,
+        m2: 120,
         ubicacion: 'La Paz, BCS'
     },
     {
@@ -50,6 +53,7 @@ const rentProperties = [
         precio: '€3,200/mes',
         habitaciones: 4,
         baños: 3,
+        m2: 400,
         ubicacion: 'San José del Cabo, BCS'
     },
     {
@@ -59,6 +63,7 @@ const rentProperties = [
         precio: '€1,500/mes',
         habitaciones: 2,
         baños: 1,
+        m2: 90,
         ubicacion: 'Todos Santos, BCS'
     },
     {
@@ -68,20 +73,56 @@ const rentProperties = [
         precio: '€4,500/mes',
         habitaciones: 3,
         baños: 3,
+        m2: 300,
         ubicacion: 'Cabo San Lucas, BCS'
     }
 ];
 
 const Rents = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(3);
     const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(rentProperties);
+
+    // Responsive items per page
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setItemsPerPage(1);
+            } else if (window.innerWidth < 1024) {
+                setItemsPerPage(2);
+            } else {
+                setItemsPerPage(3);
+            }
+        };
+
+        handleResize(); // Initial call
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Reset slider when filters change
     useEffect(() => {
         setCurrentIndex(0);
-    }, [filters]);
+    }, [filters, itemsPerPage]); // Also reset when itemsPerPage changes to avoid index issues
 
-    const itemsPerPage = 3;
+    // Autoplay logic
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex(prevIndex => {
+                const currentTotalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+                if (currentTotalPages <= 1) return 0;
+
+                const nextIndex = prevIndex + 1;
+                if (nextIndex >= currentTotalPages) {
+                    return 0; // Loop back to start
+                }
+                return nextIndex;
+            });
+        }, 8000);
+
+        return () => clearInterval(interval);
+    }, [filteredProperties.length, itemsPerPage]);
+
     const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
 
     const canGoPrev = currentIndex > 0;
