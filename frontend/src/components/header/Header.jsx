@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import Logo from './Logo';
-import Navigation from './Navigation';
+import Navigation from './Navigation'
 import styled from 'styled-components';
 const Header = () => {
     const scrolled = useScrollPosition(50);
@@ -65,73 +65,8 @@ export const HeaderContainer = styled.div`
   }
 `;
 
-export const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  
-  a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
 
-  img {
-    height: 50px;
-    width: auto;
-    object-fit: contain;
 
-    @media (max-width: 768px) {
-      height: 40px;
-    }
-  }
-`;
-
-export const Nav = styled.nav`
-  @media (max-width: 968px) {
-    display: ${props => props.$isOpen ? 'block' : 'none'};
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: var(--brand-red);
-    padding: 1rem 0;
-  }
-`;
-
-export const NavList = styled.ul`
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  @media (max-width: 968px) {
-    flex-direction: column;
-    gap: 0;
-    text-align: center;
-  }
-`;
-
-export const NavItem = styled.li`
-  a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 400;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.2s ease;
-    display: block;
-    padding: 0.5rem 1rem;
-
-    &:hover {
-      opacity: 0.8;
-    }
-
-    @media (max-width: 968px) {
-      padding: 1rem;
-    }
-  }
-`;
 
 export const MobileMenuButton = styled.button`
   display: none;
