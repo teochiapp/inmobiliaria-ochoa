@@ -15,7 +15,7 @@ const AboutSection = () => {
             Desde la estimación hasta la firma del mandato de venta, hasta la formalización de la escritura:
             Marin Ochoa le acompaña en cada paso de la cesión de su propiedad.
           </Description>
-          <ActionButton href="/contacto">
+          <ActionButton href="https://wa.me/5493512173089" target="_blank" rel="noopener noreferrer">
             SOLICITAR UNA ESTIMACIÓN
           </ActionButton>
         </TextCard>
@@ -41,6 +41,10 @@ const ContentWrapper = styled.div`
   display: flex;
   position: relative;
   align-items: center;
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -58,8 +62,20 @@ const ImageWrapper = styled.div`
     border-radius: 10px;
   }
 
-  @media (max-width: 968px) {
+  @media (max-width: 1400px) {
     width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+    }
+  }
+
+  @media (max-width: 968px) {
     height: 400px;
   }
 `;
@@ -76,19 +92,21 @@ const TextCard = styled.div`
   transform: translateY(-50%);
   border-radius: 10px;
 
-  @media (max-width: 1200px) {
-    width: 50%;
-    right: 2%;
+  @media (max-width: 1400px) {
+    position: relative;
+    width: 90%;
+    max-width: 1100px;
+    margin: -100px auto 5rem;
+    transform: none;
+    right: auto;
+    left: auto;
+    top: auto;
+    padding: 2.5rem;
   }
 
   @media (max-width: 968px) {
-    position: relative;
-    width: 90%;
     margin: -4rem auto 2rem;
-    transform: none;
-    top: 0;
-    right: 0;
-    padding: 2.5rem;
+    padding: 2rem;
   }
 `;
 
@@ -100,6 +118,10 @@ const Title = styled.h2`
   margin-bottom: 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+
+  @media (max-width: 750px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const Description = styled.p`

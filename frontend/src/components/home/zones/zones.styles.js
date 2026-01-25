@@ -293,6 +293,11 @@ export const RentSection = styled.div`
     padding: 3rem 0;
     min-height: 500px;
   }
+
+  @media (max-width: 750px) {
+    padding:0;
+    min-height: auto;
+  }
 `;
 
 
