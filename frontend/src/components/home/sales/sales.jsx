@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import PropertyCard from '../PropertyCard/PropertyCard';
 import PropertyFilters from '../../common/PropertyFilters';
@@ -150,23 +151,39 @@ const Sales = () => {
 
                 <SliderContainer>
                     <PropertiesGrid>
-                        {visibleProperties.length > 0 ? (
-                            visibleProperties.map((property, index) => (
-                                <PropertyCard
-                                    key={`${property.id}-${currentIndex}-${index}`}
-                                    image={property.imagen}
-                                    name={property.nombre}
-                                    price={property.precio}
-                                    bedrooms={property.habitaciones}
-                                    bathrooms={property.baños}
-                                    location={property.ubicacion}
-                                />
-                            ))
-                        ) : (
-                            <div style={{ width: '100%', textAlign: 'center', padding: '2rem', color: '#666' }}>
-                                No se encontraron propiedades que coincidan con los filtros.
-                            </div>
-                        )}
+                        <AnimatePresence mode="wait">
+                            {visibleProperties.length > 0 ? (
+                                visibleProperties.map((property, index) => (
+                                    <motion.div
+                                        key={`${property.id}-${currentIndex}-${index}`}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -50 }}
+                                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                                        style={{ display: 'flex' }}
+                                    >
+                                        <PropertyCard
+                                            image={property.imagen}
+                                            name={property.nombre}
+                                            price={property.precio}
+                                            bedrooms={property.habitaciones}
+                                            bathrooms={property.baños}
+                                            location={property.ubicacion}
+                                        />
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <motion.div
+                                    key="empty"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    style={{ width: '100%', textAlign: 'center', padding: '2rem', color: '#666' }}
+                                >
+                                    No se encontraron propiedades que coincidan con los filtros.
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </PropertiesGrid>
                 </SliderContainer>
 

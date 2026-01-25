@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0rem;
   width: 100%;
-  max-width: 1900px;
-  margin: 0 auto;
+  max-width: 1450px;
+  margin: 1rem auto;
   padding: 2rem 2rem;
   position: relative;
 
@@ -96,6 +96,8 @@ export const ViewAllButton = styled.button`
 export const SliderWrapper = styled.div`
   position: relative;
   width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
 `;
 
 export const SliderContainer = styled.div`

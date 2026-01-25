@@ -7,7 +7,6 @@ export default defineConfig({
   server: {
     host: true, // Permite conexiones desde cualquier IP
     allowedHosts: [
-      'f00550ad169c.ngrok-free.app',
       '.ngrok-free.app', // Permite cualquier subdominio de ngrok
       '.ngrok.io',
       '.ngrok.app'
