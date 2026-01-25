@@ -8,8 +8,8 @@ import GallerySection from '../../components/home/gallery/GallerySection';
 import Sales from '../../components/home/sales/sales';
 import Rents from '../../components/home/rents/Rents';
 import Zones from '../../components/home/zones/zones';
-import { SalesContainer } from './Home.styles';
 import Footer from '../../components/footer/footer';
+import styled from 'styled-components';
 
 const AnimatedSection = ({ children, delay = 0 }) => (
     <motion.div
@@ -41,16 +41,17 @@ const Home = () => {
                     <Zones />
                 </AnimatedSection>
             </SalesContainer>
-            <AnimatedSection>
-                <GallerySection />
-            </AnimatedSection>
-            <AnimatedSection>
+
+            <AnimatedSection delay={0.2}>
                 <AboutSection />
             </AnimatedSection>
-            <AnimatedSection>
+            <AnimatedSection delay={0.2}>
+                <GallerySection />
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
                 <Map />
             </AnimatedSection>
-            <AnimatedSection>
+            <AnimatedSection delay={0.2}>
                 <Footer />
             </AnimatedSection>
         </>
@@ -59,10 +60,10 @@ const Home = () => {
 
 export default Home;
 
-const SalesContainer = styled.div
+const SalesContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
   width: 100%;
   background-color: var(--text-light);
-;
+`;
