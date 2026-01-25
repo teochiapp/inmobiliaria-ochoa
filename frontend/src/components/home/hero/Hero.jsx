@@ -195,7 +195,7 @@ const HeroWrapper = styled.div`
   height: 75vh;
   position: relative;
   overflow: hidden;
-  font-family: sans-serif;
+  font-family: var(--headings-font);
 
   * {
     box-sizing: border-box;

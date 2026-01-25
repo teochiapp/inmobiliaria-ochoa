@@ -36,6 +36,7 @@ export const Nav = styled.nav`
     right: 0;
     background-color: var(--brand-red);
     padding: 1rem 0;
+    
   }
 `;
 
@@ -60,6 +61,7 @@ export const NavItem = styled.li`
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 400;
+    font-family: var(--headings-font);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     transition: opacity 0.2s ease;
     display: block;
