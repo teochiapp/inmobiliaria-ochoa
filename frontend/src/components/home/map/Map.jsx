@@ -4,10 +4,6 @@ import styled from 'styled-components';
 const Map = () => {
     return (
         <MapContainer id="map-section">
-            <TitleContainer>
-                <h2>Nuestra Ubicación</h2>
-                <div className="underline"></div>
-            </TitleContainer>
             <IframeWrapper>
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5843.993783169303!2d-64.40430840384465!3d-32.20592788378944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d29e93ce50c2cf%3A0x1faf6496b36a528e!2sMarin%20Ochoa%20Bienes%20Raices!5e0!3m2!1ses!2sar!4v1769377765405!5m2!1ses!2sar"

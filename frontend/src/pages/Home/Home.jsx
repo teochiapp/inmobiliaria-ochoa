@@ -42,11 +42,9 @@ const Home = () => {
                 </AnimatedSection>
             </SalesContainer>
 
+
             <AnimatedSection delay={0.2}>
                 <AboutSection />
-            </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-                <GallerySection />
             </AnimatedSection>
             <AnimatedSection delay={0.2}>
                 <Map />
