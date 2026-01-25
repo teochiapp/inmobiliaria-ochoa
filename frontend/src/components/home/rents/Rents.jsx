@@ -105,24 +105,6 @@ const Rents = () => {
         setCurrentIndex(0);
     }, [filters, itemsPerPage]); // Also reset when itemsPerPage changes to avoid index issues
 
-    // Autoplay logic
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex(prevIndex => {
-                const currentTotalPages = Math.ceil(filteredProperties.length / itemsPerPage);
-                if (currentTotalPages <= 1) return 0;
-
-                const nextIndex = prevIndex + 1;
-                if (nextIndex >= currentTotalPages) {
-                    return 0; // Loop back to start
-                }
-                return nextIndex;
-            });
-        }, 8000);
-
-        return () => clearInterval(interval);
-    }, [filteredProperties.length, itemsPerPage]);
-
     const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
 
     const canGoPrev = currentIndex > 0;
