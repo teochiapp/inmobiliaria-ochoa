@@ -12,69 +12,69 @@ import {
     SliderContainer,
     SliderButton,
     PropertiesGrid
-} from './SalesSection.styles';
+} from '../sales/SalesSection.styles';
 
-// Datos hardcodeados temporales
-const salesProperties = [
+// Datos hardcodeados temporales para rentas
+const rentProperties = [
     {
         id: 1,
-        imagen: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
-        nombre: 'Ocean Breeze Villa',
-        precio: '€90,000',
-        habitaciones: 4,
-        baños: 3,
-        ubicacion: 'Cabo Pulmo, BCS'
-    },
-    {
-        id: 2,
-        imagen: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
-        nombre: 'Jakson House',
-        precio: '€70,000',
-        habitaciones: 3,
-        baños: 2,
-        ubicacion: 'San José del Cabo, BCS'
-    },
-    {
-        id: 3,
-        imagen: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
-        nombre: 'Lakeside Cottage',
-        precio: '€540,000',
-        habitaciones: 5,
-        baños: 4,
-        ubicacion: 'La Paz, BCS'
-    },
-    {
-        id: 4,
-        imagen: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
-        nombre: 'Mountain Retreat',
-        precio: '€320,000',
-        habitaciones: 4,
-        baños: 3,
-        ubicacion: 'Todos Santos, BCS'
-    },
-    {
-        id: 5,
-        imagen: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800',
-        nombre: 'Sunset Paradise',
-        precio: '€450,000',
-        habitaciones: 3,
+        imagen: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+        nombre: 'Modern Apartment',
+        precio: '€1,200/mes',
+        habitaciones: 2,
         baños: 2,
         ubicacion: 'Cabo San Lucas, BCS'
     },
     {
-        id: 6,
-        imagen: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800',
-        nombre: 'Desert Oasis',
-        precio: '€280,000',
+        id: 2,
+        imagen: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
+        nombre: 'Beach House',
+        precio: '€2,500/mes',
+        habitaciones: 3,
+        baños: 2,
+        ubicacion: 'Todos Santos, BCS'
+    },
+    {
+        id: 3,
+        imagen: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
+        nombre: 'Downtown Loft',
+        precio: '€1,800/mes',
+        habitaciones: 2,
+        baños: 1,
+        ubicacion: 'La Paz, BCS'
+    },
+    {
+        id: 4,
+        imagen: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
+        nombre: 'Villa with Pool',
+        precio: '€3,200/mes',
         habitaciones: 4,
         baños: 3,
-        ubicacion: 'Loreto, BCS'
+        ubicacion: 'San José del Cabo, BCS'
+    },
+    {
+        id: 5,
+        imagen: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800',
+        nombre: 'Cozy Cottage',
+        precio: '€1,500/mes',
+        habitaciones: 2,
+        baños: 1,
+        ubicacion: 'Todos Santos, BCS'
+    },
+    {
+        id: 6,
+        imagen: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800',
+        nombre: 'Luxury Penthouse',
+        precio: '€4,500/mes',
+        habitaciones: 3,
+        baños: 3,
+        ubicacion: 'Cabo San Lucas, BCS'
     }
 ];
 
-const Sales = () => {
+const Rents = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(salesProperties);
+    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(rentProperties);
 
     // Reset slider when filters change
     useEffect(() => {
@@ -107,7 +107,7 @@ const Sales = () => {
     return (
         <SectionContainer>
             <SectionHeader>
-                <SectionTitle>VENTAS</SectionTitle>
+                <SectionTitle>ALQUILERES</SectionTitle>
                 <ViewAllButton>
                     Ver todo
                     <ChevronRight />
@@ -160,4 +160,4 @@ const Sales = () => {
     );
 };
 
-export default Sales;
+export default Rents;

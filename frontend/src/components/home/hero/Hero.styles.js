@@ -72,7 +72,7 @@ export const HeroContainer = styled.div`
 export const SlideWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   min-height: 600px;
   background-image: url(${props => props.$bgImage});
   background-size: cover;

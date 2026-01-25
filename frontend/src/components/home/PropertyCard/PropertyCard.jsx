@@ -1,16 +1,14 @@
 import React from 'react';
-import { Bed, Bath, MapPin } from 'lucide-react';
+import { Bed, Bath, DollarSign } from 'lucide-react';
 import {
     CardContainer,
     ImageContainer,
     PropertyImage,
-    PropertyInfo,
-    PropertyName,
-    PropertyPrice,
+    LocationTag,
     PropertyDetails,
     DetailItem,
-    PropertyLocation,
-    InfoButton
+    DetailValue,
+    DetailLabel
 } from './PropertyCard.styles';
 
 const PropertyCard = ({ image, name, price, bedrooms, bathrooms, location }) => {
@@ -18,30 +16,23 @@ const PropertyCard = ({ image, name, price, bedrooms, bathrooms, location }) => 
         <CardContainer>
             <ImageContainer>
                 <PropertyImage src={image} alt={name} />
-            </ImageContainer>
-
-            <PropertyInfo>
-                <PropertyName>{name}</PropertyName>
-                <PropertyPrice>{price}</PropertyPrice>
+                <LocationTag>{location}</LocationTag>
 
                 <PropertyDetails>
                     <DetailItem>
-                        <Bed size={18} />
-                        <span>{bedrooms}</span>
+                        <DetailValue>{price}</DetailValue>
+                        <DetailLabel>Precio</DetailLabel>
                     </DetailItem>
                     <DetailItem>
-                        <Bath size={18} />
-                        <span>{bathrooms}</span>
+                        <DetailValue>{bedrooms}</DetailValue>
+                        <DetailLabel>Habitaciones</DetailLabel>
+                    </DetailItem>
+                    <DetailItem>
+                        <DetailValue>{bathrooms}</DetailValue>
+                        <DetailLabel>Baños</DetailLabel>
                     </DetailItem>
                 </PropertyDetails>
-
-                <PropertyLocation>
-                    <MapPin size={16} />
-                    <span>{location}</span>
-                </PropertyLocation>
-
-                <InfoButton>+INFO</InfoButton>
-            </PropertyInfo>
+            </ImageContainer>
         </CardContainer>
     );
 };
