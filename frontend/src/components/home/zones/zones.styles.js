@@ -11,7 +11,7 @@ export const SliderContainer = styled.div`
 
   --slide-width: min(25vw, 300px);
   --slide-aspect: 2 / 3;
-  --slide-transition-duration: 800ms;
+  --slide-transition-duration: 400ms;
   --slide-transition-easing: ease;
 
   @media (max-width: 968px) {
@@ -109,7 +109,7 @@ export const Slide = styled.div`
   &:not([data-state="current"]) {
     --slide-scale: 1;
     --slide-tz: 0;
-    pointer-events: none;
+    pointer-events: auto;
   }
 `;
 
@@ -285,7 +285,6 @@ export const RentSection = styled.div`
   place-items: center;
   overflow: hidden;
   padding: 4rem 0;
-  margin-bottom: 3rem;
   min-height: 600px;
   position: relative;
   isolation: isolate;

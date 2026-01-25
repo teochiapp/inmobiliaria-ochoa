@@ -91,6 +91,13 @@ const Rent = () => {
     };
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % totalSlides);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [currentIndex, totalSlides]);
+
+    useEffect(() => {
         const animate = () => {
             setRotDeg(prev => ({
                 current: {
@@ -140,6 +147,8 @@ const Rent = () => {
                                         data-state={state}
                                         onMouseMove={(e) => handleMouseMove(e, index)}
                                         onMouseLeave={handleMouseLeave}
+                                        onClick={() => setCurrentIndex(index)}
+                                        style={{ cursor: state === 'current' ? 'default' : 'pointer' }}
                                     >
                                         <SlideInner
                                             style={{
