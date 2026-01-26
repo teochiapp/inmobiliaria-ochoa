@@ -2,33 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 
 const GallerySection = () => {
-    const images = [
-        '/src/public/galeria/durazno.jpg',
-        '/src/public/galeria/embalse.jpg',
-        '/src/public/galeria/quillinzo.jpg',
-        '/src/public/galeria/santa-rosa.jpg',
-        '/src/public/galeria/villa-rumipal.jpeg',
-        '/src/public/galeria/Villa-del-Dique.jpg',
-    ];
+  const images = [
+    '/src/public/galeria/durazno.jpg',
+    '/src/public/galeria/embalse.jpg',
+    '/src/public/galeria/quillinzo.jpg',
+    '/src/public/galeria/santa-rosa.jpg',
+    '/src/public/galeria/villa-rumipal.jpeg',
+    '/src/public/galeria/Villa-del-Dique.jpg',
+  ];
 
-    return (
-        <Container>
-            <GalleryGrid>
-                {images.map((src, index) => (
-                    <ImageWrapper key={index}>
-                        <img src={src} alt={`Galeria ${index + 1}`} />
-                    </ImageWrapper>
-                ))}
-            </GalleryGrid>
-            <Overlay>
-                <InstagramIcon className="fab fa-instagram"></InstagramIcon>
-                <Title>SÍGANOS EN INSTAGRAM</Title>
-                <Handle href="https://www.instagram.com/inmobiliariaochoa/" target="_blank" rel="noopener noreferrer">
-                    @inmobiliariaochoa
-                </Handle>
-            </Overlay>
-        </Container>
-    );
+  return (
+    <Container>
+      <GalleryGrid>
+        {images.map((src, index) => (
+          <ImageWrapper key={index}>
+            <img src={src} alt={`Galeria ${index + 1}`} />
+          </ImageWrapper>
+        ))}
+      </GalleryGrid>
+      <Overlay>
+        <InstagramIcon className="fab fa-instagram"></InstagramIcon>
+        <Title>SEGUINOS EN INSTAGRAM</Title>
+        <Handle href="https://www.instagram.com/marinochoainmobiliaria" target="_blank" rel="noopener noreferrer">
+          @inmobiliariaochoa
+        </Handle>
+      </Overlay>
+    </Container>
+  );
 };
 
 export default GallerySection;

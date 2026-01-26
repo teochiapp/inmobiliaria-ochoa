@@ -3,16 +3,19 @@ import useScrollPosition from '../../hooks/useScrollPosition';
 import Logo from './Logo';
 import Navigation from './Navigation'
 import styled from 'styled-components';
-const Header = () => {
+const Header = ({ isSolid = false }) => {
   const scrolled = useScrollPosition(50);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Determine if background should be visible
+  const showBackground = scrolled || isSolid;
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
-    <StyledHeader $scrolled={scrolled}>
+    <StyledHeader $scrolled={showBackground}>
       <HeaderContainer>
         <Logo />
 

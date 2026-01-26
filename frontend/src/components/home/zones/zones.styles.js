@@ -296,7 +296,7 @@ export const RentSection = styled.div`
 
   @media (max-width: 750px) {
     padding:0;
-    min-height: auto;
+    min-height: autoQ;
   }
 `;
 

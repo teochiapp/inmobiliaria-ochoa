@@ -21,19 +21,19 @@ const AboutSection = () => {
         </TextCard>
       </ContentWrapper>
     </Container>
+
   );
 };
 
 export default AboutSection;
 
 const Container = styled.section`
-  margin-top: 10px;
   width: 100%;
-  padding: 0;
   display: flex;
   justify-content: flex-start; /* Alinea el contenido a la izquierda */
   min-height: 600px;
   position: relative;
+  
 `;
 
 const ContentWrapper = styled.div`
@@ -58,7 +58,6 @@ const ImageWrapper = styled.div`
     height: 100%;
     display: block;
     object-fit: cover;
-    margin-left: 10px;
     border-radius: 10px;
   }
 
@@ -91,6 +90,7 @@ const TextCard = styled.div`
   top: 50%;
   transform: translateY(-50%);
   border-radius: 10px;
+  border: 1px solid var(--brand-blue);
 
   @media (max-width: 1400px) {
     position: relative;
