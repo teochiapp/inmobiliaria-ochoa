@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Twitter, Instagram, Youtube, Phone, Clock, Mail, MapPin } from 'lucide-react';
+import { FaWhatsapp } from "react-icons/fa";
 import {
     FooterContainer,
     FooterContent,
@@ -25,15 +26,17 @@ const Footer = () => {
                         Marin<span>Ochoa</span>
                     </Logo>
                     <p>
+                        15 años hablando de oportunidades.
                         Comprometidos con ayudarte a encontrar el hogar de tus sueños.
-                        Ofrecemos las mejores propiedades en las ubicaciones más exclusivas
-                        de Baja California Sur.
                     </p>
                     <SocialIcons>
-                        <a href="#" aria-label="Facebook"><Facebook size={20} /></a>
-                        <a href="#" aria-label="Twitter"><Twitter size={20} /></a>
-                        <a href="#" aria-label="Instagram"><Instagram size={20} /></a>
-                        <a href="#" aria-label="Youtube"><Youtube size={20} /></a>
+                        <a href="https://www.facebook.com/inmobiliariamarinochoa/?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook size={20} /></a>
+                        <a href="https://www.instagram.com/marinochoainmobiliaria/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={20} /></a>
+                        <a href="https://www.youtube.com/channel/UCA_HFMO1a5KJD-pNp-6nToQ" target="_blank" rel="noopener noreferrer" aria-label="Youtube"><Youtube size={20} /></a>
+                        <a href="mailto:franco@marinochoa.com.ar" aria-label="Email"><Mail size={20} /></a>
+                        <a href="https://api.whatsapp.com/send/?phone=54935715520528&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                            <FaWhatsapp size={20} />
+                        </a>
                     </SocialIcons>
                 </FooterBrand>
 
@@ -63,19 +66,24 @@ const Footer = () => {
 
                 {/* Work Hours & Contact */}
                 <FooterColumn>
-                    <ColumnTitle>Horario de Atención</ColumnTitle>
+                    <ColumnTitle>Contacto y Horarios</ColumnTitle>
                     <WorkHours>
                         <div className="time">
                             <Clock size={18} />
-                            7 AM - 5 PM, Lun - Sab
+                            <div>
+                                <p style={{ margin: 0 }}>Lun - Vie. 09 a 12:00hs. Y 17 a 18:30hs.</p>
+                            </div>
                         </div>
-                        <p>
-                            Nuestro equipo está disponible para atenderte en horario de oficina.
-                            ¡Agenda tu visita hoy mismo!
-                        </p>
-                        <CallButton href="tel:+1234567890">
+
+
+                        <div className="time">
+                            <Mail size={18} />
+                            <a href="mailto:franco@marinochoa.com.ar" style={{ color: 'inherit', textDecoration: 'none' }}>franco@marinochoa.com.ar</a>
+                        </div>
+
+                        <CallButton href="https://wa.me/54935715520528" target="_blank">
                             <Phone size={18} />
-                            Llamar Ahora
+                            03571-15520528
                         </CallButton>
                     </WorkHours>
                 </FooterColumn>

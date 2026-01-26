@@ -51,7 +51,23 @@ const Hero = () => {
         img.style.left = `${-100 / cols * partIndex}vw`;
         img.style.pointerEvents = 'none';
 
+        // Add overlay for darkening
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100vw'; // Match image width context
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.25)'; // Adjustable opacity
+        overlay.style.pointerEvents = 'none';
+        overlay.style.zIndex = '1';
+        // Need to position overlay correctly relative to part if part crops it?
+        // Actually, img is shifted. Overlay should probably cover the whole section or match img.
+        // If section has overflow hidden and width 100%, overlay width 100% serves the part.
+        overlay.style.width = '100%';
+
         section.appendChild(img);
+        section.appendChild(overlay);
         return section;
     };
 

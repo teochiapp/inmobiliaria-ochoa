@@ -43,7 +43,7 @@ export const FooterContent = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 3rem;
   }
 `;
@@ -52,12 +52,22 @@ export const FooterColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    &:last-child {
+      grid-column: 1 / -1;
+    }
+  }
 `;
 
 export const FooterBrand = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-column: 1 / -1;
+  }
 
   p {
     color: #a0a0a0;
