@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Bed, Bath, Ruler, ArrowLeft, DollarSign } from 'lucide-react';
 import api from '../../services/api';
 import Header from '../../components/header/Header';
+import Breadcrumb from '../../components/common/Breadcrumb';
 import Footer from '../../components/footer/footer';
 
 const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
@@ -108,6 +109,7 @@ const PropertyDetail = ({ type }) => {
         return (
             <PageWrapper>
                 <Header />
+                <Breadcrumb />
                 <LoadingContainer>Cargando detalles...</LoadingContainer>
                 <Footer />
             </PageWrapper>
@@ -118,6 +120,7 @@ const PropertyDetail = ({ type }) => {
         return (
             <PageWrapper>
                 <Header />
+                <Breadcrumb />
                 <ErrorContainer>
                     <h2>Propiedad no encontrada</h2>
                     <BackButton onClick={() => navigate(-1)}>Volver</BackButton>
@@ -130,6 +133,7 @@ const PropertyDetail = ({ type }) => {
     return (
         <PageWrapper>
             <Header />
+            <Breadcrumb />
             <ContentContainer>
                 <BackLink onClick={() => navigate(-1)}>
                     <ArrowLeft size={20} />

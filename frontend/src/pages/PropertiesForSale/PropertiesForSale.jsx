@@ -1,6 +1,7 @@
 import React from 'react';
 import useSales from '../../hooks/useSales';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
+import Breadcrumb from '../../components/common/Breadcrumb';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 import styled from 'styled-components';
@@ -11,6 +12,7 @@ const PropertiesForSale = () => {
     return (
         <PageWrapper>
             <Header />
+            <Breadcrumb title="Propiedades en Venta" />
             <ContentWrapper>
                 <PropertyCatalog
                     properties={sales}

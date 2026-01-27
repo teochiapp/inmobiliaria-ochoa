@@ -111,6 +111,13 @@ export const Slide = styled.div`
     --slide-tz: 0;
     pointer-events: auto;
   }
+
+  &[data-state="hidden"] {
+    --slide-scale: 0.8;
+    --slide-tz: -500px;
+    opacity: 0;
+    pointer-events: none;
+  }
 `;
 
 export const SlideInner = styled.div`
@@ -174,6 +181,10 @@ export const SlideBg = styled.div`
   }
 
   &:not([data-state="current"]) {
+    opacity: 0;
+  }
+
+  &[data-state="hidden"] {
     opacity: 0;
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import useRents from '../../hooks/useRents';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
+import Breadcrumb from '../../components/common/Breadcrumb';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 import styled from 'styled-components';
@@ -11,12 +12,13 @@ const Rentals = () => {
     return (
         <PageWrapper>
             <Header />
+            <Breadcrumb title="Propiedades en Alquiler" />
             <ContentWrapper>
                 <PropertyCatalog
                     properties={rents}
                     loading={loading}
                     error={error}
-                    title="Alquileres"
+                    title="Propiedades en Alquiler"
                     baseUrl="/propiedad/alquiler"
                 />
             </ContentWrapper>
