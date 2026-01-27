@@ -4,6 +4,7 @@ import { ChevronRight, ChevronLeft } from 'lucide-react';
 import PropertyCard from '../PropertyCard/PropertyCard';
 import PropertyFilters from '../../common/PropertyFilters';
 import { usePropertyFilter } from '../../../hooks/usePropertyFilter';
+import useRents from '../../../hooks/useRents';
 import {
     SectionContainer,
     SectionHeader,
@@ -15,74 +16,11 @@ import {
     PropertiesGrid
 } from '../sales/SalesSection.styles';
 
-// Datos hardcodeados temporales para rentas
-const rentProperties = [
-    {
-        id: 1,
-        imagen: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
-        nombre: 'Modern Apartment',
-        precio: '$1,200/mes',
-        habitaciones: 2,
-        baños: 2,
-        m2: 85,
-        ubicacion: 'Cabo San Lucas, BCS'
-    },
-    {
-        id: 2,
-        imagen: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-        nombre: 'Beach House',
-        precio: '$2,500/mes',
-        habitaciones: 3,
-        baños: 2,
-        m2: 250,
-        ubicacion: 'Todos Santos, BCS'
-    },
-    {
-        id: 3,
-        imagen: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
-        nombre: 'Downtown Loft',
-        precio: '$1,800/mes',
-        habitaciones: 2,
-        baños: 1,
-        m2: 120,
-        ubicacion: 'La Paz, BCS'
-    },
-    {
-        id: 4,
-        imagen: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
-        nombre: 'Villa with Pool',
-        precio: '$3,200/mes',
-        habitaciones: 4,
-        baños: 3,
-        m2: 400,
-        ubicacion: 'San José del Cabo, BCS'
-    },
-    {
-        id: 5,
-        imagen: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800',
-        nombre: 'Cozy Cottage',
-        precio: '$1,500/mes',
-        habitaciones: 2,
-        baños: 1,
-        m2: 90,
-        ubicacion: 'Todos Santos, BCS'
-    },
-    {
-        id: 6,
-        imagen: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800',
-        nombre: 'Luxury Penthouse',
-        precio: '$4,500/mes',
-        habitaciones: 3,
-        baños: 3,
-        m2: 300,
-        ubicacion: 'Cabo San Lucas, BCS'
-    }
-];
-
 const Rents = () => {
+    const { rents, loading } = useRents();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(3);
-    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(rentProperties);
+    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(rents);
 
     // Responsive items per page
     useEffect(() => {
@@ -104,7 +42,7 @@ const Rents = () => {
     // Reset slider when filters change
     useEffect(() => {
         setCurrentIndex(0);
-    }, [filters, itemsPerPage]); // Also reset when itemsPerPage changes to avoid index issues
+    }, [filters, itemsPerPage, rents]); // Also reset when data changes
 
     const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
 
@@ -127,6 +65,17 @@ const Rents = () => {
         currentIndex * itemsPerPage,
         (currentIndex + 1) * itemsPerPage
     );
+
+    if (loading) {
+        return (
+            <SectionContainer>
+                <SectionHeader>
+                    <SectionTitle>ALQUILERES</SectionTitle>
+                </SectionHeader>
+                <div style={{ textAlign: 'center', padding: '2rem' }}>Cargando propiedades...</div>
+            </SectionContainer>
+        );
+    }
 
     return (
         <SectionContainer>
@@ -169,6 +118,8 @@ const Rents = () => {
                                             bedrooms={property.habitaciones}
                                             bathrooms={property.baños}
                                             location={property.ubicacion}
+                                            m2={property.m2}
+                                            link={`/propiedad/alquiler/${property.id}`}
                                         />
                                     </motion.div>
                                 ))

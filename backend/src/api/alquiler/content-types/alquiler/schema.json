@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "alquileres",
+  "info": {
+    "singularName": "alquiler",
+    "pluralName": "alquileres",
+    "displayName": "Alquileres"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Ubicacion": {
+      "type": "string"
+    },
+    "Precio": {
+      "type": "biginteger"
+    },
+    "Portada": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Galeria": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Habitaciones": {
+      "type": "integer"
+    },
+    "Banos": {
+      "type": "integer"
+    },
+    "MetrosCuadrados": {
+      "type": "integer"
+    },
+    "Nombre": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "Nombre"
+    },
+    "Descripcion": {
+      "type": "blocks"
+    }
+  }
+}

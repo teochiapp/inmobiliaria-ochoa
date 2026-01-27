@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Bed, Bath, DollarSign } from 'lucide-react';
 import {
     CardContainer,
@@ -11,9 +12,9 @@ import {
     DetailLabel
 } from './PropertyCard.styles';
 
-const PropertyCard = ({ image, name, price, bedrooms, bathrooms, location }) => {
+const PropertyCard = ({ image, name, price, bedrooms, bathrooms, location, m2, link }) => {
     return (
-        <CardContainer>
+        <CardContainer as={link ? Link : 'div'} to={link} style={{ textDecoration: 'none', display: 'block' }}>
             <ImageContainer>
                 <PropertyImage src={image} alt={name} />
                 <LocationTag>{location}</LocationTag>

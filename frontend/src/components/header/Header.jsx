@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import Logo from './Logo';
 import Navigation from './Navigation'
 import styled from 'styled-components';
 const Header = ({ isSolid = false }) => {
   const scrolled = useScrollPosition(50);
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Determine if background should be visible
-  const showBackground = scrolled || isSolid;
+  // Show background if scrolled, explicitly set to solid, or NOT on the home page
+  const isHome = location.pathname === '/';
+  const showBackground = scrolled || isSolid || !isHome;
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
