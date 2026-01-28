@@ -1,16 +1,42 @@
 import React from 'react';
 import Header from '../../components/header/Header';
+import Breadcrumb from '../../components/common/Breadcrumb';
+import Footer from '../../components/footer/footer';
+import styled from 'styled-components';
 
 const News = () => {
     return (
         <>
             <Header />
-            <div style={{ marginTop: '100px', padding: '2rem', textAlign: 'center' }}>
-                <h1 style={{ fontFamily: 'Orbitron', color: 'var(--brand-red)' }}>Novedades</h1>
-                <p style={{ fontFamily: 'Lato', marginTop: '1rem' }}>Contenido próximamente...</p>
-            </div>
+            <Breadcrumb title="Novedades" />
+            <ContentContainer>
+                <h1>Novedades</h1>
+                <p>Contenido próximamente...</p>
+            </ContentContainer>
+            <Footer />
         </>
     );
 };
 
 export default News;
+
+const ContentContainer = styled.div`
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 50vh;
+
+    h1 {
+        font-family: var(--headings-font);
+        color: var(--brand-red);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-family: var(--body-font);
+        font-size: 1.1rem;
+        color: var(--text-light-gray);
+    }
+`;

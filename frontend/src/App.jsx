@@ -7,10 +7,12 @@ import Rentals from './pages/Rentals/Rentals';
 import News from './pages/News/News';
 import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
+import ScrollToTop from './components/common/ScrollToTop';
 
 function App() {
     return (
         <Router>
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/sobre-nosotros" element={<AboutUs />} />

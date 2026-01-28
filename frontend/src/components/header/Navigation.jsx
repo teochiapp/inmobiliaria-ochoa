@@ -47,6 +47,13 @@ export const NavList = styled.ul`
   margin: 0;
   padding: 0;
 
+  @media (max-width: 1200px) {
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1100px) {
+    gap: 1.2rem;
+  }
 
   @media (max-width: 968px) {
     flex-direction: column;
@@ -59,20 +66,38 @@ export const NavItem = styled.li`
   a {
     color: var(--text-light);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 400;
     font-family: var(--headings-font);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     transition: opacity 0.2s ease;
     display: block;
     padding: 0.5rem 1rem;
+    white-space: nowrap;
 
     &:hover {
       opacity: 0.8;
     }
 
+    @media (max-width: 1200px) {
+      font-size: 1rem;
+      padding: 0.5rem 0.8rem;
+    }
+
+    @media (max-width: 1100px) {
+      font-size: 0.95rem;
+      padding: 0.5rem 0.6rem;
+    }
+
+    @media (max-width: 1000px) {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.5rem;
+    }
+
     @media (max-width: 968px) {
+      font-size: 1.1rem;
       padding: 1rem;
+      white-space: normal;
     }
   }
 `;
