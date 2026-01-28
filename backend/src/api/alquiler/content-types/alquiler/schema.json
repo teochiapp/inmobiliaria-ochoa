@@ -11,6 +11,9 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
     "Ubicacion": {
       "type": "string"
     },
@@ -45,9 +48,6 @@
     },
     "MetrosCuadrados": {
       "type": "integer"
-    },
-    "Nombre": {
-      "type": "string"
     },
     "Slug": {
       "type": "uid",

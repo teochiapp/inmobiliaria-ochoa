@@ -130,10 +130,24 @@ const PropertyDetail = ({ type }) => {
         );
     }
 
+    // Breadcrumb customizado con el nombre de la propiedad
+    const breadcrumbItems = [
+        {
+            label: displayType === 'Venta' ? 'Propiedades en Venta' : 'Propiedades en Alquiler',
+            path: displayType === 'Venta' ? '/propiedades-venta' : '/alquileres',
+            isLast: false
+        },
+        {
+            label: property.name,
+            path: `#`,
+            isLast: true
+        }
+    ];
+
     return (
         <PageWrapper>
             <Header />
-            <Breadcrumb />
+            <Breadcrumb customItems={breadcrumbItems} title={property.name} />
             <ContentContainer>
                 <BackLink onClick={() => navigate(-1)}>
                     <ArrowLeft size={20} />
