@@ -6,7 +6,7 @@ const Map = () => {
     <MapContainer id="map-section">
       <IframeWrapper>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11687.987566338606!2d-64.40430840384465!3d-32.20592788378944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f11.5!3m3!1m2!1s0x95d29e93ce50c2cf%3A0x1faf6496b36a528e!2sMarin%20Ochoa%20Bienes%20Raices!5e0!3m2!1ses!2sar!4v1769377765405!5m2!1ses!2sar"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23375.975132677212!2d-64.40430840384465!3d-32.20592788378944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f9.5!3m3!1m2!1s0x95d29e93ce50c2cf%3A0x1faf6496b36a528e!2sMarin%20Ochoa%20Bienes%20Raices!5e0!3m2!1ses!2sar!4v1769377765405!5m2!1ses!2sar"
           width="100%"
           height="450"
           style={{ border: 0 }}
