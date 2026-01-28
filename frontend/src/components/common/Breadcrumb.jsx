@@ -35,7 +35,7 @@ const Breadcrumb = ({ customItems, title, backgroundImage }) => {
     };
 
     const breadcrumbs = generateBreadcrumbs();
-    const currentPage = breadcrumbs[breadcrumbs.length - 1]?.label || title || 'Página';
+    const currentPage = title || breadcrumbs[breadcrumbs.length - 1]?.label || 'Página';
 
     return (
         <BreadcrumbHeader $backgroundImage={backgroundImage}>
