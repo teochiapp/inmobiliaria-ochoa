@@ -7,6 +7,7 @@ import Footer from '../../components/footer/footer';
 import AboutSection from '../../components/home/about/AboutSection';
 import GallerySection from '../../components/home/gallery/GallerySection';
 import ContactForm from '../../components/contact/ContactForm';
+import Breadcrumb from '../../components/common/Breadcrumb'; // Added import
 
 const AnimatedSection = ({ children, delay = 0 }) => (
     <motion.div
@@ -29,6 +30,7 @@ const Contact = () => {
     return (
         <>
             <Header isSolid />
+            <Breadcrumb title="Contacto" />
             <PageWrapper>
                 <AnimatedSection>
                     {/* Sección de presentación utilizando el componente existente */}

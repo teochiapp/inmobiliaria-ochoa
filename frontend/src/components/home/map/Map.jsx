@@ -2,22 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Map = () => {
-    return (
-        <MapContainer id="map-section">
-            <IframeWrapper>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5843.993783169303!2d-64.40430840384465!3d-32.20592788378944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d29e93ce50c2cf%3A0x1faf6496b36a528e!2sMarin%20Ochoa%20Bienes%20Raices!5e0!3m2!1ses!2sar!4v1769377765405!5m2!1ses!2sar"
-                    width="100%"
-                    height="450"
-                    style={{ border: 0 }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Ubicación de Inmobiliaria Ochoa"
-                ></iframe>
-            </IframeWrapper>
-        </MapContainer>
-    );
+  return (
+    <MapContainer id="map-section">
+      <IframeWrapper>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23375.975132677212!2d-64.40430840384465!3d-32.20592788378944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f9.5!3m3!1m2!1s0x95d29e93ce50c2cf%3A0x1faf6496b36a528e!2sMarin%20Ochoa%20Bienes%20Raices!5e0!3m2!1ses!2sar!4v1769377765405!5m2!1ses!2sar"
+          width="100%"
+          height="450"
+          style={{ border: 0 }}
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Ubicación de Inmobiliaria Ochoa"
+        ></iframe>
+        <MapOverlay />
+      </IframeWrapper>
+    </MapContainer>
+  );
 };
 
 export default Map;
@@ -83,4 +84,15 @@ const IframeWrapper = styled.div`
     z-index: 5;
     pointer-events: none;
   }
+`;
+
+const MapOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: default;
+  pointer-events: auto;
 `;

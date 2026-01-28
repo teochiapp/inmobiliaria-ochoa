@@ -111,6 +111,13 @@ export const Slide = styled.div`
     --slide-tz: 0;
     pointer-events: auto;
   }
+
+  &[data-state="hidden"] {
+    --slide-scale: 0.8;
+    --slide-tz: -500px;
+    opacity: 0;
+    pointer-events: none;
+  }
 `;
 
 export const SlideInner = styled.div`
@@ -177,6 +184,10 @@ export const SlideBg = styled.div`
     opacity: 0;
   }
 
+  &[data-state="hidden"] {
+    opacity: 0;
+  }
+
   &[data-state="previous"] {
     transform: translateX(-10%);
   }
@@ -225,8 +236,8 @@ export const SlideInfoTextWrapper = styled.div`
 
   position: absolute;
   height: fit-content;
-  left: -15%;
-  bottom: 15%;
+  left: -10%;
+  bottom: 5%;
   transform: translateZ(var(--z-offset));
   z-index: 2;
   pointer-events: none;
@@ -258,24 +269,34 @@ export const SlideInfoText = styled.div`
 
   &[data-title],
   &[data-subtitle] {
-    font-size: min(3cqw, 2.4rem);
+    font-size: min(2.5cqw, 2.4rem);
     font-weight: 800;
     letter-spacing: 0.2cqw;
     white-space: nowrap;
     text-transform: uppercase;
+    text-shadow: 0 0 10px var(--text-dark)
   }
 
   &[data-subtitle] {
-    margin-left: 2cqw;
-    font-size: min(2.2cqw, 1.8rem);
+    margin-left: 1.5cqw;
+    font-size: min(1cqw, 1.1rem);
     font-weight: 600;
+    color: var(--text-light);
+    text-shadow: 0 0 10px var(--text-dark)
   }
 
   &[data-description] {
     margin-left: 1cqw;
-    font-size: min(1.5cqw, 0.95rem);
+    font-size: min(0.9cqw, 0.9rem);
     font-family: var(--text-font);
     font-weight: 300;
+    max-width: 20vw;
+    overflow: visible;
+    
+    span {
+        white-space: normal;
+        line-height: 1.4;
+    }
   }
 `;
 

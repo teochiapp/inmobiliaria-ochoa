@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import useZones from '../../../hooks/useZones';
 import {
     RentSection,
     SliderContainer,
@@ -16,46 +17,22 @@ import {
     SlideInfoInner,
     SlideInfoTextWrapper,
     SlideInfoText,
-    SliderTitle
 } from './zones.styles';
-
-// Datos de propiedades - usando las mismas imágenes del CodePen original
-const rentProperties = [
-    {
-        id: 1,
-        image: 'https://devloop01.github.io/voyage-slider/images/scotland-mountains.jpg',
-        title: 'Highlands',
-        subtitle: 'Scotland',
-        description: 'The mountains are calling'
-    },
-    {
-        id: 2,
-        image: 'https://devloop01.github.io/voyage-slider/images/machu-pichu.jpg',
-        title: 'Machu Pichu',
-        subtitle: 'Peru',
-        description: 'Adventure is never far away'
-    },
-    {
-        id: 3,
-        image: 'https://devloop01.github.io/voyage-slider/images/chamonix.jpg',
-        title: 'Chamonix',
-        subtitle: 'France',
-        description: 'Let your dreams come true'
-    }
-];
 
 const lerp = (a, b, t) => a + (b - a) * t;
 
-const Rent = () => {
+const Zones = () => {
+    const { zones, loading } = useZones();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [rotDeg, setRotDeg] = useState({ current: { x: 0, y: 0 }, target: { x: 0, y: 0 } });
     const [bgPos, setBgPos] = useState({ current: { x: 0, y: 0 }, target: { x: 0, y: 0 } });
     const slideRefs = useRef([]);
     const rafRef = useRef(null);
 
-    const totalSlides = rentProperties.length;
+    const totalSlides = zones ? zones.length : 0;
 
     const getSlideState = (index) => {
+        if (totalSlides === 0) return 'hidden';
         const diff = (index - currentIndex + totalSlides) % totalSlides;
         if (diff === 0) return 'current';
         if (diff === 1) return 'next';
@@ -64,11 +41,15 @@ const Rent = () => {
     };
 
     const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+        if (totalSlides > 0) {
+            setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+        }
     };
 
     const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % totalSlides);
+        if (totalSlides > 0) {
+            setCurrentIndex((prev) => (prev + 1) % totalSlides);
+        }
     };
 
     const handleMouseMove = (e, index) => {
@@ -91,6 +72,7 @@ const Rent = () => {
     };
 
     useEffect(() => {
+        if (totalSlides === 0) return;
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % totalSlides);
         }, 5000);
@@ -127,6 +109,16 @@ const Rent = () => {
         };
     }, []);
 
+    if (loading) {
+        return (
+            <RentSection>
+                <div style={{ textAlign: 'center', padding: '2rem', color: 'white' }}>Cargando zonas...</div>
+            </RentSection>
+        );
+    }
+
+    if (!zones || zones.length === 0) return null;
+
     return (
         <RentSection>
             <SliderContainer>
@@ -136,7 +128,7 @@ const Rent = () => {
 
                 <SlidesWrapper>
                     <Slides>
-                        {rentProperties.map((property, index) => {
+                        {zones.map((property, index) => {
                             const state = getSlideState(index);
                             const isCurrent = state === 'current';
 
@@ -173,7 +165,7 @@ const Rent = () => {
                     </Slides>
 
                     <SlidesInfos>
-                        {rentProperties.map((property, index) => {
+                        {zones.map((property, index) => {
                             const state = getSlideState(index);
                             const isCurrent = state === 'current';
 
@@ -211,4 +203,4 @@ const Rent = () => {
     );
 };
 
-export default Rent;
+export default Zones;

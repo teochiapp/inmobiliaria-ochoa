@@ -140,7 +140,7 @@ const MobileFilterToggle = ({ onClick }) => (
     </div>
 );
 
-const PropertyFilters = ({ filters, onFilterChange }) => {
+const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => {
     const [showMobileFilters, setShowMobileFilters] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -152,19 +152,19 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
 
     const bedOptions = [
         { value: 'any', label: 'Habitaciones' },
-        { value: '1', label: '1+ Habitaciones' },
-        { value: '2', label: '2+ Habitaciones' },
-        { value: '3', label: '3+ Habitaciones' },
-        { value: '4', label: '4+ Habitaciones' },
-        { value: '5', label: '5+ Habitaciones' }
+        { value: '1', label: '1+' },
+        { value: '2', label: '2+' },
+        { value: '3', label: '3+' },
+        { value: '4', label: '4+' },
+        { value: '5', label: '5+' }
     ];
 
     const bathOptions = [
         { value: 'any', label: 'Baños' },
-        { value: '1', label: '1+ Baños' },
-        { value: '2', label: '2+ Baños' },
-        { value: '3', label: '3+ Baños' },
-        { value: '4', label: '4+ Baños' }
+        { value: '1', label: '1+' },
+        { value: '2', label: '2+' },
+        { value: '3', label: '3+' },
+        { value: '4', label: '4+' }
     ];
 
     const m2Options = [
@@ -186,7 +186,7 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
         return () => { document.body.style.overflow = 'unset'; }
     }, [isMobile, showMobileFilters]);
 
-    // Mobile specific styles for the container
+    // Determine container style based on layout and mobile state
     const containerStyle = isMobile ? {
         display: showMobileFilters ? 'flex' : 'none',
         position: 'fixed',
@@ -200,7 +200,23 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
         padding: '2rem',
         overflowY: 'auto',
         gap: '1.5rem'
-    } : {};
+    } : layout === 'sidebar' ? {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        backgroundColor: 'white',
+        padding: '1.5rem',
+        borderRadius: '16px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
+        border: '1px solid #eee'
+    } : {
+        // Horizontal layout (original for Home)
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '0.75rem',
+        flexWrap: 'wrap',
+        alignItems: 'center'
+    };
 
     return (
         <>
@@ -224,7 +240,7 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
                     </div>
                 )}
 
-                <div style={{ flex: isMobile ? 'none' : 2, minWidth: '200px', width: isMobile ? '100%' : 'auto' }}>
+                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 2, minWidth: layout === 'sidebar' ? 'auto' : '200px' }}>
                     <InputWrapper icon={Search}>
                         <FilterInput
                             type="text"
@@ -237,7 +253,14 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
                     </InputWrapper>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.5rem', flex: isMobile ? 'none' : 2, minWidth: '240px', width: isMobile ? '100%' : 'auto' }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: layout === 'sidebar' ? 'column' : 'row',
+                    gap: '0.5rem',
+                    width: layout === 'sidebar' ? '100%' : 'auto',
+                    flex: layout === 'sidebar' ? 'none' : 2,
+                    minWidth: layout === 'sidebar' ? 'auto' : '240px'
+                }}>
                     <InputWrapper icon={DollarSign}>
                         <FilterInput
                             type="number"
@@ -245,7 +268,7 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
                             name="minPrice"
                             value={filters.minPrice}
                             onChange={onFilterChange}
-                            style={{ paddingLeft: '35px', minWidth: '100px', width: '100%' }}
+                            style={{ paddingLeft: '35px', width: '100%', minWidth: layout === 'sidebar' ? 'auto' : '100px' }}
                         />
                     </InputWrapper>
 
@@ -256,12 +279,12 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
                             name="maxPrice"
                             value={filters.maxPrice}
                             onChange={onFilterChange}
-                            style={{ paddingLeft: '35px', minWidth: '100px', width: '100%' }}
+                            style={{ paddingLeft: '35px', width: '100%', minWidth: layout === 'sidebar' ? 'auto' : '100px' }}
                         />
                     </InputWrapper>
                 </div>
 
-                <div style={{ width: isMobile ? '100%' : 'auto', flex: isMobile ? 'none' : 1 }}>
+                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
                     <CustomSelect
                         name="beds"
                         value={filters.beds}
@@ -272,7 +295,7 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
                     />
                 </div>
 
-                <div style={{ width: isMobile ? '100%' : 'auto', flex: isMobile ? 'none' : 1 }}>
+                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
                     <CustomSelect
                         name="baths"
                         value={filters.baths}
@@ -283,7 +306,7 @@ const PropertyFilters = ({ filters, onFilterChange }) => {
                     />
                 </div>
 
-                <div style={{ width: isMobile ? '100%' : 'auto', flex: isMobile ? 'none' : 1 }}>
+                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
                     <CustomSelect
                         name="m2"
                         value={filters.m2}

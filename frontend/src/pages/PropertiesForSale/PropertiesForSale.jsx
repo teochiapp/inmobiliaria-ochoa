@@ -1,16 +1,41 @@
 import React from 'react';
+import useSales from '../../hooks/useSales';
+import PropertyCatalog from '../../components/common/PropertyCatalog';
+import Breadcrumb from '../../components/common/Breadcrumb';
 import Header from '../../components/header/Header';
+import Footer from '../../components/footer/footer';
+import styled from 'styled-components';
 
 const PropertiesForSale = () => {
+    const { sales, loading, error } = useSales();
+
     return (
-        <>
+        <PageWrapper>
             <Header />
-            <div style={{ marginTop: '100px', padding: '2rem', textAlign: 'center' }}>
-                <h1 style={{ fontFamily: 'Orbitron', color: 'var(--brand-red)' }}>Propiedades en Venta</h1>
-                <p style={{ fontFamily: 'Lato', marginTop: '1rem' }}>Contenido próximamente...</p>
-            </div>
-        </>
+            <Breadcrumb title="Propiedades en Venta" />
+            <ContentWrapper>
+                <PropertyCatalog
+                    properties={sales}
+                    loading={loading}
+                    error={error}
+                    title="Propiedades en Venta"
+                    baseUrl="/propiedad/venta"
+                />
+            </ContentWrapper>
+            <Footer />
+        </PageWrapper>
     );
 };
 
 export default PropertiesForSale;
+
+const PageWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+`;
+
+const ContentWrapper = styled.div`
+    flex: 1;
+    padding-top: 100px;
+`;
