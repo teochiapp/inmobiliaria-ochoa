@@ -54,7 +54,6 @@ export default Contact;
 
 const PageWrapper = styled.main`
     width: 100%;
-    padding-top: 100px; /* Espacio para el header fijo */
     display: flex;
     flex-direction: column;
     /* gap se maneja individualmente o en los contenedores para mayor control */
