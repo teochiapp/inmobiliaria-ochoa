@@ -4,7 +4,8 @@ nixPkgs = ["nodejs_22"]
 [phases.install]
 cmds = [
     "npm ci",
-    "npm rebuild @swc/core"
+    "npm rebuild @swc/core",
+    "npm rebuild sharp"
 ]
 
 [phases.build]
