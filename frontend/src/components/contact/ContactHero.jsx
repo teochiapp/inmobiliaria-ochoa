@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-const AboutHero = () => {
+const ContactHero = () => {
   return (
     <HeroSection>
-      <BackgroundImage src="/src/public/galeria/santa-rosa.jpg" alt="Background" />
+      <BackgroundImage src="/src/public/galeria/villarumipalarriba.jpg" alt="Contacto Background" />
       <Overlay />
       <Content>
         <motion.div
@@ -13,15 +13,15 @@ const AboutHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Title>Nuestra Esencia</Title>
-          <Subtitle>Innovación y Tradición Inmobiliaria</Subtitle>
+          <Title>Contacto</Title>
+          <Subtitle>Estamos aquí para ayudarte a cumplir tus sueños</Subtitle>
         </motion.div>
       </Content>
     </HeroSection>
   );
 };
 
-export default AboutHero;
+export default ContactHero;
 
 const HeroSection = styled.div`
   position: relative;
@@ -32,7 +32,6 @@ const HeroSection = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  
 `;
 
 const BackgroundImage = styled.img`

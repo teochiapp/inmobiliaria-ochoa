@@ -64,7 +64,6 @@ const ContactForm = () => {
     return (
         <FormSection>
             <RelativeWrapper>
-                <DecorationImageLeft src="/src/public/aboutUs/carta.png" alt="" />
                 <Container>
                     <FormSide>
                         <HeaderDiv>
@@ -143,10 +142,9 @@ const ContactForm = () => {
                         </StyledForm>
                     </FormSide>
                     <ImageSide>
-                        <img src="/src/public/logo.jpeg" alt="Logo Inmobiliaria Ochoa" />
+                        <img src="/src/public/aboutUs/logo-largo.png" alt="Logo Inmobiliaria Ochoa" />
                     </ImageSide>
                 </Container>
-                <DecorationImageRight src="/src/public/aboutUs/carta.png" alt="" />
             </RelativeWrapper>
         </FormSection>
     );
@@ -335,47 +333,4 @@ const StatusMessage = styled.div`
     color: ${props =>
         props.$type === 'success' ? '#155724' :
             props.$type === 'error' ? '#721c24' : '#383d41'};
-`;
-
-const DecorationImageLeft = styled.img`
-    position: absolute;
-    right: 100%;
-    margin-right: 50px;
-    top: 20%;
-    transform: translateY(-50%) rotate(-25deg);
-    width: 250px; 
-    height: auto;
-    opacity: 1;
-    pointer-events: none;
-    z-index: 0;
-
-    @media (max-width: 1400px) {
-        width: 150px;
-    }
-
-    @media (max-width: 1800px) {
-        display: none;
-    }
-`;
-
-const DecorationImageRight = styled.img`
-    position: absolute;
-    left: 100%;
-    margin-left: 50px;
-    top: 20%;
-    transform: translateY(-50%) rotate(25deg);
-    width: 250px;
-    height: auto;
-    opacity: 1;
-    pointer-events: none;
-    z-index: 0;
-    }
-
-    @media (max-width: 1400px) {
-        width: 150px;
-    }
-
-    @media (max-width: 1800px) {
-        display: none;
-    }
 `;
