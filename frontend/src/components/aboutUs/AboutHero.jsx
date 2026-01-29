@@ -13,7 +13,7 @@ const AboutHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Title>Nuestra Esencia</Title>
+          <Title>Sobre Nosotros</Title>
           <Subtitle>Innovación y Tradición Inmobiliaria</Subtitle>
         </motion.div>
       </Content>
@@ -60,7 +60,8 @@ const Content = styled.div`
   z-index: 2;
   text-align: center;
   color: white;
-  padding: 0 1rem;
+  padding: 0 2rem;
+  margin-top: 2rem;
 `;
 
 const Title = styled.h1`

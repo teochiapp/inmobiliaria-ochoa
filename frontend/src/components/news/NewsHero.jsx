@@ -2,26 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-const RentalsHero = () => {
-  return (
-    <HeroSection>
-      <BackgroundImage src="/src/public/galeria/Villa-del-Diquearriba.jpeg" alt="Alquileres Background" />
-      <Overlay />
-      <Content>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Title>Alquileres</Title>
-          <Subtitle>Encuentre su lugar ideal para vivir o vacacionar</Subtitle>
-        </motion.div>
-      </Content>
-    </HeroSection>
-  );
+const NewsHero = () => {
+    return (
+        <HeroSection>
+            <BackgroundImage src="/src/public/galeria/santa-rosa-arriba.jpg" alt="Novedades Background" />
+            <Overlay />
+            <Content>
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <Title>Novedades</Title>
+                    <Subtitle>Manténgase informado sobre las últimas noticias y actualizaciones del mercado</Subtitle>
+                </motion.div>
+            </Content>
+        </HeroSection>
+    );
 };
 
-export default RentalsHero;
+export default NewsHero;
 
 const HeroSection = styled.div`
   position: relative;
@@ -60,7 +60,7 @@ const Content = styled.div`
   text-align: center;
   color: white;
   padding: 0 2rem;
-  margin-top: 2rem;
+  margin-top: 4rem;
 `;
 
 const Title = styled.h1`

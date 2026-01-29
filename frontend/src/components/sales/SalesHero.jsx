@@ -3,22 +3,22 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const SalesHero = () => {
-    return (
-        <HeroSection>
-            <BackgroundImage src="/src/public/galeria/yacantoarriba.jpg" alt="Ventas Background" />
-            <Overlay />
-            <Content>
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <Title>Ventas</Title>
-                    <Subtitle>Descubra su próxima inversión o el hogar de sus sueños</Subtitle>
-                </motion.div>
-            </Content>
-        </HeroSection>
-    );
+  return (
+    <HeroSection>
+      <BackgroundImage src="/src/public/galeria/yacantoarriba.jpg" alt="Ventas Background" />
+      <Overlay />
+      <Content>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Title>Ventas</Title>
+          <Subtitle>Descubra su próxima inversión o el hogar de sus sueños</Subtitle>
+        </motion.div>
+      </Content>
+    </HeroSection>
+  );
 };
 
 export default SalesHero;
@@ -59,7 +59,8 @@ const Content = styled.div`
   z-index: 2;
   text-align: center;
   color: white;
-  padding: 0 1rem;
+  padding: 0 2rem;
+  margin-top: 2rem;
 `;
 
 const Title = styled.h1`

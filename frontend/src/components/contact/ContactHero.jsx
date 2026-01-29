@@ -59,7 +59,8 @@ const Content = styled.div`
   z-index: 2;
   text-align: center;
   color: white;
-  padding: 0 1rem;
+  padding: 0 2rem;
+  margin-top: 2rem;
 `;
 
 const Title = styled.h1`

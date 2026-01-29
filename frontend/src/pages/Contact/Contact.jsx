@@ -9,6 +9,7 @@ import GallerySection from '../../components/home/gallery/GallerySection';
 import ContactForm from '../../components/contact/ContactForm';
 import Breadcrumb from '../../components/common/Breadcrumb'; // Added import
 import ContactHero from '../../components/contact/ContactHero';
+import ScheduleSection from '../../components/contact/ScheduleSection';
 
 const AnimatedSection = ({ children, delay = 0 }) => (
     <motion.div
@@ -36,8 +37,12 @@ const Contact = () => {
                 <AnimatedSection>
                     {/* Sección de presentación utilizando el componente existente */}
                     <AboutContainer>
-                        <AboutSection />
+                        <ScheduleSection />
                     </AboutContainer>
+                </AnimatedSection>
+
+                <AnimatedSection delay={0.1}>
+                    <AboutSection />
                 </AnimatedSection>
 
                 <AnimatedSection delay={0.2}>

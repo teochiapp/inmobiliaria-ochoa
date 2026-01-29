@@ -33,6 +33,13 @@ const Container = styled.section`
   justify-content: flex-start; /* Alinea el contenido a la izquierda */
   min-height: 600px;
   position: relative;
+  padding-top: 20px;
+  background: linear-gradient(
+  to bottom,
+  #ffffff 0%,
+  #ffffff 90%,
+  #FAF0F1 100%
+);
   
 `;
 
