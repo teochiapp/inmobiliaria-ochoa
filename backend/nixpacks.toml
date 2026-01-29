@@ -14,7 +14,7 @@ cmds = [
 cmds = ["echo 'Skipping admin panel build - API only deployment'"]
 
 [start]
-cmd = "npm run develop"
+cmd = "npm run develop -- --debug"
 
 [variables]
 NODE_ENV = "production"
