@@ -3,6 +3,7 @@ nixPkgs = ["nodejs_22"]
 
 [phases.install]
 cmds = [
+    "mkdir -p public/uploads",
     "npm ci --include=optional",
     "rm -rf node_modules/sharp node_modules/@img",
     "npm install --os=linux --cpu=x64 sharp",
