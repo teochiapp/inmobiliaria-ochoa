@@ -12,10 +12,12 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ["echo 'Skipping admin panel build - API only deployment'"]
+cmds = [
+    "npx tsc --project tsconfig.json"
+]
 
 [start]
-cmd = "npm run develop -- --debug"
+cmd = "NODE_ENV=production npm start"
 
 [variables]
 NODE_ENV = "production"
