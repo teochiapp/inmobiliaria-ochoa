@@ -1,7 +1,7 @@
 import React from 'react';
 import useSales from '../../hooks/useSales';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
-import Breadcrumb from '../../components/common/Breadcrumb';
+import SalesHero from '../../components/sales/SalesHero';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 import styled from 'styled-components';
@@ -11,8 +11,8 @@ const PropertiesForSale = () => {
 
     return (
         <PageWrapper>
-            <Header />
-            <Breadcrumb title="Propiedades en Venta" />
+            <Header isSolid={false} />
+            <SalesHero />
             <ContentWrapper>
                 <PropertyCatalog
                     properties={sales}
