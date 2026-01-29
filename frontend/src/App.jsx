@@ -7,6 +7,7 @@ import Rentals from './pages/Rentals/Rentals';
 import News from './pages/News/News';
 import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
+import ZoneProperties from './pages/ZoneProperties/ZoneProperties';
 import ScrollToTop from './components/common/ScrollToTop';
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
                 <Route path="/alquileres" element={<Rentals />} />
                 <Route path="/novedades" element={<News />} />
                 <Route path="/contacto" element={<Contact />} />
+
+                {/* Ruta de propiedades por zona */}
+                <Route path="/zona/:id" element={<ZoneProperties />} />
 
                 {/* Rutas de detalles de propiedades */}
                 <Route path="/propiedad/venta/:id" element={<PropertyDetail type="venta" />} />

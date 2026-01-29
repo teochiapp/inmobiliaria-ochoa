@@ -59,6 +59,7 @@ const useZones = () => {
 
             return {
                 id: item.id,
+                documentId: item.documentId, // Strapi v5 uses documentId for individual queries
                 image: fullImgUrl,
                 title: attributes.Nombre || 'Zona desconocida',
                 subtitle: attributes.Subtitulo || '',

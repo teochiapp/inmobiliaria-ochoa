@@ -7,9 +7,8 @@ export default defineConfig({
   server: {
     host: true, // Permite conexiones desde cualquier IP
     allowedHosts: [
-      '.ngrok-free.app', // Permite cualquier subdominio de ngrok
-      '.ngrok.io',
-      '.ngrok.app'
+      'https://marinochoa.surcodes.com/', // Permite cualquier subdominio de ngrok
+      'https://marinochoa.com/', // Permite cualquier subdominio de ngrok
     ]
   }
 })

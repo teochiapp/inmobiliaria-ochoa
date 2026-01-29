@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import useZones from '../../../hooks/useZones';
 import {
@@ -23,6 +24,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
 
 const Zones = () => {
     const { zones, loading } = useZones();
+    const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [rotDeg, setRotDeg] = useState({ current: { x: 0, y: 0 }, target: { x: 0, y: 0 } });
     const [bgPos, setBgPos] = useState({ current: { x: 0, y: 0 }, target: { x: 0, y: 0 } });
@@ -139,8 +141,15 @@ const Zones = () => {
                                         data-state={state}
                                         onMouseMove={(e) => handleMouseMove(e, index)}
                                         onMouseLeave={handleMouseLeave}
-                                        onClick={() => setCurrentIndex(index)}
-                                        style={{ cursor: state === 'current' ? 'default' : 'pointer' }}
+                                        onClick={() => {
+                                            if (state === 'current') {
+                                                // Use documentId for Strapi v5 compatibility
+                                                navigate(`/zona/${property.documentId || property.id}`);
+                                            } else {
+                                                setCurrentIndex(index);
+                                            }
+                                        }}
+                                        style={{ cursor: 'pointer' }}
                                     >
                                         <SlideInner
                                             style={{
