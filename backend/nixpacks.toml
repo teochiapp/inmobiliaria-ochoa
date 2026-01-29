@@ -13,7 +13,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-    "npx tsc --project tsconfig.json"
+    "npm run build -- --no-optimization"
 ]
 
 [start]
