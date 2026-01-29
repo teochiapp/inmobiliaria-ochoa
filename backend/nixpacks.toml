@@ -8,7 +8,7 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["echo 'Skipping admin panel build - API only deployment'"]
 
 [start]
 cmd = "npm start"
