@@ -13,7 +13,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-    "npm run build -- --no-optimization"
+    "npm run build"
 ]
 
 [start]
