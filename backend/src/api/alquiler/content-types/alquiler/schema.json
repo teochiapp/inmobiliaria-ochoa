@@ -17,6 +17,11 @@
     "Ubicacion": {
       "type": "string"
     },
+    "Zona": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::zona.zona"
+    },
     "Precio": {
       "type": "biginteger"
     },

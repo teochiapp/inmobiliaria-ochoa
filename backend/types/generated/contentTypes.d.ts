@@ -504,6 +504,7 @@ export interface ApiAlquilerAlquiler extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Zona: Schema.Attribute.Relation<'oneToOne', 'api::zona.zona'>;
   };
 }
 
@@ -530,6 +531,33 @@ export interface ApiHeroImageHeroImage extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     Titulo: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNovedadNovedad extends Struct.CollectionTypeSchema {
+  collectionName: 'novedades';
+  info: {
+    displayName: 'Novedades';
+    pluralName: 'novedades';
+    singularName: 'novedad';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::novedad.novedad'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -570,6 +598,7 @@ export interface ApiVentaVenta extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Zona: Schema.Attribute.Relation<'oneToOne', 'api::zona.zona'>;
   };
 }
 
@@ -1114,6 +1143,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::alquiler.alquiler': ApiAlquilerAlquiler;
       'api::hero-image.hero-image': ApiHeroImageHeroImage;
+      'api::novedad.novedad': ApiNovedadNovedad;
       'api::venta.venta': ApiVentaVenta;
       'api::zona.zona': ApiZonaZona;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "novedades",
+  "info": {
+    "singularName": "novedad",
+    "pluralName": "novedades",
+    "displayName": "Novedades"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}
