@@ -1,7 +1,7 @@
 import React from 'react';
 import useRents from '../../hooks/useRents';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
-import Breadcrumb from '../../components/common/Breadcrumb';
+import RentalsHero from '../../components/rentals/RentalsHero';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 import styled from 'styled-components';
@@ -11,8 +11,8 @@ const Rentals = () => {
 
     return (
         <PageWrapper>
-            <Header />
-            <Breadcrumb title="Propiedades en Alquiler" />
+            <Header isSolid={false} />
+            <RentalsHero />
             <ContentWrapper>
                 <PropertyCatalog
                     properties={rents}
