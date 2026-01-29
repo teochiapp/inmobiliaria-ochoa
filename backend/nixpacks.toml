@@ -4,6 +4,8 @@ nixPkgs = ["nodejs_22"]
 [phases.install]
 cmds = [
     "npm ci --include=optional",
+    "rm -rf node_modules/sharp node_modules/@img",
+    "npm install --os=linux --cpu=x64 sharp",
     "npm rebuild @swc/core"
 ]
 
