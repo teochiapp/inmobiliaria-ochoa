@@ -13,7 +13,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-    "npm run build"
+    "NODE_ENV=production npm run build"
 ]
 
 [start]
@@ -22,3 +22,4 @@ cmd = "NODE_ENV=production npm start"
 [variables]
 NODE_ENV = "production"
 PORT = "1337"
+STRAPI_DISABLE_REMOTE_DATA_TRANSFER = "true"
