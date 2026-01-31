@@ -10,6 +10,9 @@ import Footer from '../../components/footer/footer';
 
 const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
 
+import salesHeroImage from '../../public/galeria/yacantoarriba.jpg';
+import rentalsHeroImage from '../../public/galeria/Villa-del-Diquearriba.jpeg';
+
 const PropertyDetail = ({ type }) => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -20,6 +23,10 @@ const PropertyDetail = ({ type }) => {
 
     const endpoint = type === 'venta' ? 'ventas' : 'alquileres';
     const displayType = type === 'venta' ? 'Venta' : 'Alquiler';
+
+    // Determine background image based on type
+    // User requested consistency with Rents/Sales sections
+    const backgroundImage = type === 'venta' ? salesHeroImage : rentalsHeroImage;
 
     const extractTextFromBlocks = (blocks) => {
         if (!blocks || !Array.isArray(blocks)) return '';
@@ -148,7 +155,7 @@ const PropertyDetail = ({ type }) => {
         return (
             <PageWrapper>
                 <Header />
-                <Breadcrumb />
+                <Breadcrumb backgroundImage={backgroundImage} />
                 <LoadingContainer>Cargando detalles...</LoadingContainer>
                 <Footer />
             </PageWrapper>
@@ -159,7 +166,7 @@ const PropertyDetail = ({ type }) => {
         return (
             <PageWrapper>
                 <Header />
-                <Breadcrumb />
+                <Breadcrumb backgroundImage={backgroundImage} />
                 <ErrorContainer>
                     <h2>Propiedad no encontrada</h2>
                     <BackButton onClick={() => navigate(-1)}>Volver</BackButton>
@@ -185,7 +192,7 @@ const PropertyDetail = ({ type }) => {
     return (
         <PageWrapper>
             <Header />
-            <Breadcrumb key={property.id} customItems={breadcrumbItems} title={property.name} />
+            <Breadcrumb key={property.id} customItems={breadcrumbItems} title={property.name} backgroundImage={backgroundImage} />
 
             <ContentContainer>
                 <BackLink onClick={() => navigate(-1)}>
