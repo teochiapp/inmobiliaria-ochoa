@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import chicoImg from '../../public/aboutUs/chico.jpeg';
 import chicaImg from '../../public/aboutUs/chica.jpeg';
 
 const teamData = [
     {
         id: 1,
-        name: "Franco Marin Ochoa",
+        name: "Franco Ochoa",
         role: "Agente Inmobiliario",
         image: chicoImg,
         socials: {
