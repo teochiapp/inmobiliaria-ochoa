@@ -8,7 +8,7 @@ import chicaImg from '../../public/AboutUs/chica.jpeg';
 const teamData = [
     {
         id: 1,
-        name: "Franco Marin Ochoa",
+        name: "Franco Ochoa",
         role: "Agente Inmobiliario",
         image: chicoImg,
         socials: {
