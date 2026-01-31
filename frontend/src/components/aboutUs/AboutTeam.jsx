@@ -2,13 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import chicoImg from '../../../public/AboutUs/chico.jpeg';
+import chicaImg from '../../../public/AboutUs/chica.jpeg';
 
 const teamData = [
     {
         id: 1,
         name: "Nombre Apellido",
         role: "Agente Inmobiliario",
-        image: "/src/public/AboutUs/chico.jpeg", // Using a placeholder, user will replace
+        image: chicoImg, // Using a placeholder, user will replace
         socials: {
             facebook: "#",
             twitter: "#",
@@ -20,7 +22,7 @@ const teamData = [
         id: 2,
         name: "Nombre Apellido",
         role: "Asesor de Ventas",
-        image: "/src/public/AboutUs/chica.jpeg",
+        image: chicaImg,
         socials: {
             facebook: "#",
             twitter: "#",

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import logoLargoImg from '../../../public/aboutUs/logo-largo.png';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -171,7 +172,7 @@ const ContactForm = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 1, delay: 0.2 }}
                     >
-                        <img src="/src/public/aboutUs/logo-largo.png" alt="Logo Inmobiliaria Ochoa" />
+                        <img src={logoLargoImg} alt="Logo Inmobiliaria Ochoa" />
                     </ImageSide>
                 </Container>
             </RelativeWrapper>

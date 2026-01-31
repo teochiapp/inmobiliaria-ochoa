@@ -5,29 +5,12 @@ import Footer from '../../components/footer/footer';
 import AboutHero from '../../components/aboutUs/AboutHero';
 import AboutIntro from '../../components/aboutUs/AboutIntro';
 import AboutTeam from '../../components/aboutUs/AboutTeam';
+import cocheImg from '../../public/aboutUs/coche.png';
 
 const AboutUs = () => {
-    // Scroll to top on mount
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-
+    // ... existing code ...
     return (
-        <>
-            <Header isSolid={false} /> {/* Header transparante en el hero */}
-            <Main>
-                <AboutHero />
-                <AboutIntro />
-                <AboutTeam />
-                <CallToAction>
-                    <ContentWrapper>
-                        <CtaTitle>Contactanos para descubrir tu propiedad ideal</CtaTitle>
-                        <CtaButton href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer">CONTACTAR AHORA</CtaButton>
-                    </ContentWrapper>
-                </CallToAction>
-            </Main>
-            <Footer />
-        </>
+// ... existing code ...
     );
 };
 
@@ -40,7 +23,7 @@ const Main = styled.main`
 
 const CallToAction = styled.section`
     padding: 8rem 1rem;
-    background-image: url('/src/public/aboutUs/coche.png');
+    background-image: url(${cocheImg});
     background-size: cover;
     background-position: center;
     background-attachment: scroll;

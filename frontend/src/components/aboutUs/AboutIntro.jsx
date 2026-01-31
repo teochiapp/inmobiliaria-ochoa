@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaMedal, FaHandshake, FaUserShield } from 'react-icons/fa';
+import equipoImg from '../../../public/aboutUs/equipo.png';
 
 const AboutIntro = () => {
     return (
@@ -84,7 +85,7 @@ const AboutIntro = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    <StyledImage src="/src/public/aboutUs/equipo.png" alt="Equipo Marin Ochoa - Foto Grupal" />
+                    <StyledImage src={equipoImg} alt="Equipo Marin Ochoa - Foto Grupal" />
                 </ImageSection>
 
             </Container>
