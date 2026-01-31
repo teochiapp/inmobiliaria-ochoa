@@ -13,10 +13,21 @@ import ScheduleSection from '../../components/contact/ScheduleSection';
 
 const AnimatedSection = ({ children, delay = 0 }) => (
     <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, ease: "easeOut", delay }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                    duration: 0.8,
+                    ease: [0.25, 0.1, 0.25, 1], // Cubic-bezier for smoother feel
+                    delay
+                }
+            }
+        }}
         style={{ width: '100%' }}
     >
         {children}
@@ -30,29 +41,30 @@ const Contact = () => {
     }, []);
 
     return (
-        <>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+        >
             <Header isSolid={false} />
             <ContactHero />
             <PageWrapper>
                 <AnimatedSection>
-                    {/* Sección de presentación utilizando el componente existente */}
                     <AboutContainer>
                         <ScheduleSection />
                     </AboutContainer>
                 </AnimatedSection>
 
-                <AnimatedSection delay={0.1}>
+                <AnimatedSection delay={0.2}>
                     <AboutSection />
                 </AnimatedSection>
 
-                <AnimatedSection delay={0.2}>
-                    {/* Formulario de contacto */}
+                <AnimatedSection delay={0.3}>
                     <ContactForm />
                 </AnimatedSection>
-
             </PageWrapper>
             <Footer />
-        </>
+        </motion.div>
     );
 };
 
@@ -62,26 +74,25 @@ const PageWrapper = styled.main`
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* gap se maneja individualmente o en los contenedores para mayor control */
+    overflow: hidden;
 
     @media (max-width: 968px) {
-        padding-top: 80px;
+        padding-top: 0;
     }
 `;
 
 const AboutContainer = styled.div`
-    /* Ajustes para el contenedor de AboutSection si es necesario */
     width: 100%;
     position: relative;
-    /* AboutSection tiene margins internos, nos aseguramos que fluya bien */
     background: linear-gradient(
-  to bottom,
-  #ffffff 0%,
-  #ffffff 90%,
-  #faf0f1 100%
-);
+        to bottom,
+        #ffffff 0%,
+        #ffffff 90%,
+        #faf0f1 100%
+    );
 `;
 
 const GalleryContainer = styled.div`
     width: 100%;
 `;
+

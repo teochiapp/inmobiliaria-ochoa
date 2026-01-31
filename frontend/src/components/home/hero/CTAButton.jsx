@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledCTAButton } from './Hero.styles';
 
-const CTAButton = ({ text = "Contactanos", phoneNumber = "5493512173089" }) => {
+const CTAButton = ({ text = "Contactanos", phoneNumber = "5493571520528" }) => {
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
 
     return (

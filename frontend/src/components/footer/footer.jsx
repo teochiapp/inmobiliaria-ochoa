@@ -34,7 +34,7 @@ const Footer = () => {
                         <a href="https://www.instagram.com/marinochoainmobiliaria/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={20} /></a>
                         <a href="https://www.youtube.com/channel/UCA_HFMO1a5KJD-pNp-6nToQ" target="_blank" rel="noopener noreferrer" aria-label="Youtube"><Youtube size={20} /></a>
                         <a href="mailto:franco@marinochoa.com.ar" aria-label="Email"><Mail size={20} /></a>
-                        <a href="https://api.whatsapp.com/send/?phone=54935715520528&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <a href="https://api.whatsapp.com/send/?phone=5493571520528&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                             <FaWhatsapp size={20} />
                         </a>
                     </SocialIcons>
@@ -81,9 +81,9 @@ const Footer = () => {
                             <a href="mailto:franco@marinochoa.com.ar" style={{ color: 'inherit', textDecoration: 'none' }}>franco@marinochoa.com.ar</a>
                         </div>
 
-                        <CallButton href="https://wa.me/54935715520528" target="_blank">
+                        <CallButton href="https://wa.me/5493571520528" target="_blank">
                             <Phone size={18} />
-                            03571-15520528
+                            54 9 3571 52-0528
                         </CallButton>
                     </WorkHours>
                 </FooterColumn>

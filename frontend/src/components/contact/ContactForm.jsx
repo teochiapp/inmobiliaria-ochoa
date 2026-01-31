@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -49,11 +50,8 @@ const ContactForm = () => {
 
         setStatus({ type: 'loading', message: 'Enviando mensaje...' });
 
-        // Simulacion de llamada a API
-        // TODO: Integrar con backend real o servicio de email
         try {
             await new Promise(resolve => setTimeout(resolve, 1500));
-
             setStatus({ type: 'success', message: '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.' });
             setFormData({ name: '', phone: '', email: '', message: '' });
         } catch (error) {
@@ -64,7 +62,13 @@ const ContactForm = () => {
     return (
         <FormSection>
             <RelativeWrapper>
-                <Container>
+                <Container
+                    as={motion.div}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                >
                     <FormSide>
                         <HeaderDiv>
                             <Title>CONTACTANOS</Title>
@@ -75,6 +79,8 @@ const ContactForm = () => {
                             <FormGroup>
                                 <Label htmlFor="name">Nombre Completo *</Label>
                                 <Input
+                                    as={motion.input}
+                                    whileFocus={{ scale: 1.01 }}
                                     type="text"
                                     id="name"
                                     name="name"
@@ -89,6 +95,8 @@ const ContactForm = () => {
                             <FormGroup>
                                 <Label htmlFor="phone">Teléfono *</Label>
                                 <Input
+                                    as={motion.input}
+                                    whileFocus={{ scale: 1.01 }}
                                     type="tel"
                                     id="phone"
                                     name="phone"
@@ -103,6 +111,8 @@ const ContactForm = () => {
                             <FormGroup>
                                 <Label htmlFor="email">Email *</Label>
                                 <Input
+                                    as={motion.input}
+                                    whileFocus={{ scale: 1.01 }}
                                     type="email"
                                     id="email"
                                     name="email"
@@ -117,6 +127,8 @@ const ContactForm = () => {
                             <FormGroup>
                                 <Label htmlFor="message">Mensaje *</Label>
                                 <TextArea
+                                    as={motion.textarea}
+                                    whileFocus={{ scale: 1.01 }}
                                     id="message"
                                     name="message"
                                     value={formData.message}
@@ -129,19 +141,36 @@ const ContactForm = () => {
                             </FormGroup>
 
                             <ButtonWrapper>
-                                <SubmitButton type="submit" disabled={status.type === 'loading'}>
+                                <SubmitButton
+                                    as={motion.button}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    type="submit"
+                                    disabled={status.type === 'loading'}
+                                >
                                     {status.type === 'loading' ? 'ENVIANDO...' : 'ENVIAR MENSAJE'}
                                 </SubmitButton>
                             </ButtonWrapper>
 
                             {status.message && (
-                                <StatusMessage $type={status.type}>
+                                <StatusMessage
+                                    as={motion.div}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    $type={status.type}
+                                >
                                     {status.message}
                                 </StatusMessage>
                             )}
                         </StyledForm>
                     </FormSide>
-                    <ImageSide>
+                    <ImageSide
+                        as={motion.div}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.2 }}
+                    >
                         <img src="/src/public/aboutUs/logo-largo.png" alt="Logo Inmobiliaria Ochoa" />
                     </ImageSide>
                 </Container>
@@ -151,6 +180,7 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+
 
 const FormSection = styled.section`
     padding: 4rem 1rem;

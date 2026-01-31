@@ -9,17 +9,20 @@ import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
 import ZoneProperties from './pages/ZoneProperties/ZoneProperties';
 import ScrollToTop from './components/common/ScrollToTop';
+import FloatingWhatsApp from './components/common/FloatingWhatsApp';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
     return (
         <Router>
             <ScrollToTop />
+            <FloatingWhatsApp />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/sobre-nosotros" element={<AboutUs />} />
                 <Route path="/propiedades-venta" element={<PropertiesForSale />} />
                 <Route path="/alquileres" element={<Rentals />} />
-                <Route path="/novedades" element={<News />} />
+                {/* <Route path="/novedades" element={<News />} /> */}
                 <Route path="/contacto" element={<Contact />} />
 
                 {/* Ruta de propiedades por zona */}
@@ -28,6 +31,9 @@ function App() {
                 {/* Rutas de detalles de propiedades */}
                 <Route path="/propiedad/venta/:id" element={<PropertyDetail type="venta" />} />
                 <Route path="/propiedad/alquiler/:id" element={<PropertyDetail type="alquiler" />} />
+
+                {/* 404 Not Found - Esta ruta debe estar AL FINAL */}
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
     );

@@ -8,7 +8,6 @@ const Navigation = ({ isOpen }) => {
     { label: 'Sobre nosotros', path: '/sobre-nosotros' },
     { label: 'Propiedades en venta', path: '/propiedades-venta' },
     { label: 'Alquileres', path: '/alquileres' },
-    { label: 'Novedades', path: '/novedades' },
     { label: 'Contacto', path: '/contacto' },
   ];
 
