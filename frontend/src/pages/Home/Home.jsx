@@ -11,6 +11,8 @@ import Zones from '../../components/home/zones/zones';
 import Footer from '../../components/footer/footer';
 import styled from 'styled-components';
 
+import CTASection from '../../components/home/cta/CTASection';
+
 const AnimatedSection = ({ children, delay = 0 }) => (
     <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -30,17 +32,22 @@ const Home = () => {
             <AnimatedSection>
                 <Hero />
             </AnimatedSection>
-            <SalesContainer>
-                <AnimatedSection delay={0.2}>
-                    <Sales />
-                </AnimatedSection>
-                <AnimatedSection delay={0.2}>
-                    <Rents />
-                </AnimatedSection>
-                <AnimatedSection delay={0.2}>
-                    <Zones />
-                </AnimatedSection>
-            </SalesContainer>
+            <LinearGradContainer>
+                <SalesContainer>
+                    <AnimatedSection delay={0.2}>
+                        <Sales />
+                    </AnimatedSection>
+                    <AnimatedSection delay={0.2}>
+                        <Rents />
+                    </AnimatedSection>
+                    <AnimatedSection delay={0.2}>
+                        <Zones />
+                    </AnimatedSection>
+                    <AnimatedSection delay={0.2}>
+                        <CTASection />
+                    </AnimatedSection>
+                </SalesContainer>
+            </LinearGradContainer>
             <AnimatedSection delay={0.2}>
                 <Map />
             </AnimatedSection>
@@ -56,5 +63,14 @@ const SalesContainer = styled.div`
   flex-direction: column;
   gap: 0;
   width: 100%;
-  background-color: var(--text-light);
+  background-color: transparent;
+`;
+
+const LinearGradContainer = styled.div`
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0%,
+        #ffffff 90%,
+        #faf0f1 100%
+    );
 `;

@@ -301,7 +301,9 @@ export const SlideInfoText = styled.div`
 `;
 
 export const RentSection = styled.div`
-  width: 100%;
+  width: 95%;
+  max-width: 1600px;
+  margin: 0 auto 3rem auto;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -309,15 +311,23 @@ export const RentSection = styled.div`
   min-height: 600px;
   position: relative;
   isolation: isolate;
+  border-radius: 3rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  background-color: #fff;
 
   @media (max-width: 968px) {
+    width: 100%;
+    margin: 0;
     padding: 3rem 0;
     min-height: 500px;
+    border-radius: 0 0 3rem 3rem;
+    margin-bottom: 2rem;
   }
 
   @media (max-width: 750px) {
-    padding:0;
-    min-height: autoQ;
+    padding: 0;
+    min-height: auto;
+    border-radius: 0 0 2rem 2rem;
   }
 `;
 
