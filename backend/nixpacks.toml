@@ -2,6 +2,7 @@
 nixPkgs = ["nodejs_22"]
 
 [phases.install]
+cmds = [
     "mkdir -p public/uploads",
     "mkdir -p data",
     "npm install",
