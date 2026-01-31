@@ -36,7 +36,7 @@ export const SectionHeader = styled.div`
     bottom: -1.5px;
     left: 0;
     width: 60px;
-    height: 1.5px;
+    height: 1px;
     background-color: var(--brand-red);
   }
 
