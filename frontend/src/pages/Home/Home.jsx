@@ -44,9 +44,7 @@ const Home = () => {
             <AnimatedSection delay={0.2}>
                 <Map />
             </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-                <Footer />
-            </AnimatedSection>
+            <Footer />
         </>
     );
 };

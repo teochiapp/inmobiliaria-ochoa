@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import PropertiesForSale from './pages/PropertiesForSale/PropertiesForSale';
 import Rentals from './pages/Rentals/Rentals';
-import News from './pages/News/News';
+
 import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
 import ZoneProperties from './pages/ZoneProperties/ZoneProperties';
@@ -22,7 +22,6 @@ function App() {
                 <Route path="/sobre-nosotros" element={<AboutUs />} />
                 <Route path="/propiedades-venta" element={<PropertiesForSale />} />
                 <Route path="/alquileres" element={<Rentals />} />
-                {/* <Route path="/novedades" element={<News />} /> */}
                 <Route path="/contacto" element={<Contact />} />
 
                 {/* Ruta de propiedades por zona */}
