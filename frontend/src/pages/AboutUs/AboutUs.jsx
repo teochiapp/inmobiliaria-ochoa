@@ -5,6 +5,7 @@ import Footer from '../../components/footer/footer';
 import AboutHero from '../../components/aboutUs/AboutHero';
 import AboutIntro from '../../components/aboutUs/AboutIntro';
 import AboutTeam from '../../components/aboutUs/AboutTeam';
+import cocheImg from '../../public/aboutUs/coche.png';
 
 const AboutUs = () => {
     // Scroll to top on mount
@@ -40,7 +41,7 @@ const Main = styled.main`
 
 const CallToAction = styled.section`
     padding: 8rem 1rem;
-    background-image: url('/src/public/aboutUs/coche.png');
+    background-image: url(${cocheImg});
     background-size: cover;
     background-position: center;
     background-attachment: scroll;
