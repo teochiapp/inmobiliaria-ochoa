@@ -5,6 +5,7 @@ nixPkgs = ["nodejs_22"]
 cmds = [
     "mkdir -p public/uploads",
     "mkdir -p data",
+    "rm -rf package-lock.json node_modules",
     "npm install",
     "rm -rf node_modules/sharp",
     "npm install --os=linux --cpu=x64 sharp"

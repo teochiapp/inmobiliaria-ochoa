@@ -1,0 +1,18 @@
+{
+    "phases": {
+        "install": {
+            "cmds": [
+                "npm ci --include=optional"
+            ]
+        },
+        "build": {
+            "cmds": [
+                "npm rebuild @swc/core better-sqlite3 sharp",
+                "npm run build"
+            ]
+        }
+    },
+    "providers": [
+        "node"
+    ]
+}
