@@ -1,31 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import { FaFacebookF, FaLinkedinIn, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import chicoImg from '../../../public/AboutUs/chico.jpeg';
 import chicaImg from '../../../public/AboutUs/chica.jpeg';
 
 const teamData = [
     {
         id: 1,
-        name: "Nombre Apellido",
+        name: "Franco Marin Ochoa",
         role: "Agente Inmobiliario",
-        image: chicoImg, // Using a placeholder, user will replace
+        image: chicoImg,
         socials: {
             facebook: "#",
-            twitter: "#",
+            whatsapp: "https://wa.me/5493571520528",
             linkedin: "#",
             instagram: "#"
         }
     },
     {
         id: 2,
-        name: "Nombre Apellido",
+        name: "Angelina Cerutti",
         role: "Asesor de Ventas",
         image: chicaImg,
         socials: {
             facebook: "#",
-            twitter: "#",
+            whatsapp: "https://wa.me/5493512173089",
             linkedin: "#",
             instagram: "#"
         }
@@ -52,7 +52,6 @@ const AboutTeam = () => {
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
                             <ImageWrapper>
-                                {/* Placeholder for user to swap later */}
                                 <MemberImage src={member.image} alt={member.name} />
                             </ImageWrapper>
                             <InfoCard>
@@ -62,7 +61,7 @@ const AboutTeam = () => {
                                 </NameBox>
                                 <SocialLinks>
                                     <SocialIcon href={member.socials.facebook} target="_blank"><FaFacebookF /></SocialIcon>
-                                    <SocialIcon href={member.socials.twitter} target="_blank"><FaTwitter /></SocialIcon>
+                                    <SocialIcon href={member.socials.whatsapp} target="_blank"><FaWhatsapp /></SocialIcon>
                                     <SocialIcon href={member.socials.linkedin} target="_blank"><FaLinkedinIn /></SocialIcon>
                                     <SocialIcon href={member.socials.instagram} target="_blank"><FaInstagram /></SocialIcon>
                                 </SocialLinks>
