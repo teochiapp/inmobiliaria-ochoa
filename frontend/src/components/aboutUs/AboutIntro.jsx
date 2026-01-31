@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaMedal, FaHandshake, FaUserShield } from 'react-icons/fa';
-import equipoImg from '../../../public/aboutUs/equipo.png';
+import equipoImg from '../../public/aboutUs/equipo.png';
 
 const AboutIntro = () => {
     return (

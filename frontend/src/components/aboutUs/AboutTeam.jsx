@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaFacebookF, FaLinkedinIn, FaInstagram, FaWhatsapp } from 'react-icons/fa';
-import chicoImg from '../../../public/AboutUs/chico.jpeg';
-import chicaImg from '../../../public/AboutUs/chica.jpeg';
+import chicoImg from '../../public/AboutUs/chico.jpeg';
+import chicaImg from '../../public/AboutUs/chica.jpeg';
 
 const teamData = [
     {

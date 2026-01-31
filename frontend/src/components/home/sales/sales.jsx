@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import PropertyCard from '../PropertyCard/PropertyCard';
@@ -81,7 +82,7 @@ const Sales = () => {
         <SectionContainer>
             <SectionHeader>
                 <SectionTitle>VENTAS</SectionTitle>
-                <ViewAllButton>
+                <ViewAllButton as={Link} to="/propiedades-venta">
                     Ver todo
                     <ChevronRight />
                 </ViewAllButton>

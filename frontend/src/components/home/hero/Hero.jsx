@@ -4,28 +4,28 @@ import useHero from '../../../hooks/useHero';
 import useHeroAnimation from '../../../hooks/useHeroAnimation';
 
 const Hero = () => {
-    const { images, titles, loading, error } = useHero();
-    const { mainRef, partsRef, titleRef, cols } = useHeroAnimation({ images, titles, loading });
+  const { images, titles, loading, error } = useHero();
+  const { mainRef, partsRef, titleRef, cols } = useHeroAnimation({ images, titles, loading });
 
-    if (loading && (!images || images.length === 0)) return <HeroWrapper style={{ justifyContent: 'center', alignItems: 'center', color: 'white' }}>Loading...</HeroWrapper>;
-    if (error) return <HeroWrapper style={{ justifyContent: 'center', alignItems: 'center', color: 'white' }}>Error loading hero</HeroWrapper>;
-    if (!loading && images.length === 0) return null;
+  if (loading && (!images || images.length === 0)) return <HeroWrapper style={{ justifyContent: 'center', alignItems: 'center', color: 'white' }}>Loading...</HeroWrapper>;
+  if (error) return <HeroWrapper style={{ justifyContent: 'center', alignItems: 'center', color: 'white' }}>Error loading hero</HeroWrapper>;
+  if (!loading && images.length === 0) return null;
 
-    return (
-        <>
-            <GlobalStyle />
-            <HeroWrapper id="hero-main" ref={mainRef}>
-                {[...Array(cols)].map((_, i) => (
-                    <Part
-                        key={i}
-                        ref={el => partsRef.current[i] = el}
-                    />
-                ))}
+  return (
+    <>
+      <GlobalStyle />
+      <HeroWrapper id="hero-main" ref={mainRef}>
+        {[...Array(cols)].map((_, i) => (
+          <Part
+            key={i}
+            ref={el => partsRef.current[i] = el}
+          />
+        ))}
 
-                <MainTitle ref={titleRef}>{titles[0]}</MainTitle>
-            </HeroWrapper>
-        </>
-    );
+        <MainTitle ref={titleRef}>{titles[0]}</MainTitle>
+      </HeroWrapper>
+    </>
+  );
 };
 
 export default Hero;
@@ -60,7 +60,7 @@ const Part = styled.div`
   position: relative;
 `;
 
-const MainTitle = styled.h1`
+const MainTitle = styled.h2`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -71,7 +71,7 @@ const MainTitle = styled.h1`
   color: white;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
   text-align: center;
-  font-size: 2.2em;
+  font-size: 2.7em;
   font-weight: 700;
   pointer-events: none;
   font-family: inherit;
