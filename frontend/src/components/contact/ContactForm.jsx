@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import logoLargoImg from '../../../public/aboutUs/logo-largo.png';
+import logoLargoImg from '../../public/aboutUs/logo-largo.png';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
