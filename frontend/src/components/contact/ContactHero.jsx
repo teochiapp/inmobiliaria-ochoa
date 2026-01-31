@@ -15,7 +15,7 @@ const ContactHero = () => {
           transition={{ duration: 0.8 }}
         >
           <Title>Contacto</Title>
-          <Subtitle>Estamos aquí para ayudarte a cumplir tus sueños</Subtitle>
+          <Subtitle>Estamos acá para ayudarte a cumplir tus sueños</Subtitle>
         </motion.div>
       </Content>
     </HeroSection>

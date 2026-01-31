@@ -5,7 +5,7 @@ import { ChevronRight, Home as HomeIcon } from 'lucide-react';
 import SplitText from './SplitText';
 import LightRays from './LightRays';
 
-const Breadcrumb = ({ customItems, title, backgroundImage }) => {
+const Breadcrumb = ({ customItems, title, backgroundImage, showLights = false }) => {
     const location = useLocation();
 
     // Generate breadcrumb items from path if not custom provided
@@ -39,22 +39,24 @@ const Breadcrumb = ({ customItems, title, backgroundImage }) => {
 
     return (
         <BreadcrumbHeader $backgroundImage={backgroundImage}>
-            <LightRaysBackground>
-                <LightRays
-                    raysOrigin="top-center"
-                    raysColor="#ffffff"
-                    raysSpeed={0.7}
-                    lightSpread={2.5}
-                    rayLength={3}
-                    followMouse={true}
-                    mouseInfluence={0.2}
-                    noiseAmount={0.08}
-                    distortion={0.25}
-                    pulsating={false}
-                    fadeDistance={1.5}
-                    saturation={0.9}
-                />
-            </LightRaysBackground>
+            {showLights && (
+                <LightRaysBackground>
+                    <LightRays
+                        raysOrigin="top-center"
+                        raysColor="#ffffff"
+                        raysSpeed={0.7}
+                        lightSpread={2.5}
+                        rayLength={3}
+                        followMouse={true}
+                        mouseInfluence={0.2}
+                        noiseAmount={0.08}
+                        distortion={0.25}
+                        pulsating={false}
+                        fadeDistance={1.5}
+                        saturation={0.9}
+                    />
+                </LightRaysBackground>
+            )}
             <Overlay />
             <ContentWrapper>
                 <BreadcrumbTrail>
@@ -112,9 +114,19 @@ const BreadcrumbHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${props => props.$backgroundImage
-        ? `linear-gradient(135deg, rgba(43, 46, 75, 0.92) 0%, rgba(11, 23, 46, 0.88) 100%), url(${props.$backgroundImage})`
-        : 'linear-gradient(135deg, #2B2E4B 0%, #0B172E 100%)'};
+    background: ${props => {
+        if (props.$backgroundImage) {
+            // If lights are on, use the heavy gradient. If off (standard mode), use simpler overlay like SalesHero
+            // We need to pass the prop $showLights to this component to decide. 
+            // Since we didn't pass it yet, let's assume we want the simpler style for now, or just relax it globally if this is the only user?
+            // User requested "like other pages". Other pages have visible images.
+            // Let's use a lighter gradient comparable to rgba(0,0,0,0.5) but keeping some blue tint for brand consistency?
+            // Actually SalesHero uses pure black overlay.
+            // Let's stick to a simpler gradient that is less opaque.
+            return `linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%), url(${props.$backgroundImage})`;
+        }
+        return 'linear-gradient(135deg, #2B2E4B 0%, #0B172E 100%)';
+    }};
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

@@ -61,7 +61,7 @@ const PropertyCatalog = ({ properties, loading, title, error, baseUrl }) => {
 
                 <PropertiesColumn>
                     <Grid>
-                        <AnimatePresence mode="wait">
+                        <AnimatePresence>
                             {currentProperties.length > 0 ? (
                                 currentProperties.map((property, index) => (
                                     <motion.div

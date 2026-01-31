@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { MapPin, Bed, Bath, Ruler, ArrowLeft, Phone, Home as HomeIcon, Car } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import api from '../../services/api';
 import Header from '../../components/header/Header';
-import Breadcrumb from '../../components/common/Breadcrumb';
 import Footer from '../../components/footer/footer';
 
 const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
@@ -154,8 +154,20 @@ const PropertyDetail = ({ type }) => {
     if (loading) {
         return (
             <PageWrapper>
-                <Header />
-                <Breadcrumb backgroundImage={backgroundImage} />
+                <Header isSolid={false} />
+                <HeroSection>
+                    <BackgroundImage src={backgroundImage} alt="Background" />
+                    <Overlay />
+                    <Content>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <HeroTitle>Cargando...</HeroTitle>
+                        </motion.div>
+                    </Content>
+                </HeroSection>
                 <LoadingContainer>Cargando detalles...</LoadingContainer>
                 <Footer />
             </PageWrapper>
@@ -165,8 +177,20 @@ const PropertyDetail = ({ type }) => {
     if (error || !property) {
         return (
             <PageWrapper>
-                <Header />
-                <Breadcrumb backgroundImage={backgroundImage} />
+                <Header isSolid={false} />
+                <HeroSection>
+                    <BackgroundImage src={backgroundImage} alt="Background" />
+                    <Overlay />
+                    <Content>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <HeroTitle>Error</HeroTitle>
+                        </motion.div>
+                    </Content>
+                </HeroSection>
                 <ErrorContainer>
                     <h2>Propiedad no encontrada</h2>
                     <BackButton onClick={() => navigate(-1)}>Volver</BackButton>
@@ -176,23 +200,23 @@ const PropertyDetail = ({ type }) => {
         );
     }
 
-    const breadcrumbItems = [
-        {
-            label: displayType === 'Venta' ? 'Propiedades en Venta' : 'Propiedades en Alquiler',
-            path: displayType === 'Venta' ? '/propiedades-venta' : '/alquileres',
-            isLast: false
-        },
-        {
-            label: property.name,
-            path: `#`,
-            isLast: true
-        }
-    ];
-
     return (
         <PageWrapper>
-            <Header />
-            <Breadcrumb key={property.id} customItems={breadcrumbItems} title={property.name} backgroundImage={backgroundImage} />
+            <Header isSolid={false} />
+            <HeroSection>
+                <BackgroundImage src={backgroundImage} alt={property.name} />
+                <Overlay />
+                <Content>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <HeroTitle>{property.name}</HeroTitle>
+                        <HeroSubtitle>{property.location || displayType}</HeroSubtitle>
+                    </motion.div>
+                </Content>
+            </HeroSection>
 
             <ContentContainer>
                 <BackLink onClick={() => navigate(-1)}>
@@ -317,7 +341,7 @@ const PropertyDetail = ({ type }) => {
             </ContentContainer>
 
             <Footer />
-        </PageWrapper>
+        </PageWrapper >
     );
 };
 
@@ -785,4 +809,65 @@ const AdditionalFeatureItem = styled.div`
         color: var(--brand-red);
         flex-shrink: 0;
     }
+`;
+
+const HeroSection = styled.div`
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`;
+
+const BackgroundImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+`;
+
+const Content = styled.div`
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  padding: 0 2rem;
+  margin-top: 2rem;
+`;
+
+const HeroTitle = styled.h1`
+  font-family: var(--headings-font);
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 2.2rem;
+  }
+`;
+
+const HeroSubtitle = styled.p`
+  font-family: var(--text-font);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
 `;
