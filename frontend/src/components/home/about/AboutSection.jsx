@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import marinOchoaImg from '../../../public/hero/marin-ochoa.png';
 
 const AboutSection = () => {
   return (
     <Container>
       <ContentWrapper>
         <ImageWrapper>
-          <img src="/src/public/hero/marin-ochoa.png" alt="Oficina Marin Ochoa" />
+          <img src={marinOchoaImg} alt="Oficina Marin Ochoa" />
         </ImageWrapper>
         <TextCard>
           <Title>ESTIME Y VENDA SU PROPIEDAD CON MARIN OCHOA</Title>

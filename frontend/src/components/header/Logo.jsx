@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from '../../public/logo.png';
 
 const Logo = () => {
   return (
     <LogoWrapper>
       <Link to="/">
-        <img src="/src/public/logo.png" alt="Inmobiliaria Ochoa Logo" />
+        <img src={logo} alt="Inmobiliaria Ochoa Logo" />
       </Link>
     </LogoWrapper>
   );

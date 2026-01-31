@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import heroBg from '../../public/galeria/Villa-del-Diquearriba.jpeg';
 
 const RentalsHero = () => {
   return (
     <HeroSection>
-      <BackgroundImage src="/src/public/galeria/Villa-del-Diquearriba.jpeg" alt="Alquileres Background" />
+      <BackgroundImage src={heroBg} alt="Alquileres Background" />
       <Overlay />
       <Content>
         <motion.div

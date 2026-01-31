@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import durazno from '../../../public/galeria/durazno.jpg';
+import embalse from '../../../public/galeria/embalse.jpg';
+import quillinzo from '../../../public/galeria/quillinzo.jpg';
+import santaRosa from '../../../public/galeria/santa-rosa.jpg';
+import villaRumipal from '../../../public/galeria/villa-rumipal.jpeg';
+import villaDelDique from '../../../public/galeria/Villa-del-Dique.jpg';
 
 const GallerySection = () => {
   const images = [
-    '/src/public/galeria/durazno.jpg',
-    '/src/public/galeria/embalse.jpg',
-    '/src/public/galeria/quillinzo.jpg',
-    '/src/public/galeria/santa-rosa.jpg',
-    '/src/public/galeria/villa-rumipal.jpeg',
-    '/src/public/galeria/Villa-del-Dique.jpg',
+    durazno,
+    embalse,
+    quillinzo,
+    santaRosa,
+    villaRumipal,
+    villaDelDique,
   ];
 
   return (
