@@ -320,14 +320,14 @@ export const RentSection = styled.div`
     margin: 0;
     padding: 3rem 0;
     min-height: 500px;
-    border-radius: 0 0 3rem 3rem;
+    border-radius: 0;
     margin-bottom: 2rem;
   }
 
   @media (max-width: 750px) {
     padding: 0;
     min-height: auto;
-    border-radius: 0 0 2rem 2rem;
+    border-radius: 0;
   }
 `;
 

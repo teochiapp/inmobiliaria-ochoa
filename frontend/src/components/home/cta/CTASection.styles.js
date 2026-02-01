@@ -11,12 +11,17 @@ export const CTAContainer = styled.section`
   @media (max-width: 768px) {
     padding: 3rem 1rem;
   }
+
+  @media (max-width: 450px) {
+    padding: 2rem 0.5rem;
+    padding-bottom: 2rem;
+  }
 `;
 
 export const ContentWrapper = styled.div`
   width: 100%;
   max-width: 1000px; /* Slightly narrower for focus */
-  padding: 0 2rem;
+  padding: 0 1rem;
 
   .custom-spotlight-card {
     background-color: var(--brand-blue); /* The card itself is now the dark element */
@@ -26,6 +31,10 @@ export const ContentWrapper = styled.div`
     
     @media (max-width: 768px) {
         padding: 3rem 1.5rem;
+    }
+
+    @media (max-width: 450px) {
+        padding: 2rem 1rem;
     }
   }
 `;
@@ -37,16 +46,26 @@ export const CTATitle = styled.h2`
   text-transform: uppercase;
   margin-bottom: 0.5rem;
   text-align: center;
+
+  @media (max-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const CTADescription = styled.p`
   font-family: var(--text-font);
-  font-size: clamp(1.2rem, 2.5vw, 1.1rem);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: rgba(255, 255, 255, 0.8);
   max-width: 600px;
   text-align: center;
   margin-bottom: 1rem;
   line-height: 1.6;
+
+  @media (max-width: 450px) {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0rem;
+  }
 `;
 
 export const ButtonGroup = styled.div`
@@ -56,6 +75,10 @@ export const ButtonGroup = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 1rem;
+
+  @media (max-width: 450px) {
+    gap: 1rem;
+  }
 `;
 
 export const CTAButton = styled(motion.a)`
@@ -82,6 +105,13 @@ export const CTAButton = styled(motion.a)`
   @media (max-width: 768px) {
     width: 100%;
     padding: 1.5rem;
+  }
+
+  @media (max-width: 450px) {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.85rem;
+    width: auto;
+    min-width: unset;
   }
 
   &::before {
