@@ -19,9 +19,8 @@
     },
     "Zona": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::zona.zona",
-      "inversedBy": "Alquileres"
+      "relation": "oneToOne",
+      "target": "api::zona.zona"
     },
     "Precio": {
       "type": "biginteger"

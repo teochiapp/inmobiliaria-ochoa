@@ -29,18 +29,6 @@
         "videos",
         "audios"
       ]
-    },
-    "Alquileres": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::alquiler.alquiler",
-      "mappedBy": "Zona"
-    },
-    "Ventas": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::venta.venta",
-      "mappedBy": "Zona"
     }
   }
 }
