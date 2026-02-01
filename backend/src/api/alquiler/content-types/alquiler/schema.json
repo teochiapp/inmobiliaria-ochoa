@@ -19,7 +19,7 @@
     },
     "Zona": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::zona.zona"
     },
     "Precio": {
