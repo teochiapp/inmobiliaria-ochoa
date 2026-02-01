@@ -34,6 +34,7 @@ export const CTATitle = styled.h2`
   font-family: var(--headings-font);
   font-size: clamp(2.1rem, 5vw, 2.5rem);
   color: white;
+  text-transform: uppercase;
   margin-bottom: 0.5rem;
   text-align: center;
 `;
