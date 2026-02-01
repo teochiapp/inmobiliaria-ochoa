@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "cp serve.json build/serve.json || copy serve.json build\\serve.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
