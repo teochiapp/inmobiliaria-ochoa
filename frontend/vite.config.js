@@ -7,8 +7,18 @@ export default defineConfig({
   server: {
     host: true, // Permite conexiones desde cualquier IP
     allowedHosts: [
-      'https://marinochoa.surcodes.com/', // Permite cualquier subdominio de ngrok
-      'https://marinochoa.com/', // Permite cualquier subdominio de ngrok
+      'marinochoa.surcodes.com',
+      'api.marinochoa.surcodes.com',
+      'marinochoa.com',
+      'api.marinochoa.com',
+      'https://marinochoa.com.ar',
+      'https://marinochoa.com.ar/admin',
+      'https://marinochoa.com.ar/api',
+      'https://api.marinochoa.com.ar/api',
+      'https://marinochoa.com.ar',
+      'https://marinochoa.com.ar/admin',
+      'https://marinochoa.com.ar/api',
+      'https://api.marinochoa.com.ar/ap',
     ]
   }
 })
