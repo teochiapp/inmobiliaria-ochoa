@@ -1,7 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
 
-const STRAPI_BASE_URL = process.env.REACT_APP_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
+// Remove /api from the end to get base URL for images
+const STRAPI_BASE_URL = (() => {
+    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
+    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
+})();
 
 const useSales = () => {
     const [salesData, setSalesData] = useState([]);

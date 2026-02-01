@@ -8,7 +8,11 @@ import api from '../../services/api';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 
-const STRAPI_BASE_URL = process.env.REACT_APP_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
+// Remove /api from the end to get base URL for images
+const STRAPI_BASE_URL = (() => {
+    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
+    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
+})();
 
 import salesHeroImage from '../../public/galeria/yacantoarriba.jpg';
 import rentalsHeroImage from '../../public/galeria/Villa-del-Diquearriba.jpeg';
