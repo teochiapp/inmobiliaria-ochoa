@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 const Navigation = ({ isOpen }) => {
   const navItems = [
-    { label: 'Inicio', path: '/' },
-    { label: 'Sobre nosotros', path: '/sobre-nosotros' },
-    { label: 'Propiedades en venta', path: '/propiedades-venta' },
-    { label: 'Alquileres', path: '/alquileres' },
-    { label: 'Contacto', path: '/contacto' },
+    { label: 'INICIO', path: '/' },
+    { label: 'SOBRE NOSOTROS', path: '/sobre-nosotros' },
+    { label: 'PROPIEDADES EN VENTA', path: '/propiedades-venta' },
+    { label: 'ALQUILERES', path: '/alquileres' },
+    { label: 'CONTACTO', path: '/contacto' },
   ];
 
   return (
