@@ -1,4 +1,4 @@
-const Strapi = require('@strapi/strapi');
+const { createStrapi } = require('@strapi/strapi');
 
 const ZONES = [
     { Nombre: 'Centro', Subtitulo: 'Corazón de la ciudad', Descripcion: 'La zona más activa y conectada.' },
@@ -32,7 +32,8 @@ const getDescription = (name) => [
 ];
 
 async function seed() {
-    const strapi = await Strapi().load();
+    // Strapi v5 init
+    const strapi = await createStrapi().load();
 
     console.log('🚀 Iniciando script de seeding...');
 
@@ -40,7 +41,6 @@ async function seed() {
         // 1. Zonas
         const zonesMap = {};
         for (const z of ZONES) {
-            // Buscar si existe
             const existing = await strapi.entityService.findMany('api::zona.zona', {
                 filters: { Nombre: z.Nombre },
             });
@@ -61,7 +61,6 @@ async function seed() {
             }
         }
 
-        // Helper para asignar zona random
         const getRandomZoneId = () => {
             const names = Object.keys(zonesMap);
             const randomName = names[Math.floor(Math.random() * names.length)];
@@ -97,8 +96,6 @@ async function seed() {
     } catch (error) {
         console.error('❌ Error en seeding:', error);
     } finally {
-        // No llamamos a strapi.server.destroy() porque a veces cuelga el proceso en scripts simples,
-        // pero process.exit lo mata igual.
         process.exit(0);
     }
 }
