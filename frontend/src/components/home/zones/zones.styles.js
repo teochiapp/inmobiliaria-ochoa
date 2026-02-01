@@ -294,7 +294,7 @@ export const SlideInfoText = styled.div`
     text-shadow: 0 0 10px var(--text-dark)
 
     @media (max-width: 480px) {
-       font-size: 0.9rem;
+       font-size: 0.9rem !important;
        margin-left: 0.5rem;
     }
   }
@@ -313,8 +313,7 @@ export const SlideInfoText = styled.div`
     }
 
     @media (max-width: 480px) {
-        font-size: 0.85rem;
-        max-width: 60vw;
+        display: none;
     }
   }
 `;
