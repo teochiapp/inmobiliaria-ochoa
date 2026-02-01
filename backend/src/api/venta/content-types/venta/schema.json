@@ -19,8 +19,9 @@
     },
     "Zona": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::zona.zona"
+      "relation": "manyToOne",
+      "target": "api::zona.zona",
+      "inversedBy": "Ventas"
     },
     "Precio": {
       "type": "biginteger"
