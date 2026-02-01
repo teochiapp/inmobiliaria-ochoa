@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
 
-const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
+const STRAPI_BASE_URL = process.env.REACT_APP_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
 
 const useZoneProperties = (zoneId) => {
     const [salesData, setSalesData] = useState([]);
