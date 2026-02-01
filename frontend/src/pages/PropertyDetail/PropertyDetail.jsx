@@ -8,7 +8,7 @@ import api from '../../services/api';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 
-const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
+const STRAPI_BASE_URL = process.env.REACT_APP_STRAPI_URL?.replace('/api', '') || 'http://localhost:1337';
 
 import salesHeroImage from '../../public/galeria/yacantoarriba.jpg';
 import rentalsHeroImage from '../../public/galeria/Villa-del-Diquearriba.jpeg';
