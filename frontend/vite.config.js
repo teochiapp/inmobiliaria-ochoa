@@ -9,16 +9,12 @@ export default defineConfig({
     allowedHosts: [
       'marinochoa.surcodes.com',
       'api.marinochoa.surcodes.com',
+      'https://api.marinochoa.surcodes.com/admin',
+      'https://api.marinochoa.surcodes.com',
       'marinochoa.com',
       'api.marinochoa.com',
-      'https://marinochoa.com.ar',
-      'https://marinochoa.com.ar/admin',
-      'https://marinochoa.com.ar/api',
-      'https://api.marinochoa.com.ar/api',
-      'https://marinochoa.com.ar',
-      'https://marinochoa.com.ar/admin',
-      'https://marinochoa.com.ar/api',
-      'https://api.marinochoa.com.ar/ap',
+      'marinochoa.com.ar',
+      'api.marinochoa.com.ar',
     ]
   }
 })
