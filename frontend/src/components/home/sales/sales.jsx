@@ -62,6 +62,34 @@ const Sales = () => {
         }
     };
 
+    // Swipe handlers
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe && canGoNext) {
+            handleNext();
+        }
+        if (isRightSwipe && canGoPrev) {
+            handlePrev();
+        }
+    };
+
     const visibleProperties = filteredProperties.slice(
         currentIndex * itemsPerPage,
         (currentIndex + 1) * itemsPerPage
@@ -99,7 +127,11 @@ const Sales = () => {
                     <ChevronLeft />
                 </SliderButton>
 
-                <SliderContainer>
+                <SliderContainer
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
                     <PropertiesGrid>
                         <AnimatePresence mode="wait">
                             {visibleProperties.length > 0 ? (

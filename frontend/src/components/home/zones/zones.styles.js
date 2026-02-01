@@ -281,7 +281,7 @@ export const SlideInfoText = styled.div`
     }
     
     @media (max-width: 480px) {
-       font-size: 1.8rem;
+       font-size: 1.4rem;
        white-space: normal;
     }
   }
@@ -294,7 +294,7 @@ export const SlideInfoText = styled.div`
     text-shadow: 0 0 10px var(--text-dark)
 
     @media (max-width: 480px) {
-       font-size: 1rem;
+       font-size: 0.9rem;
        margin-left: 0.5rem;
     }
   }
@@ -313,7 +313,7 @@ export const SlideInfoText = styled.div`
     }
 
     @media (max-width: 480px) {
-        font-size: 1rem;
+        font-size: 0.85rem;
         max-width: 60vw;
     }
   }
