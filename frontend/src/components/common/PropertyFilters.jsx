@@ -16,7 +16,7 @@ const InputWrapper = ({ children, icon: Icon }) => (
     </div>
 );
 
-const CustomSelect = ({ value, onChange, options, icon: Icon, placeholder, name }) => {
+const CustomSelect = ({ value, onChange, options, icon: Icon, placeholder, name, isMobile }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -43,7 +43,7 @@ const CustomSelect = ({ value, onChange, options, icon: Icon, placeholder, name 
             <div
                 onClick={() => setIsOpen(!isOpen)}
                 style={{
-                    padding: '0.8rem 1rem 0.8rem 2.8rem', // Padding left for icon
+                    padding: isMobile ? '0.6rem 1rem 0.6rem 2.8rem' : '0.8rem 1rem 0.8rem 2.8rem', // Padding left for icon
                     border: '1.5px solid #e0e0e0',
                     borderRadius: '50px',
                     backgroundColor: 'white',
@@ -197,9 +197,10 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
         backgroundColor: 'white',
         zIndex: 2000,
         flexDirection: 'column',
+        justifyContent: 'flex-start',
         padding: '2rem',
         overflowY: 'auto',
-        gap: '1.5rem'
+        gap: '1rem'
     } : layout === 'sidebar' ? {
         display: 'flex',
         flexDirection: 'column',
@@ -215,7 +216,7 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
         flexDirection: 'row',
         gap: '0.75rem',
         flexWrap: 'wrap',
-        alignItems: 'center'
+        alignItems: 'left'
     };
 
     return (
@@ -240,7 +241,7 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                     </div>
                 )}
 
-                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 2, minWidth: layout === 'sidebar' ? 'auto' : '200px' }}>
+                <div style={{ width: (layout === 'sidebar' || isMobile) ? '100%' : 'auto', flex: (layout === 'sidebar' || isMobile) ? 'none' : 2, minWidth: (layout === 'sidebar' || isMobile) ? 'auto' : '200px' }}>
                     <InputWrapper icon={Search}>
                         <FilterInput
                             type="text"
@@ -255,11 +256,11 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
 
                 <div style={{
                     display: 'flex',
-                    flexDirection: layout === 'sidebar' ? 'column' : 'row',
-                    gap: '0.5rem',
-                    width: layout === 'sidebar' ? '100%' : 'auto',
-                    flex: layout === 'sidebar' ? 'none' : 2,
-                    minWidth: layout === 'sidebar' ? 'auto' : '240px'
+                    flexDirection: (layout === 'sidebar' && !isMobile) ? 'column' : 'row',
+                    gap: isMobile ? '1rem' : '0.5rem',
+                    width: (layout === 'sidebar' || isMobile) ? '100%' : 'auto',
+                    flex: (layout === 'sidebar' || isMobile) ? 'none' : 2,
+                    minWidth: (layout === 'sidebar' || isMobile) ? 'auto' : '240px'
                 }}>
                     <InputWrapper icon={DollarSign}>
                         <FilterInput
@@ -268,7 +269,7 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                             name="minPrice"
                             value={filters.minPrice}
                             onChange={onFilterChange}
-                            style={{ paddingLeft: '35px', width: '100%', minWidth: layout === 'sidebar' ? 'auto' : '100px' }}
+                            style={{ paddingLeft: '35px', width: '100%', minWidth: (layout === 'sidebar' || isMobile) ? 'auto' : '100px' }}
                         />
                     </InputWrapper>
 
@@ -279,34 +280,65 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                             name="maxPrice"
                             value={filters.maxPrice}
                             onChange={onFilterChange}
-                            style={{ paddingLeft: '35px', width: '100%', minWidth: layout === 'sidebar' ? 'auto' : '100px' }}
+                            style={{ paddingLeft: '35px', width: '100%', minWidth: (layout === 'sidebar' || isMobile) ? 'auto' : '100px' }}
                         />
                     </InputWrapper>
                 </div>
 
-                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
-                    <CustomSelect
-                        name="beds"
-                        value={filters.beds}
-                        onChange={onFilterChange}
-                        options={bedOptions}
-                        icon={Bed}
-                        placeholder="Habitaciones"
-                    />
-                </div>
+                {isMobile ? (
+                    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                        <div style={{ flex: 1 }}>
+                            <CustomSelect
+                                name="beds"
+                                value={filters.beds}
+                                onChange={onFilterChange}
+                                options={bedOptions}
+                                icon={Bed}
+                                placeholder="Habitaciones"
+                                isMobile={isMobile}
+                            />
+                        </div>
+                        <div style={{ flex: 1 }}>
+                            <CustomSelect
+                                name="baths"
+                                value={filters.baths}
+                                onChange={onFilterChange}
+                                options={bathOptions}
+                                icon={Bath}
+                                placeholder="Baños"
+                                isMobile={isMobile}
+                            />
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
+                            <CustomSelect
+                                name="beds"
+                                value={filters.beds}
+                                onChange={onFilterChange}
+                                options={bedOptions}
+                                icon={Bed}
+                                placeholder="Habitaciones"
+                                isMobile={isMobile}
+                            />
+                        </div>
 
-                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
-                    <CustomSelect
-                        name="baths"
-                        value={filters.baths}
-                        onChange={onFilterChange}
-                        options={bathOptions}
-                        icon={Bath}
-                        placeholder="Baños"
-                    />
-                </div>
+                        <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
+                            <CustomSelect
+                                name="baths"
+                                value={filters.baths}
+                                onChange={onFilterChange}
+                                options={bathOptions}
+                                icon={Bath}
+                                placeholder="Baños"
+                                isMobile={isMobile}
+                            />
+                        </div>
+                    </>
+                )}
 
-                <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
+                <div style={{ width: (layout === 'sidebar' || isMobile) ? '100%' : 'auto', flex: (layout === 'sidebar' || isMobile) ? 'none' : 1 }}>
                     <CustomSelect
                         name="m2"
                         value={filters.m2}
@@ -314,6 +346,7 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                         options={m2Options}
                         icon={Ruler}
                         placeholder="m²"
+                        isMobile={isMobile}
                     />
                 </div>
 
@@ -321,7 +354,7 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                     <button
                         onClick={() => setShowMobileFilters(false)}
                         style={{
-                            marginTop: 'auto',
+                            marginTop: '1.5rem',
                             padding: '1rem',
                             backgroundColor: 'var(--brand-blue)',
                             color: 'white',

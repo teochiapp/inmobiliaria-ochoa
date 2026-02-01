@@ -275,6 +275,15 @@ export const SlideInfoText = styled.div`
     white-space: nowrap;
     text-transform: uppercase;
     text-shadow: 0 0 10px var(--text-dark)
+
+    @media (max-width: 768px) {
+      font-size: min(4cqw, 2rem);
+    }
+    
+    @media (max-width: 480px) {
+       font-size: 1.8rem;
+       white-space: normal;
+    }
   }
 
   &[data-subtitle] {
@@ -283,6 +292,11 @@ export const SlideInfoText = styled.div`
     font-weight: 600;
     color: var(--text-light);
     text-shadow: 0 0 10px var(--text-dark)
+
+    @media (max-width: 480px) {
+       font-size: 1rem;
+       margin-left: 0.5rem;
+    }
   }
 
   &[data-description] {
@@ -296,6 +310,11 @@ export const SlideInfoText = styled.div`
     span {
         white-space: normal;
         line-height: 1.4;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1rem;
+        max-width: 60vw;
     }
   }
 `;

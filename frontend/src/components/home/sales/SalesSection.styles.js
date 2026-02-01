@@ -248,6 +248,11 @@ export const FilterInput = styled.input`
   &[type=number] {
     -moz-appearance: textfield;
   }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 `;
 
 export const FilterSelect = styled.select`
