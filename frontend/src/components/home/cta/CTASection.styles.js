@@ -81,7 +81,7 @@ export const CTAButton = styled(motion.a)`
 
   @media (max-width: 768px) {
     width: 100%;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   &::before {

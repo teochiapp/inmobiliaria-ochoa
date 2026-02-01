@@ -68,6 +68,7 @@ export const NavItem = styled.li`
     font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 400;
     font-family: var(--headings-font);
+    text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     transition: opacity 0.2s ease;
     display: block;

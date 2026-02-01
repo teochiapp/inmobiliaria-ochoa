@@ -64,6 +64,7 @@ export const FooterBrand = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  text-transform: uppercase;
 
   @media (max-width: 768px) {
     grid-column: 1 / -1;
@@ -86,6 +87,7 @@ export const Logo = styled.div`
   text-shadow: 0 2px 5px rgba(0,0,0,0.3);
   font-weight: 700;
   color: #fff;
+  text-transform: uppercase;
 
   span {
     color: var(--brand-red); /* Assuming using brand color for accent */

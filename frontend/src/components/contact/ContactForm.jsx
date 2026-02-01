@@ -335,6 +335,7 @@ const SubmitButton = styled.button`
     font-family: var(--headings-font);
     font-size: 1rem;
     letter-spacing: 1px;
+    text-transform: uppercase;
     transition: all 0.3s ease;
     width: 100%;
     max-width: 300px;

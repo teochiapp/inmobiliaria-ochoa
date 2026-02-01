@@ -106,6 +106,7 @@ export const DetailValue = styled.span`
   text-align: center;
   word-break: break-word;
   max-width: 100%;
+  text-transform: uppercase;
 
   @media (max-width: 480px) {
     font-size: 0.85rem;

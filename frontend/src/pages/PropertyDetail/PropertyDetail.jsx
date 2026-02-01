@@ -649,6 +649,7 @@ const PropertyPrice = styled.div`
     font-weight: 700;
     color: var(--brand-blue);
     margin: 0 0 2rem 0;
+    text-transform: uppercase;
     
     small {
         font-size: 1rem;
@@ -697,6 +698,7 @@ const FeatureValue = styled.div`
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-dark);
+    text-transform: uppercase;
 `;
 
 const FeatureLabel = styled.div`
@@ -780,6 +782,7 @@ const ContactButton = styled.button`
     justify-content: center;
     gap: 0.75rem;
     text-decoration: none;
+    text-transform: uppercase;
 
     &:hover {
         transform: translateY(-2px);
