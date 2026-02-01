@@ -241,6 +241,11 @@ export const SlideInfoTextWrapper = styled.div`
   transform: translateZ(var(--z-offset));
   z-index: 2;
   pointer-events: none;
+
+  @media (max-width: 480px) {
+    bottom: 15%;
+    left: -5%;
+  }
 `;
 
 export const SlideInfoText = styled.div`
@@ -294,7 +299,9 @@ export const SlideInfoText = styled.div`
     text-shadow: 0 0 10px var(--text-dark)
 
     @media (max-width: 480px) {
-       font-size: 1.1rem !important;
+       & span {
+         font-size: 1.1rem !important;
+       }
        margin-left: 0.5rem;
     }
   }
