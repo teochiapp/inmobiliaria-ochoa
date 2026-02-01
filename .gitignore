@@ -44,7 +44,8 @@ backend/.strapi
 # Strapi
 backend/.cache
 backend/.tmp
-backend/public/uploads
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
 backend/database/*.db*
 backend/.strapi-updater.json
 backend/exports
