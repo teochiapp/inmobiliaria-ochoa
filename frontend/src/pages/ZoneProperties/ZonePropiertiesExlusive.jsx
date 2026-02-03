@@ -8,7 +8,7 @@ import Footer from '../../components/footer/footer';
 
 const ZoneProperties = () => {
     const { id } = useParams();
-    const { properties: apiProperties, zone: apiZone, loading, error } = useZoneProperties(id);
+    const { properties, zone, loading, error } = useZoneProperties(id);
 
     // Image Gallery State
     const galleryImages = [
@@ -20,14 +20,6 @@ const ZoneProperties = () => {
 
     const handleImageSwap = (newImage) => {
         setMainImage(newImage);
-    };
-
-    // Provide default values so the page doesn't break if no id or data
-    const properties = apiProperties || [];
-    const zone = apiZone || {
-        nombre: "Mirador del Lago",
-        subtitulo: "Segunda Usina",
-        imagen: "/fotomiradordellagoExclusiva.jpeg"
     };
 
     // Custom PropertyCatalog that handles different property types
@@ -43,8 +35,35 @@ const ZoneProperties = () => {
         );
     };
 
-    // Note: We removed the hard returns for loading and error 
-    // to allow the static Exclusive section to always show.
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Header isSolid={false} />
+                <ContentWrapper>
+                    <LoadingContainer>
+                        <i className="fas fa-spinner fa-spin"></i>
+                        <p>Cargando propiedades exclusivas...</p>
+                    </LoadingContainer>
+                </ContentWrapper>
+                <Footer />
+            </PageWrapper>
+        );
+    }
+
+    if (error || !zone) {
+        return (
+            <PageWrapper>
+                <Header isSolid={false} />
+                <ContentWrapper>
+                    <ErrorContainer>
+                        <i className="fas fa-exclamation-circle"></i>
+                        <p>No se encontraron propiedades en esta zona exclusiva.</p>
+                    </ErrorContainer>
+                </ContentWrapper>
+                <Footer />
+            </PageWrapper>
+        );
+    }
 
     return (
         <PageWrapper>
@@ -472,4 +491,45 @@ const Icon = styled.div`
 const ContentWrapper = styled.div`
     flex: 1;
     padding-top: 20px;
+`;
+
+const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem;
+    color: var(--brand-blue);
+    gap: 1.5rem;
+
+    i {
+        font-size: 3rem;
+        color: var(--brand-red);
+    }
+
+    p {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+`;
+
+const ErrorContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem;
+    color: #666;
+    gap: 1.5rem;
+    text-align: center;
+
+    i {
+        font-size: 3rem;
+        color: #ddd;
+    }
+
+    p {
+        font-size: 1.2rem;
+        max-width: 400px;
+    }
 `;
