@@ -48,6 +48,13 @@ const Navigation = ({ isOpen }) => {
     }
   };
 
+  const handleToggleDropdown = (e) => {
+    if (window.innerWidth <= 1200) {
+      e.preventDefault();
+      setDropdownOpen(!dropdownOpen);
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -332,5 +339,3 @@ export const DropdownItem = styled.li`
     }
   }
 `;
-
-

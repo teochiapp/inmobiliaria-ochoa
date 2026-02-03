@@ -12,6 +12,15 @@ const Header = ({ isSolid = false }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { zones, loading } = useZones();
 
+  // Lock scroll when mobile menu is open
+  React.useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
+
   // Determine if background should be visible
   // Show background if scrolled, explicitly set to solid, or NOT on the home page
   const isHome = location.pathname === '/';
@@ -52,8 +61,10 @@ const Header = ({ isSolid = false }) => {
           </a>
         </SocialIcons>
 
-        <MobileMenuButton onClick={toggleMobileMenu} aria-label="Toggle menu">
-          {mobileMenuOpen ? '✕' : '☰'}
+        <MobileMenuButton onClick={toggleMobileMenu} aria-label="Toggle menu" $isOpen={mobileMenuOpen}>
+          <span></span>
+          <span></span>
+          <span></span>
         </MobileMenuButton>
       </HeaderContainer>
     </StyledHeader>
@@ -82,9 +93,14 @@ export const HeaderContainer = styled.div`
   margin: 0 auto;
   padding: 0.5rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap:1rem;
 
+
+  @media (max-width: 1200px) {
+    justify-content: space-between;
+  }
   @media (max-width: 768px) {
     padding: 1rem 1.5rem;
   }
@@ -98,14 +114,51 @@ export const MobileMenuButton = styled.button`
   display: block;
   background: none;
   border: none;
-  color: var(--text-light);
-  font-size: 1.5rem;
   cursor: pointer;
+<<<<<<< HEAD
   padding: 0.5rem;
   transition: opacity 0.2s ease;
 
   &:hover {
     opacity: 0.8;
+=======
+  width: 40px;
+  height: 40px;
+  position: relative;
+  z-index: 1001;
+
+  span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: var(--text-light);
+    border-radius: 2px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:nth-child(1) {
+      top: ${props => props.$isOpen ? '50%' : '8px'};
+      transform: translateX(-50%) ${props => props.$isOpen ? 'translateY(-50%) rotate(45deg)' : 'translateY(0) rotate(0)'};
+    }
+
+    &:nth-child(2) {
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      opacity: ${props => props.$isOpen ? '0' : '1'};
+      width: ${props => props.$isOpen ? '0' : '28px'};
+    }
+
+    &:nth-child(3) {
+      top: ${props => props.$isOpen ? '50%' : 'calc(100% - 11px)'};
+      transform: translateX(-50%) ${props => props.$isOpen ? 'translateY(-50%) rotate(-45deg)' : 'translateY(0) rotate(0)'};
+    }
+  }
+
+  @media (max-width: 1200px) {
+    display: block;
+>>>>>>> d6bc8cc4a7e8b5089e85367b519b7019d145b840
   }
 `;
 
@@ -124,7 +177,7 @@ export const SocialIcons = styled.div`
     }
   }
 
-  @media (max-width: 968px) {
+  @media (max-width: 1200px) {
     display: none;
   }
 `;
