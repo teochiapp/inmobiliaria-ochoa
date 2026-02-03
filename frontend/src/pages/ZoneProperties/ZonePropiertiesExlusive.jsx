@@ -156,17 +156,22 @@ const ZonePropertiesExclusive = () => {
                 }
 
                 // Fetch properties for this zone
+                // Fetch properties for this zone
                 const zoneId = zoneData.id || id;
+
+                // Revert to simple populate first to ensure page loads
+                // filter by numeric ID is safer if zoneData.id is available
                 const ventasResponse = await api.get(`/ventas?populate=*&filters[Zona][id][$eq]=${zoneId}`);
                 const alquileresResponse = await api.get(`/alquileres?populate=*&filters[Zona][id][$eq]=${zoneId}`);
 
                 const ventasData = ventasResponse.data.data || [];
                 const alquileresData = alquileresResponse.data.data || [];
 
-                // Process properties (same logic as useZoneProperties hook would use)
+                // Process properties
                 const processProperties = (data, type) => {
                     return data.map(item => {
                         const attrs = item.attributes || item;
+
                         const imgField = attrs.Portada;
                         let imgUrl = '';
                         if (imgField?.data) {
@@ -174,17 +179,22 @@ const ZonePropertiesExclusive = () => {
                             const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
                             imgUrl = imgObj?.attributes?.url || imgObj?.url;
                         }
-                        const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
+
+                        // Handle absolute URLs (e.g. Cloudinary) or relative URLs
+                        // Add placeholder if empty
+                        const fullImgUrl = imgUrl
+                            ? (imgUrl.startsWith('http') ? imgUrl : `${STRAPI_BASE_URL}${imgUrl}`)
+                            : '/placeholder.jpg';
 
                         return {
                             id: item.id,
                             imagen: fullImgUrl,
                             nombre: attrs.Nombre || attrs.Titulo,
-                            precio: attrs.Precio,
-                            habitaciones: attrs.Habitaciones,
-                            baños: attrs.Banos,
-                            ubicacion: attrs.Ubicacion,
-                            m2: attrs.MetrosCuadrados,
+                            precio: attrs.Precio ? `$${Number(attrs.Precio).toLocaleString()}` : 'Consultar',
+                            habitaciones: attrs.Habitaciones || 0,
+                            baños: attrs.Banos || 0,
+                            ubicacion: attrs.Ubicacion || '',
+                            m2: attrs.MetrosCuadrados || 0,
                             baseUrl: `/propiedad/${type}`
                         };
                     });
@@ -199,7 +209,6 @@ const ZonePropertiesExclusive = () => {
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching zone data:", err);
-                console.error("Error details:", err.response?.data || err.message);
                 setError(err);
                 setLoading(false);
             }
