@@ -161,7 +161,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 ) : (
                     <PaginationNumber
                         key={page}
-                        active={page === currentPage}
+                        $active={page === currentPage}
                         onClick={() => onPageChange(page)}
                     >
                         {page}
@@ -315,9 +315,9 @@ const PaginationButton = styled.button`
 
 const PaginationNumber = styled.button`
     padding: 0.75rem 1.25rem;
-    background-color: ${props => props.active ? 'var(--brand-blue)' : 'white'};
+    background-color: ${props => props.$active ? 'var(--brand-blue)' : 'white'};
     border: 2px solid var(--brand-blue);
-    color: ${props => props.active ? 'white' : 'var(--brand-blue)'};
+    color: ${props => props.$active ? 'white' : 'var(--brand-blue)'};
     font-family: var(--headings-font);
     font-size: 1rem;
     font-weight: 600;

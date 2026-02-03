@@ -98,6 +98,7 @@ export const SliderWrapper = styled.div`
   width: 100%;
   max-width: 1450px;
   margin: 0 auto;
+  overflow-x: hidden; /* Previene scroll horizontal causado por botones */
 `;
 
 export const SliderContainer = styled.div`

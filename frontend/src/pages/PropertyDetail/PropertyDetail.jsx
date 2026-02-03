@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { MapPin, Bed, Bath, Ruler, ArrowLeft, Phone, Home as HomeIcon, Car } from 'lucide-react';
+import { MapPin, Bed, Bath, Ruler, ArrowLeft, Phone, Home as HomeIcon, Car, Check, Map as MapIcon } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import api from '../../services/api';
 import Header from '../../components/header/Header';
@@ -102,6 +102,8 @@ const PropertyDetail = ({ type }) => {
                     image: fullImgUrl,
                     gallery: gallery,
                     features: attributes.Caracteristicas,
+                    adicionales: attributes.Adicionales ? attributes.Adicionales.map(item => item.Texto).filter(Boolean) : [],
+                    mapEmbed: Array.isArray(attributes.Mapa) ? extractTextFromBlocks(attributes.Mapa) : attributes.Mapa,
                 });
                 setLoading(false);
             } catch (err) {
@@ -314,26 +316,12 @@ const PropertyDetail = ({ type }) => {
                         </ContactButtons>
 
                         <AdditionalFeatures>
-                            <AdditionalFeatureItem>
-                                <HomeIcon size={20} />
-                                <span>Apta Crédito</span>
-                            </AdditionalFeatureItem>
-                            <AdditionalFeatureItem>
-                                <Car size={20} />
-                                <span>Cochera</span>
-                            </AdditionalFeatureItem>
-                            <AdditionalFeatureItem>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="2" />
-                                </svg>
-                                <span>Seguridad 24hs</span>
-                            </AdditionalFeatureItem>
-                            <AdditionalFeatureItem>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="2" />
-                                </svg>
-                                <span>Espacios Verdes</span>
-                            </AdditionalFeatureItem>
+                            {property.adicionales && property.adicionales.length > 0 && property.adicionales.map((item, index) => (
+                                <AdditionalFeatureItem key={index}>
+                                    <Check size={20} />
+                                    <span>{item}</span>
+                                </AdditionalFeatureItem>
+                            ))}
                         </AdditionalFeatures>
                     </PropertyInfo>
                 </ProductDetails>
@@ -342,6 +330,13 @@ const PropertyDetail = ({ type }) => {
                     <h2>Descripción</h2>
                     <p>{property.description || 'Descripción no disponible.'}</p>
                 </DescriptionSection>
+
+                {property.mapEmbed && (
+                    <MapSection>
+                        <h2>Ubicación</h2>
+                        <MapContainer dangerouslySetInnerHTML={{ __html: property.mapEmbed }} />
+                    </MapSection>
+                )}
             </ContentContainer>
 
             <Footer />
@@ -751,6 +746,59 @@ const DescriptionSection = styled.div`
 
         h2 {
             font-size: 1.35rem;
+        }
+    }
+`;
+
+const MapSection = styled.div`
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    
+    h2 {
+        font-family: var(--headings-font);
+        font-size: 1.75rem;
+        margin: 0 0 1.5rem 0;
+        color: var(--text-dark);
+    }
+
+    @media (max-width: 768px) {
+        padding: 2rem 1.5rem;
+        margin-top: 2rem;
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 1.5rem 1.25rem;
+        border-radius: 12px;
+
+        h2 {
+            font-size: 1.35rem;
+        }
+    }
+`;
+
+const MapContainer = styled.div`
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    
+    iframe {
+        width: 100%;
+        height: 450px;
+        border: 0;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        iframe {
+            height: 350px;
         }
     }
 `;
