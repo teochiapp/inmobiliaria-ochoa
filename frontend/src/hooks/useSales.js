@@ -60,7 +60,9 @@ const useSales = () => {
                 habitaciones: attributes.Habitaciones || 0,
                 baños: attributes.Banos || 0,
                 m2: attributes.MetrosCuadrados || 0,
-                ubicacion: attributes.Ubicacion || ''
+                ubicacion: attributes.Ubicacion || '',
+                zona: attributes.Zona?.data?.id || null,
+                zonaSlug: attributes.Zona?.data?.attributes?.Slug || null
             };
         });
     }, [salesData]);

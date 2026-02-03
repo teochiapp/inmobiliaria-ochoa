@@ -6,6 +6,8 @@ import api from '../../services/api';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
+import useSales from '../../hooks/useSales';
+import useRents from '../../hooks/useRents';
 
 // Remove /api from the end to get base URL for images
 const STRAPI_BASE_URL = (() => {
@@ -15,9 +17,13 @@ const STRAPI_BASE_URL = (() => {
 
 const ZonePropertiesExclusive = () => {
     const { id } = useParams();
+
+    // Use hooks for properties to ensure consistent image processing
+    const { sales, loading: salesLoading } = useSales();
+    const { rents, loading: rentsLoading } = useRents();
+
     const [zone, setZone] = useState(null);
-    const [properties, setProperties] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loadingZone, setLoadingZone] = useState(true);
     const [error, setError] = useState(null);
     const [mainImage, setMainImage] = useState('');
 
@@ -155,62 +161,15 @@ const ZonePropertiesExclusive = () => {
                     setMainImage(gallery[0]);
                 }
 
-                // Fetch properties for this zone
-                // Fetch properties for this zone
-                const zoneId = zoneData.id || id;
 
-                // Revert to simple populate first to ensure page loads
-                // filter by numeric ID is safer if zoneData.id is available
-                const ventasResponse = await api.get(`/ventas?populate=*&filters[Zona][id][$eq]=${zoneId}`);
-                const alquileresResponse = await api.get(`/alquileres?populate=*&filters[Zona][id][$eq]=${zoneId}`);
 
-                const ventasData = ventasResponse.data.data || [];
-                const alquileresData = alquileresResponse.data.data || [];
 
-                // Process properties
-                const processProperties = (data, type) => {
-                    return data.map(item => {
-                        const attrs = item.attributes || item;
 
-                        const imgField = attrs.Portada;
-                        let imgUrl = '';
-                        if (imgField?.data) {
-                            const imgData = imgField.data;
-                            const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                            imgUrl = imgObj?.attributes?.url || imgObj?.url;
-                        }
-
-                        // Handle absolute URLs (e.g. Cloudinary) or relative URLs
-                        // Add placeholder if empty
-                        const fullImgUrl = imgUrl
-                            ? (imgUrl.startsWith('http') ? imgUrl : `${STRAPI_BASE_URL}${imgUrl}`)
-                            : '/placeholder.jpg';
-
-                        return {
-                            id: item.id,
-                            imagen: fullImgUrl,
-                            nombre: attrs.Nombre || attrs.Titulo,
-                            precio: attrs.Precio ? `$${Number(attrs.Precio).toLocaleString()}` : 'Consultar',
-                            habitaciones: attrs.Habitaciones || 0,
-                            baños: attrs.Banos || 0,
-                            ubicacion: attrs.Ubicacion || '',
-                            m2: attrs.MetrosCuadrados || 0,
-                            baseUrl: `/propiedad/${type}`
-                        };
-                    });
-                };
-
-                const allProperties = [
-                    ...processProperties(ventasData, 'venta'),
-                    ...processProperties(alquileresData, 'alquiler')
-                ];
-
-                setProperties(allProperties);
-                setLoading(false);
+                setLoadingZone(false);
             } catch (err) {
                 console.error("Error fetching zone data:", err);
                 setError(err);
-                setLoading(false);
+                setLoadingZone(false);
             }
         };
 
@@ -218,6 +177,30 @@ const ZonePropertiesExclusive = () => {
             fetchZoneData();
         }
     }, [id]);
+
+    // Filter properties based on current zone
+    const properties = useMemo(() => {
+        if (!zone) return [];
+
+        const zoneId = zone.id;
+        // console.log('Filtering properties for zone ID:', zoneId);
+
+        // Filter and add baseUrl
+        // Note: Comparison must be type-safe or check structure. zoneId is number. item.zona is number.
+        const filteredSales = sales.filter(item => item.zona === zoneId).map(item => ({
+            ...item,
+            baseUrl: '/propiedad/venta'
+        }));
+
+        const filteredRents = rents.filter(item => item.zona === zoneId).map(item => ({
+            ...item,
+            baseUrl: '/propiedad/alquiler'
+        }));
+
+        return [...filteredSales, ...filteredRents];
+    }, [zone, sales, rents]);
+
+    const loading = loadingZone || salesLoading || rentsLoading;
 
     // Gallery images combining portada and galeria
     const galleryImages = useMemo(() => {

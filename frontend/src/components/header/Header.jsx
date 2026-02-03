@@ -48,17 +48,6 @@ const Header = ({ isSolid = false }) => {
         </DesktopZonesNav>
 
         <HeaderActions>
-          <SocialIcons>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <i className="fab fa-facebook"></i>
-            </a>
-            <a href="mailto:info@inmobiliariaochoa.com" aria-label="Email">
-              <i className="fas fa-envelope"></i>
-            </a>
-          </SocialIcons>
 
           <MobileMenuButton onClick={toggleMobileMenu} aria-label="Toggle menu" $isOpen={mobileMenuOpen}>
             <span></span>
@@ -161,25 +150,6 @@ export const MobileMenuButton = styled.button`
   }
 `;
 
-export const SocialIcons = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-
-  a {
-    color: var(--text-light);
-    font-size: 1.5rem;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-
-  @media (max-width: 1200px) {
-    display: none;
-  }
-`;
 
 export const DesktopZonesNav = styled.nav`
   display: flex;
