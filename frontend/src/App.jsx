@@ -26,8 +26,7 @@ function App() {
                 <Route path="/contacto" element={<Contact />} />
 
                 {/* Ruta de propiedades por zona */}
-                <Route path="/zona/:id" element={<ZoneProperties />} />
-                <Route path="/propiedades-exclusivas" element={<ZonePropertiesExclusive />} />
+                <Route path="/zona/:id" element={<ZonePropertiesExclusive />} />
                 <Route path="/zona-exclusiva/:id" element={<ZonePropertiesExclusive />} />
 
                 {/* Rutas de detalles de propiedades */}

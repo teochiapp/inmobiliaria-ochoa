@@ -61,17 +61,13 @@
     "Descripcion": {
       "type": "blocks"
     },
-    "Adicional": {
-      "type": "enumeration",
-      "enum": [
-        "Apta Crédito",
-        "Cochera",
-        "Seguridad 24hs",
-        "Espacios Verdes"
-      ]
-    },
     "Mapa": {
       "type": "blocks"
+    },
+    "AdicionalesVentas": {
+      "type": "component",
+      "component": "adicionales.adicionales",
+      "repeatable": true
     }
   }
 }

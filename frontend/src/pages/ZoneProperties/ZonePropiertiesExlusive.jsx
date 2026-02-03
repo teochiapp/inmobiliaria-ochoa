@@ -1,22 +1,229 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import useZoneProperties from '../../hooks/useZoneProperties';
+import { Check } from 'lucide-react';
+import api from '../../services/api';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 
-const ZoneProperties = () => {
-    const { id } = useParams();
-    const { properties, zone, loading, error } = useZoneProperties(id);
+// Remove /api from the end to get base URL for images
+const STRAPI_BASE_URL = (() => {
+    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
+    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
+})();
 
-    // Image Gallery State
-    const galleryImages = [
-        "/FotoExclusiva.jpeg",
-        "/fotomiradordellagoExclusiva.jpeg",
-        "/foto-grupal.jpeg"
-    ];
-    const [mainImage, setMainImage] = React.useState(galleryImages[0]);
+const ZonePropertiesExclusive = () => {
+    const { id } = useParams();
+    const [zone, setZone] = useState(null);
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [mainImage, setMainImage] = useState('');
+
+    // Helper function to extract text from blocks
+    const extractTextFromBlocks = (blocks) => {
+        if (!blocks || !Array.isArray(blocks)) return '';
+        return blocks.map(block => {
+            if (block.type === 'paragraph' && block.children) {
+                return block.children.map(child => child.text).join('');
+            }
+            if (block.children && Array.isArray(block.children)) {
+                return block.children.map(child => child.text).join('');
+            }
+            return '';
+        }).join('\n\n');
+    };
+
+    useEffect(() => {
+        const fetchZoneData = async () => {
+            try {
+                console.log('Fetching zone with ID/Slug:', id);
+
+                let zoneResponse;
+                let zoneData;
+
+                // Try to fetch by slug first
+                try {
+                    zoneResponse = await api.get(`/zonas?filters[Slug][$eq]=${id}&populate=*`);
+                    const dataArray = zoneResponse.data.data;
+
+                    if (dataArray && dataArray.length > 0) {
+                        zoneData = dataArray[0];
+                        console.log('Zone found by slug');
+                    }
+                } catch (slugError) {
+                    console.log('Slug search failed, trying documentId/id');
+                }
+
+                // If not found by slug, try by documentId/id
+                if (!zoneData) {
+                    try {
+                        zoneResponse = await api.get(`/zonas/${id}?populate=*`);
+                        zoneData = zoneResponse.data.data;
+                        console.log('Zone found by documentId');
+                    } catch (idError) {
+                        console.error('Failed to find zone by slug or id');
+                        throw new Error('Zone not found');
+                    }
+                }
+
+                console.log('Zone data:', zoneData);
+
+                // Validate zone data exists
+                if (!zoneData) {
+                    console.error('No zone data found in response');
+                    throw new Error('Zone data not found');
+                }
+
+                const attributes = zoneData.attributes || zoneData;
+                console.log('Zone attributes:', attributes);
+
+                // Validate attributes exist
+                if (!attributes) {
+                    console.error('No attributes found in zone data');
+                    throw new Error('Zone attributes not found');
+                }
+
+                // Map Portada (cover image)
+                const portadaField = attributes.Portada;
+                let portadaUrl = '';
+                if (portadaField?.data) {
+                    const imgData = portadaField.data;
+                    const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
+                    portadaUrl = imgObj?.attributes?.url || imgObj?.url;
+                } else if (portadaField?.url) {
+                    portadaUrl = portadaField.url;
+                }
+                const fullPortadaUrl = portadaUrl ? `${STRAPI_BASE_URL}${portadaUrl}` : '';
+
+                // Map ImagenCabecera (header image for hero)
+                const cabeceraField = attributes.ImagenCabecera;
+                let cabeceraUrl = '';
+                if (cabeceraField?.data) {
+                    const imgData = cabeceraField.data;
+                    const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
+                    cabeceraUrl = imgObj?.attributes?.url || imgObj?.url;
+                } else if (cabeceraField?.url) {
+                    cabeceraUrl = cabeceraField.url;
+                }
+                const fullCabeceraUrl = cabeceraUrl ? `${STRAPI_BASE_URL}${cabeceraUrl}` : fullPortadaUrl;
+
+                // Map Galeria (gallery images)
+                const gallery = [];
+                if (attributes.Galeria) {
+                    let galData = attributes.Galeria.data || attributes.Galeria;
+                    galData = Array.isArray(galData) ? galData : [galData];
+
+                    galData.forEach(img => {
+                        if (img) {
+                            const u = img.attributes?.url || img.url;
+                            if (u) gallery.push(`${STRAPI_BASE_URL}${u}`);
+                        }
+                    });
+                }
+
+                // Extract description
+                let descripcion = '';
+                if (attributes.Descripcion) {
+                    if (Array.isArray(attributes.Descripcion)) {
+                        descripcion = extractTextFromBlocks(attributes.Descripcion);
+                    } else if (typeof attributes.Descripcion === 'string') {
+                        descripcion = attributes.Descripcion;
+                    }
+                }
+
+                // Map AdicionalesZona
+                const adicionales = attributes.AdicionalesZona || [];
+
+                setZone({
+                    id: zoneData.id,
+                    nombre: attributes.Nombre || 'Zona Exclusiva',
+                    titulo: attributes.Titulo || attributes.Nombre,
+                    subtitulo: attributes.Subtitulo || '',
+                    descripcion: descripcion,
+                    portada: fullPortadaUrl,
+                    imagenCabecera: fullCabeceraUrl,
+                    galeria: gallery,
+                    adicionales: adicionales
+                });
+
+                // Set initial main image
+                if (fullPortadaUrl) {
+                    setMainImage(fullPortadaUrl);
+                } else if (gallery.length > 0) {
+                    setMainImage(gallery[0]);
+                }
+
+                // Fetch properties for this zone
+                const zoneId = zoneData.id || id;
+                const ventasResponse = await api.get(`/ventas?populate=*&filters[Zona][id][$eq]=${zoneId}`);
+                const alquileresResponse = await api.get(`/alquileres?populate=*&filters[Zona][id][$eq]=${zoneId}`);
+
+                const ventasData = ventasResponse.data.data || [];
+                const alquileresData = alquileresResponse.data.data || [];
+
+                // Process properties (same logic as useZoneProperties hook would use)
+                const processProperties = (data, type) => {
+                    return data.map(item => {
+                        const attrs = item.attributes || item;
+                        const imgField = attrs.Portada;
+                        let imgUrl = '';
+                        if (imgField?.data) {
+                            const imgData = imgField.data;
+                            const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
+                            imgUrl = imgObj?.attributes?.url || imgObj?.url;
+                        }
+                        const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
+
+                        return {
+                            id: item.id,
+                            imagen: fullImgUrl,
+                            nombre: attrs.Nombre || attrs.Titulo,
+                            precio: attrs.Precio,
+                            habitaciones: attrs.Habitaciones,
+                            baños: attrs.Banos,
+                            ubicacion: attrs.Ubicacion,
+                            m2: attrs.MetrosCuadrados,
+                            baseUrl: `/propiedad/${type}`
+                        };
+                    });
+                };
+
+                const allProperties = [
+                    ...processProperties(ventasData, 'venta'),
+                    ...processProperties(alquileresData, 'alquiler')
+                ];
+
+                setProperties(allProperties);
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching zone data:", err);
+                console.error("Error details:", err.response?.data || err.message);
+                setError(err);
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchZoneData();
+        }
+    }, [id]);
+
+    // Gallery images combining portada and galeria
+    const galleryImages = useMemo(() => {
+        const images = [];
+
+        if (zone?.portada) {
+            images.push(zone.portada);
+        }
+
+        if (zone?.galeria && Array.isArray(zone.galeria)) {
+            images.push(...zone.galeria);
+        }
+
+        return images.length > 0 ? images : [];
+    }, [zone]);
 
     const handleImageSwap = (newImage) => {
         setMainImage(newImage);
@@ -42,7 +249,7 @@ const ZoneProperties = () => {
                 <ContentWrapper>
                     <LoadingContainer>
                         <i className="fas fa-spinner fa-spin"></i>
-                        <p>Cargando propiedades exclusivas...</p>
+                        <p>Cargando zona exclusiva...</p>
                     </LoadingContainer>
                 </ContentWrapper>
                 <Footer />
@@ -57,7 +264,7 @@ const ZoneProperties = () => {
                 <ContentWrapper>
                     <ErrorContainer>
                         <i className="fas fa-exclamation-circle"></i>
-                        <p>No se encontraron propiedades en esta zona exclusiva.</p>
+                        <p>No se encontró la zona exclusiva.</p>
                     </ErrorContainer>
                 </ContentWrapper>
                 <Footer />
@@ -69,14 +276,16 @@ const ZoneProperties = () => {
         <PageWrapper>
             <Header isSolid={false} />
             {zone && (
-                <ZoneHero $bgImage={zone.imagen}>
+                <ZoneHero $bgImage={zone.imagenCabecera}>
                     <HeroOverlay />
                     <HeroContent>
                         <ZoneTitle>{zone.nombre}</ZoneTitle>
                         {zone.subtitulo && <ZoneSubtitle>{zone.subtitulo}</ZoneSubtitle>}
-                        <PropertiesCount>
-                            {properties.length} {properties.length === 1 ? 'Propiedad Disponible' : 'Propiedades Disponibles'}
-                        </PropertiesCount>
+                        {properties.length > 0 && (
+                            <PropertiesCount>
+                                {properties.length} {properties.length === 1 ? 'Propiedad Disponible' : 'Propiedades Disponibles'}
+                            </PropertiesCount>
+                        )}
                     </HeroContent>
                 </ZoneHero>
             )}
@@ -85,48 +294,54 @@ const ZoneProperties = () => {
                 <Container>
                     <InfoGrid>
                         <GalleryWrapper>
-                            <ThumbnailsColumn>
-                                {galleryImages.map((img, index) => (
-                                    <Thumbnail
-                                        key={index}
-                                        $active={mainImage === img}
-                                        onClick={() => handleImageSwap(img)}
-                                    >
-                                        <img src={img} alt={`Thumbnail ${index}`} />
-                                    </Thumbnail>
-                                ))}
-                            </ThumbnailsColumn>
-                            <ImageSidebar>
-                                <img src={mainImage} alt="Exclusiva Inmobiliaria Ochoa" />
-                                <ImageOverlay />
-                            </ImageSidebar>
+                            {galleryImages.length > 0 && (
+                                <>
+                                    <ThumbnailsColumn>
+                                        {galleryImages.map((img, index) => (
+                                            <Thumbnail
+                                                key={index}
+                                                $active={mainImage === img}
+                                                onClick={() => handleImageSwap(img)}
+                                            >
+                                                <img src={img} alt={`${zone.nombre} ${index + 1}`} />
+                                            </Thumbnail>
+                                        ))}
+                                    </ThumbnailsColumn>
+                                    <ImageSidebar>
+                                        <img src={mainImage} alt={zone.nombre} />
+                                        <ImageOverlay />
+                                    </ImageSidebar>
+                                </>
+                            )}
                         </GalleryWrapper>
 
                         <TextContent>
                             <Badge>Emprendimiento Exclusivo</Badge>
-                            <MainText>
-                                Este emprendiendo de 10 años, ofrece lotes con vistas al lago y a las sierras.
-                            </MainText>
-                            <SubText>
-                                Se ubica en Segunda Usina, una comuna hermanada con ma localidad de Embalse en el valle de Calamuchita!
-                            </SubText>
-                            <StatsText>
-                                En el barrio ya se construyeron 25 viviendas, y residen permanentemente más de 12 familias. Esto es posible debido que cuentan con servicio de:
-                            </StatsText>
-                            <ServicesList>
-                                <li>
-                                    <Icon><i className="fas fa-bolt"></i></Icon>
-                                    <span><strong>Energía eléctrica:</strong> con su tendido eléctrico aprobado por Ersep.</span>
-                                </li>
-                                <li>
-                                    <Icon><i className="fas fa-tint"></i></Icon>
-                                    <span><strong>Agua corriente:</strong> red de agua con normativas vigentes, tanque y bomba propia.</span>
-                                </li>
-                                <li>
-                                    <Icon><i className="fas fa-wifi"></i></Icon>
-                                    <span><strong>Internet:</strong> una antena de última generación, que no solo brinde el servicio al barrio, sino también a toda la comuna...</span>
-                                </li>
-                            </ServicesList>
+                            {zone.titulo && (
+                                <MainText>
+                                    {zone.titulo}
+                                </MainText>
+                            )}
+                            {zone.subtitulo && (
+                                <SubText>
+                                    {zone.subtitulo}
+                                </SubText>
+                            )}
+                            {zone.descripcion && (
+                                <StatsText>
+                                    {zone.descripcion}
+                                </StatsText>
+                            )}
+                            {zone.adicionales && zone.adicionales.length > 0 && (
+                                <ServicesList>
+                                    {zone.adicionales.map((item, index) => (
+                                        <ServicesItem key={index}>
+                                            <Check size={20} />
+                                            <span>{item.Texto}</span>
+                                        </ServicesItem>
+                                    ))}
+                                </ServicesList>
+                            )}
                         </TextContent>
                     </InfoGrid>
                 </Container>
@@ -144,8 +359,6 @@ const ZoneProperties = () => {
         </PageWrapper>
     );
 };
-
-export default ZoneProperties;
 
 const PageWrapper = styled.div`
     display: flex;
@@ -441,9 +654,8 @@ const StatsText = styled.p`
     }
 `;
 
-const ServicesList = styled.ul`
-    list-style: none;
-    padding: 0;
+
+const ServicesList = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -451,40 +663,19 @@ const ServicesList = styled.ul`
     @media (max-width: 480px) {
         gap: 1rem;
     }
-
-    @media (max-width: 320px) {
-        gap: 0.8rem;
-    }
-
-    li {
-        display: flex;
-        gap: 1rem;
-        align-items: flex-start;
-        font-size: 1rem;
-        color: #444;
-        line-height: 1.4;
-
-        span {
-            flex: 1;
-        }
-    }
 `;
 
-const Icon = styled.div`
-    min-width: 40px;
-    height: 40px;
-    background-color: rgba(230, 0, 0, 0.1);
-    color: var(--brand-red);
+const ServicesItem = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 1.1rem;
-
-    @media (max-width: 480px) {
-        min-width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
+    gap: 0.75rem;
+    font-family: var(--body-font);
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    
+    svg {
+        color: var(--brand-red);
+        flex-shrink: 0;
     }
 `;
 
@@ -533,3 +724,5 @@ const ErrorContainer = styled.div`
         max-width: 400px;
     }
 `;
+
+export default ZonePropertiesExclusive;

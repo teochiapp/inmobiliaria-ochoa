@@ -40,7 +40,7 @@ const Header = ({ isSolid = false }) => {
           {!loading && zones && zones.map((zone) => (
             <ZoneLink
               key={zone.documentId || zone.id}
-              to={`/zona/${zone.documentId || zone.id}`}
+              to={`/zona/${zone.Slug || zone.slug || zone.documentId || zone.id}`}
             >
               {zone.title}
             </ZoneLink>
@@ -120,11 +120,11 @@ export const MobileMenuButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   position: relative;
   z-index: 1001;
-  padding: 0.5rem;
+  padding: 0.45rem;
   transition: opacity 0.2s ease;
 
   &:hover {
@@ -133,7 +133,7 @@ export const MobileMenuButton = styled.button`
 
   span {
     display: block;
-    width: 28px;
+    width: 25px;
     height: 3px;
     background-color: var(--text-light);
     border-radius: 2px;
@@ -143,7 +143,7 @@ export const MobileMenuButton = styled.button`
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:nth-child(1) {
-      top: ${props => props.$isOpen ? '50%' : '8px'};
+      top: ${props => props.$isOpen ? '50%' : '7px'};
       transform: translateX(-50%) ${props => props.$isOpen ? 'translateY(-50%) rotate(45deg)' : 'translateY(0) rotate(0)'};
     }
 
@@ -151,11 +151,11 @@ export const MobileMenuButton = styled.button`
       top: 50%;
       transform: translateX(-50%) translateY(-50%);
       opacity: ${props => props.$isOpen ? '0' : '1'};
-      width: ${props => props.$isOpen ? '0' : '28px'};
+      width: ${props => props.$isOpen ? '0' : '25px'};
     }
 
     &:nth-child(3) {
-      top: ${props => props.$isOpen ? '50%' : 'calc(100% - 11px)'};
+      top: ${props => props.$isOpen ? '50%' : 'calc(100% - 10px)'};
       transform: translateX(-50%) ${props => props.$isOpen ? 'translateY(-50%) rotate(-45deg)' : 'translateY(0) rotate(0)'};
     }
   }

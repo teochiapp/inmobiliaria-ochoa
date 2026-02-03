@@ -143,8 +143,8 @@ const Zones = () => {
                                         onMouseLeave={handleMouseLeave}
                                         onClick={() => {
                                             if (state === 'current') {
-                                                // Use documentId for Strapi v5 compatibility
-                                                navigate(`/zona/${property.documentId || property.id}`);
+                                                // Use Slug for clean URLs, fallback to documentId/id
+                                                navigate(`/zona/${property.Slug || property.slug || property.documentId || property.id}`);
                                             } else {
                                                 setCurrentIndex(index);
                                             }

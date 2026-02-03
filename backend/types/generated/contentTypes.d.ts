@@ -540,8 +540,9 @@ export interface ApiVentaVenta extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Adicional: Schema.Attribute.Enumeration<
-      ['Apta Cr\u00E9dito', 'Cochera', 'Seguridad 24hs', 'Espacios Verdes']
+    AdicionalesVentas: Schema.Attribute.Component<
+      'adicionales.adicionales',
+      true
     >;
     Banos: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
@@ -582,17 +583,30 @@ export interface ApiZonaZona extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    AdicionalesZona: Schema.Attribute.Component<
+      'adicionales.adicionales',
+      true
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Descripcion: Schema.Attribute.Blocks;
+    Galeria: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    ImagenCabecera: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::zona.zona'> &
       Schema.Attribute.Private;
     Nombre: Schema.Attribute.String;
     Portada: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Nombre'>;
     Subtitulo: Schema.Attribute.String;
+    Titulo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

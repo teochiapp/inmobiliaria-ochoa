@@ -30,7 +30,7 @@ const FloatingWhatsApp = () => {
                         </Header>
                         <ChatBody>
                             <MessageBubble>
-                                <p>Hola bienvenido a la inmobiliaria ochoa, ¿Queres hacernos alguno consulta? mandanos un mensaje.</p>
+                                <p>Hola bienvenidos a la Inmobiliaria Marin Ochoa, ¿Querés hacernos alguna consulta? Mandanos un mensaje.</p>
                             </MessageBubble>
                         </ChatBody>
                         <ChatFooter>

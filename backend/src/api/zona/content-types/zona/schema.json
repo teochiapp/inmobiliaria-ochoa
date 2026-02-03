@@ -14,11 +14,9 @@
     "Nombre": {
       "type": "string"
     },
-    "Subtitulo": {
-      "type": "string"
-    },
-    "Descripcion": {
-      "type": "blocks"
+    "Slug": {
+      "type": "uid",
+      "targetField": "Nombre"
     },
     "Portada": {
       "type": "media",
@@ -29,6 +27,40 @@
         "videos",
         "audios"
       ]
+    },
+    "ImagenCabecera": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Titulo": {
+      "type": "string"
+    },
+    "Subtitulo": {
+      "type": "string"
+    },
+    "Descripcion": {
+      "type": "blocks"
+    },
+    "Galeria": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "AdicionalesZona": {
+      "type": "component",
+      "component": "adicionales.adicionales",
+      "repeatable": true
     }
   }
 }

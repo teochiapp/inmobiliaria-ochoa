@@ -103,7 +103,7 @@ const Navigation = ({ isOpen }) => {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.05 }}
                         >
-                          <Link to={`/zona/${zone.documentId || zone.id}`}>
+                          <Link to={`/zona/${zone.Slug || zone.slug || zone.documentId || zone.id}`}>
                             {zone.title}
                           </Link>
                         </DropdownItem>
