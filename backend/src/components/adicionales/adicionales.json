@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_adicionales_adicionales",
+  "info": {
+    "displayName": "Adicionales"
+  },
+  "options": {},
+  "attributes": {
+    "Texto": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

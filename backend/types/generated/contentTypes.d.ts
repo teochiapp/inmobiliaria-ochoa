@@ -441,6 +441,7 @@ export interface ApiAlquilerAlquiler extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Adicionales: Schema.Attribute.Component<'adicionales.adicionales', true>;
     Banos: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -457,6 +458,7 @@ export interface ApiAlquilerAlquiler extends Struct.CollectionTypeSchema {
       'api::alquiler.alquiler'
     > &
       Schema.Attribute.Private;
+    Mapa: Schema.Attribute.Blocks;
     MetrosCuadrados: Schema.Attribute.Integer;
     Nombre: Schema.Attribute.String;
     Portada: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
@@ -538,6 +540,9 @@ export interface ApiVentaVenta extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Adicional: Schema.Attribute.Enumeration<
+      ['Apta Cr\u00E9dito', 'Cochera', 'Seguridad 24hs', 'Espacios Verdes']
+    >;
     Banos: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -551,6 +556,7 @@ export interface ApiVentaVenta extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::venta.venta'> &
       Schema.Attribute.Private;
+    Mapa: Schema.Attribute.Blocks;
     MetrosCuadrados: Schema.Attribute.Integer;
     Nombre: Schema.Attribute.String;
     Portada: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
