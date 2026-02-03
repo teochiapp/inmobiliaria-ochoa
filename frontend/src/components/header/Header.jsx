@@ -47,25 +47,27 @@ const Header = ({ isSolid = false }) => {
           ))}
         </DesktopZonesNav>
 
+        <HeaderActions>
+          <SocialIcons>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <i className="fab fa-facebook"></i>
+            </a>
+            <a href="mailto:info@inmobiliariaochoa.com" aria-label="Email">
+              <i className="fas fa-envelope"></i>
+            </a>
+          </SocialIcons>
+
+          <MobileMenuButton onClick={toggleMobileMenu} aria-label="Toggle menu" $isOpen={mobileMenuOpen}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </MobileMenuButton>
+        </HeaderActions>
+
         <Navigation isOpen={mobileMenuOpen} />
-
-        <SocialIcons>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i className="fab fa-instagram"></i>
-          </a>
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <i className="fab fa-facebook"></i>
-          </a>
-          <a href="mailto:info@inmobiliariaochoa.com" aria-label="Email">
-            <i className="fas fa-envelope"></i>
-          </a>
-        </SocialIcons>
-
-        <MobileMenuButton onClick={toggleMobileMenu} aria-label="Toggle menu" $isOpen={mobileMenuOpen}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </MobileMenuButton>
       </HeaderContainer>
     </StyledHeader>
   );
@@ -93,17 +95,20 @@ export const HeaderContainer = styled.div`
   margin: 0 auto;
   padding: 0.5rem 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap:1rem;
+  gap: 1rem;
+  position: relative;
 
-
-  @media (max-width: 1200px) {
-    justify-content: space-between;
-  }
   @media (max-width: 768px) {
     padding: 1rem 1.5rem;
   }
+`;
+
+export const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 `;
 
 
@@ -115,17 +120,16 @@ export const MobileMenuButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-<<<<<<< HEAD
+  width: 40px;
+  height: 40px;
+  position: relative;
+  z-index: 1001;
   padding: 0.5rem;
   transition: opacity 0.2s ease;
 
   &:hover {
     opacity: 0.8;
-=======
-  width: 40px;
-  height: 40px;
-  position: relative;
-  z-index: 1001;
+  }
 
   span {
     display: block;
@@ -154,11 +158,6 @@ export const MobileMenuButton = styled.button`
       top: ${props => props.$isOpen ? '50%' : 'calc(100% - 11px)'};
       transform: translateX(-50%) ${props => props.$isOpen ? 'translateY(-50%) rotate(-45deg)' : 'translateY(0) rotate(0)'};
     }
-  }
-
-  @media (max-width: 1200px) {
-    display: block;
->>>>>>> d6bc8cc4a7e8b5089e85367b519b7019d145b840
   }
 `;
 

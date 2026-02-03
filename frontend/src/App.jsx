@@ -8,6 +8,7 @@ import Rentals from './pages/Rentals/Rentals';
 import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
 import ZoneProperties from './pages/ZoneProperties/ZoneProperties';
+import ZonePropertiesExclusive from './pages/ZoneProperties/ZonePropiertiesExlusive';
 import ScrollToTop from './components/common/ScrollToTop';
 import FloatingWhatsApp from './components/common/FloatingWhatsApp';
 import NotFound from './pages/NotFound/NotFound';
@@ -26,6 +27,8 @@ function App() {
 
                 {/* Ruta de propiedades por zona */}
                 <Route path="/zona/:id" element={<ZoneProperties />} />
+                <Route path="/propiedades-exclusivas" element={<ZonePropertiesExclusive />} />
+                <Route path="/zona-exclusiva/:id" element={<ZonePropertiesExclusive />} />
 
                 {/* Rutas de detalles de propiedades */}
                 <Route path="/propiedad/venta/:id" element={<PropertyDetail type="venta" />} />
