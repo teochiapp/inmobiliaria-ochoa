@@ -82,20 +82,13 @@ export const Logo = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--headings-font);
-  font-size: 2rem;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  font-weight: 700;
-  color: #fff;
-  text-transform: uppercase;
-
-  span {
-    color: var(--brand-red); /* Assuming using brand color for accent */
-  }
   
-  /* If using the logo from Header, might need adjustment */
   img {
-      height: 50px;
+    height: 135px;
+    width: 265px;
+    background-color: transparent;
+    object-fit: contain;
+    border-radius:15px;
   }
 `;
 
