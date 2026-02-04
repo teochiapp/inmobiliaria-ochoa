@@ -39,6 +39,7 @@ const useRents = () => {
             // Map image
             const imgField = attributes.Portada;
             let imgUrl = '';
+
             if (imgField?.data) {
                 const imgData = imgField.data;
                 const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
@@ -63,8 +64,9 @@ const useRents = () => {
                 baños: attributes.Banos || 0,
                 m2: attributes.MetrosCuadrados || 0,
                 ubicacion: attributes.Ubicacion || '',
-                zona: attributes.Zona?.data?.id || null,
-                zonaSlug: attributes.Zona?.data?.attributes?.Slug || null
+                // FIX: Zona is the direct object, not wrapped in .data
+                zona: attributes.Zona?.id || null,
+                zonaSlug: attributes.Zona?.Slug || null
             };
         });
     }, [rentsData]);

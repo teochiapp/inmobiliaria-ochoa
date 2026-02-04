@@ -8,7 +8,7 @@ import Rentals from './pages/Rentals/Rentals';
 import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
 import ZoneProperties from './pages/ZoneProperties/ZoneProperties';
-import ZonePropertiesExclusive from './pages/ZoneProperties/ZonePropiertiesExlusive';
+import ZonePropertiesExclusive from './pages/ZoneProperties/ZonePropiertiesExclusive';
 import ScrollToTop from './components/common/ScrollToTop';
 import FloatingWhatsApp from './components/common/FloatingWhatsApp';
 import NotFound from './pages/NotFound/NotFound';

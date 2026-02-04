@@ -183,10 +183,8 @@ const ZonePropertiesExclusive = () => {
         if (!zone) return [];
 
         const zoneId = zone.id;
-        // console.log('Filtering properties for zone ID:', zoneId);
 
         // Filter and add baseUrl
-        // Note: Comparison must be type-safe or check structure. zoneId is number. item.zona is number.
         const filteredSales = sales.filter(item => item.zona === zoneId).map(item => ({
             ...item,
             baseUrl: '/propiedad/venta'
