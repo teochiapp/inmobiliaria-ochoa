@@ -15,7 +15,6 @@ const Map = () => {
           referrerPolicy="no-referrer-when-downgrade"
           title="Ubicación de Inmobiliaria Ochoa"
         ></iframe>
-        <MapOverlay />
       </IframeWrapper>
     </MapContainer>
   );
@@ -24,7 +23,7 @@ const Map = () => {
 export default Map;
 
 const MapContainer = styled.section`
-  width: 100%;Q
+  width: 100%;
   background-color: var(--text-light);
 `;
 
@@ -55,44 +54,14 @@ const IframeWrapper = styled.div`
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  background-color: #e5e3df; /* Map placeholder color */
+  background-color: #e5e3df;
 
   iframe {
     position: absolute;
-    top: -150px; /* Oculta la tarjeta informativa superior */
+    top: 0;
     left: 0;
     width: 100%;
-    height: 650px; /* Aumentamos el alto para compensar el recorte */
+    height: 100%;
     border: 0;
-    filter: grayscale(0.2) contrast(1.1);
-    transition: filter 0.3s ease;
-
-    &:hover {
-      filter: grayscale(0);
-    }
   }
-
-  /* Capa para ocultar los términos y logo de Google en la esquina inferior */
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 150px;
-    height: 50px;
-    background-color: #f7f3f2; /* Color de fondo del sitio para tapar el logo */
-    z-index: 5;
-    pointer-events: none;
-  }
-`;
-
-const MapOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  cursor: default;
-  pointer-events: auto;
 `;

@@ -7,6 +7,7 @@ import { FaWhatsapp } from 'react-icons/fa';
 import api from '../../services/api';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
+import ContactForm from '../../components/contact/ContactForm';
 
 // Remove /api from the end to get base URL for images
 const STRAPI_BASE_URL = (() => {
@@ -337,6 +338,10 @@ const PropertyDetail = ({ type }) => {
                         <MapContainer dangerouslySetInnerHTML={{ __html: property.mapEmbed }} />
                     </MapSection>
                 )}
+
+                <FormWrapper>
+                    <ContactForm />
+                </FormWrapper>
             </ContentContainer>
 
             <Footer />
@@ -353,6 +358,15 @@ const PageWrapper = styled.div`
     flex-direction: column;
     min-height: 100vh;
     background: #F9F5F0;
+`;
+
+const FormWrapper = styled.div`
+    margin-top: 4rem;
+    width: 100%;
+    
+    @media (max-width: 768px) {
+        margin-top: 2.5rem;
+    }
 `;
 
 const ContentContainer = styled.div`

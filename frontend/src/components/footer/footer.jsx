@@ -1,6 +1,7 @@
 import React from 'react';
 import { Facebook, Twitter, Instagram, Youtube, Phone, Clock, Mail, MapPin } from 'lucide-react';
 import { FaWhatsapp } from "react-icons/fa";
+import logo from '../../public/logo.png';
 import {
     FooterContainer,
     FooterContent,
@@ -22,8 +23,7 @@ const Footer = () => {
                 {/* Brand Section */}
                 <FooterBrand>
                     <Logo>
-                        {/* <img src="/logo.png" alt="Inmobiliaria Ochoa" /> */}
-                        Marin<span>Ochoa</span>
+                        <img src={logo} alt="Inmobiliaria Ochoa" />
                     </Logo>
                     <p>
                         15 años hablando de oportunidades.
