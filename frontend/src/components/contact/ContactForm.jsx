@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import logoLargoImg from '../../public/aboutUs/logo-largo.png';
 
-const ContactForm = ({ noBackground = false }) => {
+const ContactForm = ({
+    noBackground = false,
+    propertyName = null,  // e.g., "Casa en Alta Córdoba"
+    originPage = null     // e.g., "Detalle de Propiedad" or "Zona: Alta Córdoba"
+}) => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -52,10 +57,29 @@ const ContactForm = ({ noBackground = false }) => {
         setStatus({ type: 'loading', message: 'Enviando mensaje...' });
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Prepare template parameters for EmailJS
+            const templateParams = {
+                from_name: formData.name,
+                from_email: formData.email,
+                phone: formData.phone,
+                message: formData.message,
+                origin_page: originPage || 'Página de Contacto',
+                origin_url: window.location.href,
+                property_name: propertyName || 'N/A'
+            };
+
+            // Send email via EmailJS
+            await emailjs.send(
+                process.env.REACT_APP_EMAILJS_SERVICE_ID,
+                process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+                templateParams,
+                process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+            );
+
             setStatus({ type: 'success', message: '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.' });
             setFormData({ name: '', phone: '', email: '', message: '' });
         } catch (error) {
+            console.error('EmailJS Error:', error);
             setStatus({ type: 'error', message: 'Hubo un error al enviar el mensaje. Por favor intenta nuevamente.' });
         }
     };
@@ -288,12 +312,17 @@ const Input = styled.input`
     font-family: var(--text-font);
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    background-color: #fdfdfd;
+    background-color: white;
+    color: #333333;
 
     &:focus {
         outline: none;
         border-color: var(--brand-blue);
         background-color: white;
+    }
+    
+    &::placeholder {
+        color: #999999;
     }
 `;
 
@@ -305,12 +334,17 @@ const TextArea = styled.textarea`
     font-size: 1rem;
     transition: border-color 0.3s ease;
     resize: vertical;
-     background-color: #fdfdfd;
+    background-color: white;
+    color: #333333;
 
     &:focus {
         outline: none;
         border-color: var(--brand-blue);
-         background-color: white;
+        background-color: white;
+    }
+    
+    &::placeholder {
+        color: #999999;
     }
 `;
 
