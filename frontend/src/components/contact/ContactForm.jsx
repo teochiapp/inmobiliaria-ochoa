@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import logoLargoImg from '../../public/aboutUs/logo-largo.png';
 
-const ContactForm = () => {
+const ContactForm = ({ noBackground = false }) => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -61,7 +61,7 @@ const ContactForm = () => {
     };
 
     return (
-        <FormSection>
+        <FormSection $noBackground={noBackground}>
             <RelativeWrapper>
                 <Container
                     as={motion.div}
@@ -184,8 +184,8 @@ export default ContactForm;
 
 
 const FormSection = styled.section`
-    padding: 4rem 1rem;
-    background-color: var(--text-light);
+    padding: ${props => props.$noBackground ? '0' : '4rem 1rem'};
+    background-color: ${props => props.$noBackground ? 'transparent' : 'var(--text-light)'};
     display: flex;
     justify-content: center;
     position: relative;

@@ -340,7 +340,7 @@ const PropertyDetail = ({ type }) => {
                 )}
 
                 <FormWrapper>
-                    <ContactForm />
+                    <ContactForm noBackground={true} />
                 </FormWrapper>
             </ContentContainer>
 

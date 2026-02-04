@@ -88,6 +88,7 @@ export const Logo = styled.div`
     width: 265px;
     background-color: transparent;
     object-fit: contain;
+    border-radius:15px;
   }
 `;
 
