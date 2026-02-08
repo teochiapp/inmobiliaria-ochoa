@@ -1,47 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import api from '../../services/api';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import useSchedule from '../../hooks/useSchedule';
 
 const ScheduleSection = () => {
+    const { schedule, loading } = useSchedule();
+
     const defaultDays = [
-        { day: 'Lunes', time: '7:00 Am - 6:00 Pm', key: 'Lunes' },
-        { day: 'Martes', time: '8:00 Am - 5:00 Pm', key: 'Martes' },
-        { day: 'Miércoles', time: '7:00 Am - 6:00 Pm', key: 'Miercoles' },
-        { day: 'Jueves', time: '8:00 Am - 5:00 Pm', key: 'Jueves' },
-        { day: 'Viernes', time: '8:00 Am - 4:00 Pm', key: 'Viernes' },
-        { day: 'Sáb & Dom', time: '¡Cerrado!', key: 'FinDeSemana' },
+        { day: 'Lunes', time: '7:00 Am - 6:00 Pm' },
+        { day: 'Martes', time: '8:00 Am - 5:00 Pm' },
+        { day: 'Miércoles', time: '7:00 Am - 6:00 Pm' },
+        { day: 'Jueves', time: '8:00 Am - 5:00 Pm' },
+        { day: 'Viernes', time: '8:00 Am - 4:00 Pm' },
+        { day: 'Sáb & Dom', time: '¡Cerrado!' },
     ];
 
-    const [days, setDays] = useState(defaultDays);
+    const days = schedule ? [
+        { day: 'Lunes', time: schedule.Lunes },
+        { day: 'Martes', time: schedule.Martes },
+        { day: 'Miércoles', time: schedule.Miercoles },
+        { day: 'Jueves', time: schedule.Jueves },
+        { day: 'Viernes', time: schedule.Viernes },
+        { day: 'Sáb & Dom', time: schedule.SabadoDomingo },
+    ] : defaultDays;
 
-    useEffect(() => {
-        const fetchSchedule = async () => {
-            try {
-                const response = await api.get('/horario');
-                // Check if we have data
-                if (response.data && response.data.data && response.data.data.attributes) {
-                    const attrs = response.data.data.attributes;
-
-                    const newDays = defaultDays.map(item => {
-                        // Use the key (e.g., 'Lunes') to find the value in attributes
-                        // Fallback to default time if not found or empty
-                        const backendTime = attrs[item.key];
-                        return {
-                            ...item,
-                            time: backendTime || item.time
-                        };
-                    });
-
-                    setDays(newDays);
-                }
-            } catch (err) {
-                console.error("Error fetching schedule, using defaults:", err);
-                // Do nothing, keep defaults
-            }
-        };
-        fetchSchedule();
-    }, []);
+    if (loading && !schedule) {
+        return null; // Or a loading spinner
+    }
 
     return (
         <Section>

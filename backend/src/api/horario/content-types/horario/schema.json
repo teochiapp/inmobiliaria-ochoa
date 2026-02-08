@@ -4,12 +4,11 @@
     "info": {
         "singularName": "horario",
         "pluralName": "horarios",
-        "displayName": "Horario"
+        "displayName": "Horarios de Atención"
     },
     "options": {
-        "draftAndPublish": true
+        "draftAndPublish": false
     },
-    "pluginOptions": {},
     "attributes": {
         "Lunes": {
             "type": "string",
@@ -31,7 +30,7 @@
             "type": "string",
             "default": "8:00 Am - 4:00 Pm"
         },
-        "FinDeSemana": {
+        "SabadoDomingo": {
             "type": "string",
             "default": "¡Cerrado!"
         }

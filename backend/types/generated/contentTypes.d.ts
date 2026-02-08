@@ -461,6 +461,7 @@ export interface ApiAlquilerAlquiler extends Struct.CollectionTypeSchema {
     Mapa: Schema.Attribute.Blocks;
     MetrosCuadrados: Schema.Attribute.Integer;
     Nombre: Schema.Attribute.String;
+    Periodo: Schema.Attribute.Enumeration<['mes', 'semana', 'dia']>;
     Portada: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     Precio: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
@@ -499,6 +500,45 @@ export interface ApiHeroImageHeroImage extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHorarioHorario extends Struct.SingleTypeSchema {
+  collectionName: 'horarios';
+  info: {
+    displayName: 'Horarios de Atenci\u00F3n';
+    pluralName: 'horarios';
+    singularName: 'horario';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Jueves: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'8:00 Am - 5:00 Pm'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::horario.horario'
+    > &
+      Schema.Attribute.Private;
+    Lunes: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'7:00 Am - 6:00 Pm'>;
+    Martes: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'8:00 Am - 5:00 Pm'>;
+    Miercoles: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'7:00 Am - 6:00 Pm'>;
+    publishedAt: Schema.Attribute.DateTime;
+    SabadoDomingo: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u00A1Cerrado!'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Viernes: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'8:00 Am - 4:00 Pm'>;
   };
 }
 
@@ -1125,6 +1165,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::alquiler.alquiler': ApiAlquilerAlquiler;
       'api::hero-image.hero-image': ApiHeroImageHeroImage;
+      'api::horario.horario': ApiHorarioHorario;
       'api::novedad.novedad': ApiNovedadNovedad;
       'api::venta.venta': ApiVentaVenta;
       'api::zona.zona': ApiZonaZona;
