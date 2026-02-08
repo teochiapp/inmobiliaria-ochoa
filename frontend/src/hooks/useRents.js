@@ -59,7 +59,9 @@ const useRents = () => {
                 slug: attributes.Slug,
                 imagen: fullImgUrl,
                 nombre: name,
-                precio: attributes.Precio ? `$${attributes.Precio}/mes` : '', // Format price?
+                precio: attributes.Precio
+                    ? `$${attributes.Precio}${attributes.Periodo ? '/' + attributes.Periodo.toUpperCase() : ''}`
+                    : '',
                 habitaciones: attributes.Habitaciones || 0,
                 baños: attributes.Banos || 0,
                 m2: attributes.MetrosCuadrados || 0,

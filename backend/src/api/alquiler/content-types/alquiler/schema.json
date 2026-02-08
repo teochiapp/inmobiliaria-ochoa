@@ -54,6 +54,14 @@
     "MetrosCuadrados": {
       "type": "integer"
     },
+    "Periodo": {
+      "type": "enumeration",
+      "enum": [
+        "mes",
+        "semana",
+        "dia"
+      ]
+    },
     "Slug": {
       "type": "uid",
       "targetField": "Nombre"
