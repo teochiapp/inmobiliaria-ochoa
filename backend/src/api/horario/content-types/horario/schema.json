@@ -1,0 +1,39 @@
+{
+    "kind": "singleType",
+    "collectionName": "horarios",
+    "info": {
+        "singularName": "horario",
+        "pluralName": "horarios",
+        "displayName": "Horario"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "Lunes": {
+            "type": "string",
+            "default": "7:00 Am - 6:00 Pm"
+        },
+        "Martes": {
+            "type": "string",
+            "default": "8:00 Am - 5:00 Pm"
+        },
+        "Miercoles": {
+            "type": "string",
+            "default": "7:00 Am - 6:00 Pm"
+        },
+        "Jueves": {
+            "type": "string",
+            "default": "8:00 Am - 5:00 Pm"
+        },
+        "Viernes": {
+            "type": "string",
+            "default": "8:00 Am - 4:00 Pm"
+        },
+        "FinDeSemana": {
+            "type": "string",
+            "default": "¡Cerrado!"
+        }
+    }
+}
