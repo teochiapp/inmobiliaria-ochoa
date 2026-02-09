@@ -33,9 +33,18 @@ export const FooterContent = styled.div`
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: 3rem;
+  grid-template-columns: repeat(3, 1fr);
   padding-bottom: 4rem;
+
+  @media (min-width: 750px) {
+    justify-items: center;
+  }
+
+  & > *:nth-child(2) {
+    @media (min-width: 1025px) {
+      margin-left: 8rem;
+    }
+  }
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr 1fr;
@@ -52,8 +61,11 @@ export const FooterColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  width: 100%;
+  max-width: 255px;
 
   @media (max-width: 768px) {
+    max-width: none;
     &:last-child {
       grid-column: 1 / -1;
     }
@@ -65,6 +77,11 @@ export const FooterBrand = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   text-transform: uppercase;
+  width: 100%;
+
+  @media (min-width: 750px) {
+    width: 265px;
+  }
 
   @media (max-width: 768px) {
     grid-column: 1 / -1;
