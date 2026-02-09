@@ -152,6 +152,7 @@ const Rents = () => {
                                             bathrooms={property.baños}
                                             location={property.ubicacion}
                                             m2={property.m2}
+                                            period={property.period}
                                             link={`/propiedad/alquiler/${property.id}`}
                                         />
                                     </motion.div>

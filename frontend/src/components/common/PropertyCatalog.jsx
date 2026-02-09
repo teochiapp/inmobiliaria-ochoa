@@ -79,6 +79,7 @@ const PropertyCatalog = ({ properties, loading, title, error, baseUrl }) => {
                                             bathrooms={property.baños}
                                             location={property.ubicacion}
                                             m2={property.m2}
+                                            period={property.period}
                                             link={property.baseUrl ? `${property.baseUrl}/${property.id}` : (baseUrl ? `${baseUrl}/${property.id}` : undefined)}
                                         />
                                     </motion.div>

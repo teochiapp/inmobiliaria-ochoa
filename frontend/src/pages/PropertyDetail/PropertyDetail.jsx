@@ -105,6 +105,7 @@ const PropertyDetail = ({ type }) => {
                     features: attributes.Caracteristicas,
                     adicionales: attributes.Adicionales ? attributes.Adicionales.map(item => item.Texto).filter(Boolean) : [],
                     mapEmbed: Array.isArray(attributes.Mapa) ? extractTextFromBlocks(attributes.Mapa) : attributes.Mapa,
+                    period: attributes.Periodo ? attributes.Periodo.toUpperCase() : null,
                 });
                 setLoading(false);
             } catch (err) {
@@ -284,7 +285,7 @@ const PropertyDetail = ({ type }) => {
 
                         <PropertyPrice>
                             ${property.price ? Math.round(Number(property.price)).toLocaleString() : '0'}
-                            {type === 'alquiler' && <small>/mes</small>}
+                            {property.period && <small>/{property.period}</small>}
                         </PropertyPrice>
 
                         <MainFeatures>

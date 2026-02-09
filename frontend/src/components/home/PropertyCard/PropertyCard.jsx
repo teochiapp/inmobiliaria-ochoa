@@ -12,7 +12,7 @@ import {
     DetailLabel
 } from './PropertyCard.styles';
 
-const PropertyCard = ({ image, name, price, bedrooms, bathrooms, location, m2, link }) => {
+const PropertyCard = ({ image, name, price, period, bedrooms, bathrooms, location, m2, link }) => {
     return (
         <CardContainer as={link ? Link : 'div'} to={link} style={{ textDecoration: 'none', display: 'block' }}>
             <ImageContainer>
@@ -21,7 +21,10 @@ const PropertyCard = ({ image, name, price, bedrooms, bathrooms, location, m2, l
 
                 <PropertyDetails>
                     <DetailItem>
-                        <DetailValue>{price}</DetailValue>
+                        <DetailValue>
+                            {price}
+                            {period && <span style={{ display: 'block', fontSize: '0.8em', marginTop: '2px' }}>({period})</span>}
+                        </DetailValue>
                         <DetailLabel>Precio</DetailLabel>
                     </DetailItem>
                     <DetailItem>
