@@ -46,23 +46,12 @@ const Footer = () => {
                     <FooterLinks>
                         <li><a href="/">Inicio</a></li>
                         <li><a href="/propiedades-venta">Propiedades</a></li>
+                        <li><a href="/alquileres">Alquileres</a></li>
                         <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
-                        <li><a href="/servicios">Servicios</a></li>
                         <li><a href="/contacto">Contacto</a></li>
                     </FooterLinks>
                 </FooterColumn>
 
-                {/* Quick Links */}
-                <FooterColumn>
-                    <ColumnTitle>Enlaces Rápidos</ColumnTitle>
-                    <FooterLinks>
-                        <li><a href="#">Preguntas Frecuentes</a></li>
-                        <li><a href="#">Blog Inmobiliario</a></li>
-                        <li><a href="#">Términos y Condiciones</a></li>
-                        <li><a href="#">Política de Privacidad</a></li>
-                        <li><a href="#">Mapa del Sitio</a></li>
-                    </FooterLinks>
-                </FooterColumn>
 
                 {/* Work Hours & Contact */}
                 <FooterColumn>

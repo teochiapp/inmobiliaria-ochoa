@@ -306,11 +306,11 @@ const PropertyDetail = ({ type }) => {
                         </MainFeatures>
 
                         <ContactButtons>
-                            <ContactButton $primary as="a" href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer">
+                            <ContactButton $primary as="a" href="https://wa.me/+5493571520528" target="_blank" rel="noopener noreferrer">
                                 <FaWhatsapp size={20} />
                                 Contactar
                             </ContactButton>
-                            <ContactButton as="a" href="tel:+5491123456789">
+                            <ContactButton as="a" href="tel:+5493571520528">
                                 <Phone size={20} />
                                 Llamar
                             </ContactButton>
