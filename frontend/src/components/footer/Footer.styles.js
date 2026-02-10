@@ -33,7 +33,7 @@ export const FooterContent = styled.div`
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   padding-bottom: 4rem;
 
   @media (min-width: 750px) {

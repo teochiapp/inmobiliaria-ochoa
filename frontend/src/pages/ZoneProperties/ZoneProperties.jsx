@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useZoneProperties from '../../hooks/useZoneProperties';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
+import PropertyFilters from '../../components/common/PropertyFilters';
+import { usePropertyFilter } from '../../hooks/usePropertyFilter';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 
@@ -10,20 +12,16 @@ const ZoneProperties = () => {
     const { id } = useParams();
     const { properties, zone, loading, error } = useZoneProperties(id);
 
-    // Custom PropertyCatalog that handles different property types
-    const PropertiesWithDynamicUrl = ({ properties, loading, error, title }) => {
-        // We need to render PropertyCards manually to handle dynamic baseUrl
-        // But we can reuse most of PropertyCatalog structure
-        return (
-            <PropertyCatalog
-                properties={properties}
-                loading={loading}
-                error={error}
-                title={title}
-                baseUrl="" // We'll handle this in the PropertyCard itself via the link prop
-            />
-        );
-    };
+    // Sort properties by newest first
+    const sortedProperties = useMemo(() => {
+        return [...(properties || [])].sort((a, b) => {
+            const dateA = new Date(a.createdAt || a.publishedAt || 0);
+            const dateB = new Date(b.createdAt || b.publishedAt || 0);
+            return dateB - dateA;
+        });
+    }, [properties]);
+
+    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(sortedProperties);
 
     if (loading) {
         return (
@@ -67,11 +65,13 @@ const ZoneProperties = () => {
                 </ZoneHero>
             )}
             <ContentWrapper>
-                <PropertiesWithDynamicUrl
-                    properties={properties}
+                <PropertyFilters filters={filters} onFilterChange={handleFilterChange} layout="horizontal" />
+                <PropertyCatalog
+                    properties={filteredProperties}
                     loading={loading}
                     error={error}
                     title={zone ? `Propiedades en ${zone.nombre}` : 'Propiedades'}
+                    baseUrl=""
                 />
             </ContentWrapper>
             <Footer />

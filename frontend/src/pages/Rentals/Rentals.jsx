@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import useRents from '../../hooks/useRents';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
+import PropertyFilters from '../../components/common/PropertyFilters';
+import { usePropertyFilter } from '../../hooks/usePropertyFilter';
 import RentalsHero from '../../components/rentals/RentalsHero';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
@@ -9,13 +11,25 @@ import styled from 'styled-components';
 const Rentals = () => {
     const { rents, loading, error } = useRents();
 
+    // Sort properties by newest first
+    const sortedProperties = useMemo(() => {
+        return [...(rents || [])].sort((a, b) => {
+            const dateA = new Date(a.createdAt || a.publishedAt || 0);
+            const dateB = new Date(b.createdAt || b.publishedAt || 0);
+            return dateB - dateA;
+        });
+    }, [rents]);
+
+    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(sortedProperties);
+
     return (
         <PageWrapper>
             <Header isSolid={false} />
             <RentalsHero />
             <ContentWrapper>
+                <PropertyFilters filters={filters} onFilterChange={handleFilterChange} layout="horizontal" />
                 <PropertyCatalog
-                    properties={rents}
+                    properties={filteredProperties}
                     loading={loading}
                     error={error}
                     title="Propiedades en Alquiler"
@@ -37,5 +51,5 @@ const PageWrapper = styled.div`
 
 const ContentWrapper = styled.div`
     flex: 1;
-    padding-top: 100px;
+    padding-top: 50px;
 `;

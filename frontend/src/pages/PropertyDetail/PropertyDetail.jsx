@@ -307,7 +307,13 @@ const PropertyDetail = ({ type }) => {
                         </MainFeatures>
 
                         <ContactButtons>
-                            <ContactButton $primary as="a" href="https://wa.me/+5493571520528" target="_blank" rel="noopener noreferrer">
+                            <ContactButton
+                                $primary
+                                as="a"
+                                href={`https://wa.me/5493571520528?text=${encodeURIComponent(`Hola! Estoy interesad@ en la propiedad "${property.name}" (${displayType})${property.location ? ` ubicada en ${property.location}` : ''}. Vi su anuncio en la web y me gustaría recibir más información.`)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <FaWhatsapp size={20} />
                                 Contactar
                             </ContactButton>

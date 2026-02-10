@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Youtube, Phone, Clock, Mail, MapPin } from 'lucide-react';
 import { FaWhatsapp } from "react-icons/fa";
+import useZones from '../../hooks/useZones';
 import logo from '../../public/logo.png';
 import {
     FooterContainer,
@@ -17,6 +19,8 @@ import {
 } from './Footer.styles';
 
 const Footer = () => {
+    const { zones, loading } = useZones();
+
     return (
         <FooterContainer>
             <FooterContent>
@@ -44,11 +48,25 @@ const Footer = () => {
                 <FooterColumn>
                     <ColumnTitle>Navegación</ColumnTitle>
                     <FooterLinks>
-                        <li><a href="/">Inicio</a></li>
-                        <li><a href="/propiedades-venta">Propiedades</a></li>
-                        <li><a href="/alquileres">Alquileres</a></li>
-                        <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
-                        <li><a href="/contacto">Contacto</a></li>
+                        <li><Link to="/">Inicio</Link></li>
+                        <li><Link to="/propiedades-venta">Propiedades</Link></li>
+                        <li><Link to="/alquileres">Alquileres</Link></li>
+                        <li><Link to="/sobre-nosotros">Sobre Nosotros</Link></li>
+                        <li><Link to="/contacto">Contacto</Link></li>
+                    </FooterLinks>
+                </FooterColumn>
+
+                <FooterColumn>
+                    <ColumnTitle>Zonas</ColumnTitle>
+                    <FooterLinks>
+                        {!loading && zones && zones.map((zone) => (
+                            <li key={zone.documentId || zone.id}>
+                                <Link to={`/zona/${zone.Slug || zone.slug || zone.documentId || zone.id}`}>
+                                    {zone.title}
+                                </Link>
+                            </li>
+                        ))}
+                        {loading && <li>Cargando zonas...</li>}
                     </FooterLinks>
                 </FooterColumn>
 

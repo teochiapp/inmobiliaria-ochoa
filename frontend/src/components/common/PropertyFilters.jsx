@@ -126,12 +126,12 @@ const MobileFilterToggle = ({ onClick }) => (
             border: '1.5px solid #e0e0e0',
             borderRadius: '50%',
             cursor: 'pointer',
-            position: 'absolute',
-            top: '6rem',
+            position: 'fixed',
+            top: 'calc(80px + 2rem)', // Below header
             right: '1rem',
             margin: 0,
-            zIndex: 10,
-            boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+            zIndex: 1000,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
             color: 'var(--brand-blue)'
         }}
         className="mobile-filter-btn"
@@ -186,6 +186,16 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
         return () => { document.body.style.overflow = 'unset'; }
     }, [isMobile, showMobileFilters]);
 
+    // Pipe separator component
+    const PipeSeparator = () => (
+        <div style={{
+            width: '1px',
+            height: '40px',
+            backgroundColor: '#e0e0e0',
+            margin: '0 0.5rem'
+        }} />
+    );
+
     // Determine container style based on layout and mobile state
     const containerStyle = isMobile ? {
         display: showMobileFilters ? 'flex' : 'none',
@@ -214,9 +224,12 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
         // Horizontal layout (original for Home)
         display: 'flex',
         flexDirection: 'row',
-        gap: '0.75rem',
+        gap: '0rem',
         flexWrap: 'wrap',
-        alignItems: 'left'
+        alignItems: 'center',
+        margin: '0 auto 2rem auto',
+        width: '100%',
+        maxWidth: '1400px'
     };
 
     return (
@@ -233,10 +246,46 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
 
             <FilterContainer style={containerStyle}>
                 {isMobile && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', width: '100%' }}>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>Filtros</h3>
-                        <div onClick={() => setShowMobileFilters(false)} style={{ cursor: 'pointer', padding: '5px' }}>
-                            <X size={28} color="#2B2E4B" />
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1.5rem',
+                        marginTop: '8vh',
+                        paddingBottom: '1rem',
+                        borderBottom: '2px solid #e0e0e0',
+                        width: '100%'
+                    }}>
+                        <h3 style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold',
+                            margin: 0,
+                            color: 'var(--brand-blue)'
+                        }}>Filtros</h3>
+                        <div
+                            onClick={() => setShowMobileFilters(false)}
+                            style={{
+                                cursor: 'pointer',
+                                padding: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: '50%',
+                                backgroundColor: '#f5f5f5',
+                                transition: 'all 0.3s ease',
+                                width: '40px',
+                                height: '40px'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = 'var(--brand-red)';
+                                e.currentTarget.querySelector('svg').style.color = 'white';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = '#f5f5f5';
+                                e.currentTarget.querySelector('svg').style.color = '#2B2E4B';
+                            }}
+                        >
+                            <X size={24} color="#2B2E4B" strokeWidth={2.5} />
                         </div>
                     </div>
                 )}
@@ -253,6 +302,8 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                         />
                     </InputWrapper>
                 </div>
+
+                {layout === 'horizontal' && !isMobile && <PipeSeparator />}
 
                 <div style={{
                     display: 'flex',
@@ -284,6 +335,8 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                         />
                     </InputWrapper>
                 </div>
+
+                {layout === 'horizontal' && !isMobile && <PipeSeparator />}
 
                 {isMobile ? (
                     <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
@@ -324,6 +377,8 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                             />
                         </div>
 
+                        {layout === 'horizontal' && !isMobile && <PipeSeparator />}
+
                         <div style={{ width: layout === 'sidebar' ? '100%' : 'auto', flex: layout === 'sidebar' ? 'none' : 1 }}>
                             <CustomSelect
                                 name="baths"
@@ -337,6 +392,8 @@ const PropertyFilters = ({ filters, onFilterChange, layout = 'horizontal' }) => 
                         </div>
                     </>
                 )}
+
+                {layout === 'horizontal' && !isMobile && <PipeSeparator />}
 
                 <div style={{ width: (layout === 'sidebar' || isMobile) ? '100%' : 'auto', flex: (layout === 'sidebar' || isMobile) ? 'none' : 1 }}>
                     <CustomSelect

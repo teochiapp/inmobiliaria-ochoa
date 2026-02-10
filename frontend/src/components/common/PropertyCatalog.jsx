@@ -1,35 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import PropertyCard from '../home/PropertyCard/PropertyCard';
-import PropertyFilters from './PropertyFilters';
-import { usePropertyFilter } from '../../hooks/usePropertyFilter';
-import SplitText from './SplitText';
 
 const PropertyCatalog = ({ properties, loading, title, error, baseUrl }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
 
-    // Sort properties by newest first
-    const sortedProperties = useMemo(() => {
-        return [...(properties || [])].sort((a, b) => {
-            const dateA = new Date(a.createdAt || a.publishedAt || 0);
-            const dateB = new Date(b.createdAt || b.publishedAt || 0);
-            return dateB - dateA; // Descending (newest first)
-        });
-    }, [properties]);
-
-    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(sortedProperties);
-
     // Pagination calculations
-    const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+    const totalPages = Math.ceil(properties.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentProperties = filteredProperties.slice(startIndex, startIndex + itemsPerPage);
+    const currentProperties = properties.slice(startIndex, startIndex + itemsPerPage);
 
-    // Reset to page 1 when filters change
+    // Reset to page 1 when properties change
     useEffect(() => {
         setCurrentPage(1);
-    }, [filteredProperties.length]);
+    }, [properties.length]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -54,53 +40,45 @@ const PropertyCatalog = ({ properties, loading, title, error, baseUrl }) => {
 
     return (
         <CatalogContainer>
-            <MainContentWrapper>
-                <FiltersColumn>
-                    <PropertyFilters filters={filters} onFilterChange={handleFilterChange} layout="sidebar" />
-                </FiltersColumn>
-
-                <PropertiesColumn>
-                    <Grid>
-                        <AnimatePresence>
-                            {currentProperties.length > 0 ? (
-                                currentProperties.map((property, index) => (
-                                    <motion.div
-                                        key={property.id}
-                                        initial={{ opacity: 0, y: 40 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true, margin: "-100px" }}
-                                        transition={{ duration: 0.6, delay: index * 0.05 }}
-                                    >
-                                        <PropertyCard
-                                            image={property.imagen}
-                                            name={property.nombre}
-                                            price={property.precio}
-                                            bedrooms={property.habitaciones}
-                                            bathrooms={property.baños}
-                                            location={property.ubicacion}
-                                            m2={property.m2}
-                                            period={property.period}
-                                            link={property.baseUrl ? `${property.baseUrl}/${property.id}` : (baseUrl ? `${baseUrl}/${property.id}` : undefined)}
-                                        />
-                                    </motion.div>
-                                ))
-                            ) : (
-                                <EmptyState>
-                                    No se encontraron propiedades que coincidan con los filtros.
-                                </EmptyState>
-                            )}
-                        </AnimatePresence>
-                    </Grid>
-
-                    {totalPages > 1 && (
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={handlePageChange}
-                        />
+            <Grid>
+                <AnimatePresence>
+                    {currentProperties.length > 0 ? (
+                        currentProperties.map((property, index) => (
+                            <motion.div
+                                key={property.id}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.6, delay: index * 0.05 }}
+                            >
+                                <PropertyCard
+                                    image={property.imagen}
+                                    name={property.nombre}
+                                    price={property.precio}
+                                    bedrooms={property.habitaciones}
+                                    bathrooms={property.baños}
+                                    location={property.ubicacion}
+                                    m2={property.m2}
+                                    period={property.period}
+                                    link={property.baseUrl ? `${property.baseUrl}/${property.id}` : (baseUrl ? `${baseUrl}/${property.id}` : undefined)}
+                                />
+                            </motion.div>
+                        ))
+                    ) : (
+                        <EmptyState>
+                            No se encontraron propiedades que coincidan con los filtros.
+                        </EmptyState>
                     )}
-                </PropertiesColumn>
-            </MainContentWrapper>
+                </AnimatePresence>
+            </Grid>
+
+            {totalPages > 1 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </CatalogContainer>
     );
 };

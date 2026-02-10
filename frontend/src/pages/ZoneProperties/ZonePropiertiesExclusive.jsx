@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Check } from 'lucide-react';
 import api from '../../services/api';
 import PropertyCatalog from '../../components/common/PropertyCatalog';
+import PropertyFilters from '../../components/common/PropertyFilters';
+import { usePropertyFilter } from '../../hooks/usePropertyFilter';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/footer';
 import useSales from '../../hooks/useSales';
@@ -198,6 +200,17 @@ const ZonePropertiesExclusive = () => {
         return [...filteredSales, ...filteredRents];
     }, [zone, sales, rents]);
 
+    // Sort properties by newest first
+    const sortedProperties = useMemo(() => {
+        return [...(properties || [])].sort((a, b) => {
+            const dateA = new Date(a.createdAt || a.publishedAt || 0);
+            const dateB = new Date(b.createdAt || b.publishedAt || 0);
+            return dateB - dateA;
+        });
+    }, [properties]);
+
+    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(sortedProperties);
+
     const loading = loadingZone || salesLoading || rentsLoading;
 
     // Gallery images combining portada and galeria
@@ -217,19 +230,6 @@ const ZonePropertiesExclusive = () => {
 
     const handleImageSwap = (newImage) => {
         setMainImage(newImage);
-    };
-
-    // Custom PropertyCatalog that handles different property types
-    const PropertiesWithDynamicUrl = ({ properties, loading, error, title }) => {
-        return (
-            <PropertyCatalog
-                properties={properties}
-                loading={loading}
-                error={error}
-                title={title}
-                baseUrl=""
-            />
-        );
     };
 
     if (loading) {
@@ -338,11 +338,13 @@ const ZonePropertiesExclusive = () => {
             </ExclusiveInfoSection>
 
             <ContentWrapper>
-                <PropertiesWithDynamicUrl
-                    properties={properties}
+                <PropertyFilters filters={filters} onFilterChange={handleFilterChange} layout="horizontal" />
+                <PropertyCatalog
+                    properties={filteredProperties}
                     loading={loading}
                     error={error}
                     title={zone ? `Propiedades en ${zone.nombre}` : 'Propiedades'}
+                    baseUrl=""
                 />
             </ContentWrapper>
             <Footer />

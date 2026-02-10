@@ -98,7 +98,7 @@ export const SliderWrapper = styled.div`
   width: 100%;
   max-width: 1450px;
   margin: 0 auto;
-  overflow-x: hidden; /* Previene scroll horizontal causado por botones */
+  /* Eliminado overflow-x: hidden para que se vean las flechas por completo */
 `;
 
 export const SliderContainer = styled.div`
@@ -132,11 +132,13 @@ export const SliderButton = styled.button`
   pointer-events: ${props => props.$visible ? 'all' : 'none'};
   transition: all 0.3s ease;
   z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   
   &:hover {
     background: var(--brand-red);
     color: white;
     transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(193, 60, 55, 0.3);
   }
 
   svg {
