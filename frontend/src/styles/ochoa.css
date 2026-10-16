@@ -730,3 +730,74 @@
 .mo-error{display:flex; flex-direction:column; align-items:center; gap:24px; padding:96px 0; text-align:center}
 .mo-field-err{font-size:12.5px; color:var(--r600)}
 body.mo-lock{overflow:hidden}
+
+/* ==========================================================
+   Galería de fotos (mosaico + carrusel móvil + visor)
+   ========================================================== */
+.mo-gallery{position:relative}
+.mo-mosaic{position:relative; display:grid; gap:10px; height:clamp(380px, 40cqi, 600px); grid-template-columns:2fr 1fr 1fr; grid-template-rows:1fr 1fr}
+.mo-mosaic--1{grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr)}
+.mo-mosaic--2{grid-template-columns:repeat(2, minmax(0,1fr)); grid-template-rows:minmax(0,1fr)}
+.mo-mosaic--3{grid-template-columns:2fr 1fr}
+.mo-mosaic--3 .mo-mosaic-tile:first-child,
+.mo-mosaic--4 .mo-mosaic-tile:first-child,
+.mo-mosaic--5 .mo-mosaic-tile:first-child{grid-row:1 / 3}
+.mo-mosaic--4 .mo-mosaic-tile:nth-child(2){grid-column:2 / 4}
+.mo-mosaic-tile{position:relative; display:block; width:100%; height:100%; min-height:0; padding:0; border:0; overflow:hidden; background:var(--n800); cursor:zoom-in}
+.mo-mosaic-tile img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease), filter .6s}
+.mo-mosaic-tile::after{content:""; position:absolute; inset:0; background:rgba(11,12,24,0); transition:background .5s}
+.mo-mosaic-tile:hover img{transform:scale(1.045)}
+.mo-mosaic-tile:hover::after{background:rgba(11,12,24,.18)}
+.mo-mosaic-more{position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:rgba(11,12,24,.62); color:#FAF0F1; font:700 10.5px/1 var(--txt); letter-spacing:.26em; text-transform:uppercase}
+.mo-mosaic-more b{font:400 40px/1 var(--disp); letter-spacing:.02em}
+.mo-mosaic-all{position:absolute; left:18px; bottom:18px; z-index:3; display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:0 18px; border:0; background:var(--iv50); color:var(--n900); cursor:pointer; font:700 11px/1 var(--txt); letter-spacing:.2em; text-transform:uppercase; box-shadow:0 10px 30px rgba(11,12,24,.25); transition:background .3s, color .3s}
+.mo-mosaic-all:hover{background:var(--r600); color:#fff}
+.mo-carousel{display:none; position:relative}
+.mo-carousel-track{display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; -webkit-overflow-scrolling:touch}
+.mo-carousel-track::-webkit-scrollbar{display:none}
+.mo-carousel-slide{flex:0 0 100%; aspect-ratio:4/3.2; padding:0; border:0; scroll-snap-align:start; background:var(--n800); cursor:zoom-in}
+.mo-carousel-slide img{width:100%; height:100%; object-fit:cover; user-select:none}
+.mo-carousel-nav{position:absolute; top:50%; z-index:2; width:44px; height:44px; display:grid; place-items:center; transform:translateY(-50%); border:0; border-radius:50%; background:rgba(250,240,241,.9); color:var(--n900); cursor:pointer}
+.mo-carousel-nav:disabled{opacity:0; pointer-events:none}
+.mo-carousel-nav--prev{left:12px}
+.mo-carousel-nav--next{right:12px}
+.mo-carousel-count{position:absolute; left:12px; bottom:12px; padding:8px 12px; background:rgba(18,20,42,.75); color:#fff; font:700 11px/1 var(--txt); letter-spacing:.2em}
+
+/* Visor a pantalla completa (se renderiza en <body>, por eso usa colores directos) */
+.mo-lb{position:fixed; inset:0; z-index:1000; display:grid; grid-template-rows:auto minmax(0,1fr) auto; background:rgba(11,12,24,.985); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); color:#FAF0F1; font-family:'Lato','Helvetica Neue',Helvetica,sans-serif; animation:mo-lb-in .35s ease both}
+.mo-lb *{box-sizing:border-box}
+.mo-lb-top{display:flex; align-items:center; gap:24px; padding:16px 24px}
+.mo-lb-count{font:700 12px/1 'Lato',sans-serif; letter-spacing:.24em}
+.mo-lb-title{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:400 16px/1.2 'Cinzel',Georgia,serif; letter-spacing:.06em; color:#C9CBDD}
+.mo-lb-close{margin-left:auto; width:48px; height:48px; display:grid; place-items:center; border:1px solid rgba(250,240,241,.3); background:transparent; color:#FAF0F1; cursor:pointer; transition:background .3s}
+.mo-lb-close:hover{background:#C71A22; border-color:#C71A22}
+.mo-lb-stage{position:relative; min-height:0; touch-action:pan-y; user-select:none; overflow:hidden}
+.mo-lb-stage img{position:absolute; inset:0; margin:auto; max-width:calc(100% - 176px); max-height:100%; width:auto; height:auto; object-fit:contain; display:block; animation:mo-lb-img .45s ease both}
+.mo-lb-nav{position:absolute; top:50%; z-index:2; width:56px; height:56px; display:grid; place-items:center; transform:translateY(-50%); border:1px solid rgba(250,240,241,.3); border-radius:50%; background:rgba(11,12,24,.4); color:#FAF0F1; cursor:pointer; transition:background .3s, border-color .3s}
+.mo-lb-nav:hover{background:#C71A22; border-color:#C71A22}
+.mo-lb-nav--prev{left:20px}
+.mo-lb-nav--next{right:20px}
+.mo-lb-strip{display:flex; gap:8px; overflow-x:auto; padding:14px 24px 22px; scrollbar-width:thin; scrollbar-color:rgba(250,240,241,.3) transparent}
+.mo-lb-thumb{flex:0 0 auto; width:96px; height:66px; padding:0; border:0; background:#1F2240; opacity:.45; cursor:pointer; transition:opacity .3s; outline-offset:-2px}
+.mo-lb-thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.mo-lb-thumb:hover{opacity:.85}
+.mo-lb-thumb.is-on{opacity:1; outline:2px solid #C71A22}
+@keyframes mo-lb-in{from{opacity:0}to{opacity:1}}
+@keyframes mo-lb-img{from{opacity:0; transform:scale(.985)}to{opacity:1; transform:none}}
+@media (max-width: 720px){
+  .mo-lb-top{padding:12px 14px; gap:14px}
+  .mo-lb-stage img{max-width:100%}
+  .mo-lb-nav{width:44px; height:44px; top:auto; bottom:12px; transform:none}
+  .mo-lb-nav--prev{left:14px}
+  .mo-lb-nav--next{right:14px}
+  .mo-lb-thumb{width:72px; height:50px}
+  .mo-lb-strip{padding:10px 14px 16px}
+}
+
+@container mo (max-width: 1000px){
+  .mo-mosaic{height:clamp(320px, 52cqi, 480px)}
+}
+@container mo (max-width: 720px){
+  .mo-mosaic{display:none}
+  .mo-carousel{display:block; margin-left:calc(var(--pad) * -1); margin-right:calc(var(--pad) * -1)}
+}

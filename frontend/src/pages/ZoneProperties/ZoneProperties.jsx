@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Layout from '../../components/mo/Layout';
 import PageHero from '../../components/mo/PageHero';
 import PropertyCatalog from '../../components/mo/PropertyCatalog';
 import Icon from '../../components/mo/Icon';
+import PropertyGallery from '../../components/mo/PropertyGallery';
 import { CtaBand } from '../../components/mo/Sections';
 import usePreferentialZones from '../../components/mo/usePreferentialZones';
 import useZoneProperties from '../../hooks/useZoneProperties';
 import { SITE, waLink } from '../../config/site';
-import { SIZES } from '../../services/media';
 import fallbackHero from '../../public/galeria/yacantoarriba.jpg';
 
 const splitName = (name = '') => {
@@ -21,9 +21,6 @@ const ZoneProperties = () => {
     const { id } = useParams();
     const { properties, zone, loading, error } = useZoneProperties(id);
     const { preferential } = usePreferentialZones();
-    const [active, setActive] = useState(0);
-
-    useEffect(() => setActive(0), [id]);
 
     const name = zone?.nombre || (loading ? 'Cargando' : 'Zona');
     const { title, accent } = splitName(name);
@@ -31,7 +28,6 @@ const ZoneProperties = () => {
         (z) => zone && (z.zone.id === zone.id || String(z.zone.documentId) === String(zone.documentId))
     );
     const gallery = zone?.galeria || [];
-    const main = gallery[Math.min(active, gallery.length - 1)];
 
     if (!loading && (error || !zone)) {
         return (
@@ -139,31 +135,9 @@ const ZoneProperties = () => {
                         </div>
                     )}
 
-                    {main && (
-                        <div className="mo-gal mo-rv" style={{ marginTop: 80, ...(gallery.length < 2 ? { gridTemplateColumns: 'minmax(0,1fr)' } : {}) }}>
-                            <div className="mo-gal-main">
-                                <img key={main.url} src={main.url} srcSet={main.srcSet || undefined} sizes={main.srcSet ? SIZES.gallery : undefined} alt={main.alt || `${name} — imagen ${active + 1}`} />
-                                <span className="mo-gal-count">
-                                    {String(active + 1).padStart(2, '0')} / {String(gallery.length).padStart(2, '0')}
-                                </span>
-                            </div>
-                            {gallery.length > 1 && (
-                                <div className="mo-thumbs" role="tablist" aria-label="Galería de imágenes">
-                                    {gallery.map((img, i) => (
-                                        <button
-                                            key={img.url}
-                                            type="button"
-                                            role="tab"
-                                            aria-selected={i === active}
-                                            aria-label={`Ver imagen ${i + 1}`}
-                                            className={`mo-thumb${i === active ? ' is-on' : ''}`}
-                                            onClick={() => setActive(i)}
-                                        >
-                                            <img src={img.url} srcSet={img.srcSet || undefined} sizes={img.srcSet ? SIZES.thumb : undefined} alt="" loading="lazy" decoding="async" />
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
+                    {gallery.length > 0 && (
+                        <div className="mo-rv" style={{ marginTop: 80 }}>
+                            <PropertyGallery images={gallery} title={name} />
                         </div>
                     )}
                 </div>

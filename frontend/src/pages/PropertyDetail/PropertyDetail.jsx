@@ -5,6 +5,7 @@ import Layout from '../../components/mo/Layout';
 import PageHero from '../../components/mo/PageHero';
 import Icon from '../../components/mo/Icon';
 import PropertyCard from '../../components/mo/PropertyCard';
+import PropertyGallery from '../../components/mo/PropertyGallery';
 import { SectionHead, MoreLink, MapCard } from '../../components/mo/Sections';
 import useSales from '../../hooks/useSales';
 import useRents from '../../hooks/useRents';
@@ -69,7 +70,6 @@ const PropertyDetail = ({ type }) => {
     const [property, setProperty] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [active, setActive] = useState(0);
     const [form, setForm] = useState({ nombre: '', telefono: '', email: '', mensaje: '' });
     const [status, setStatus] = useState({ type: '', message: '' });
 
@@ -81,7 +81,6 @@ const PropertyDetail = ({ type }) => {
         const fetchProperty = async () => {
             setLoading(true);
             setError(null);
-            setActive(0);
             try {
                 const response = await api.get(`/${endpoint}?filters[id][$eq]=${id}&populate=*`);
                 const data = response.data.data?.[0];
@@ -176,7 +175,6 @@ const PropertyDetail = ({ type }) => {
 
     const { title, accent } = splitTitle(property.name);
     const gallery = property.gallery.length ? property.gallery : [{ url: fallbackHero, srcSet: '' }];
-    const pad = (n) => String(n).padStart(2, '0');
     const priceText = formatPrice(property.price, property.periodo);
 
     const waText = `${form.mensaje}\n\nNombre: ${form.nombre}${form.telefono ? `\nTeléfono: ${form.telefono}` : ''}`;
@@ -233,37 +231,7 @@ const PropertyDetail = ({ type }) => {
                         Volver al listado
                     </button>
 
-                    <div className="mo-gal" style={gallery.length < 2 ? { gridTemplateColumns: 'minmax(0,1fr)' } : undefined}>
-                        <div className="mo-gal-main">
-                            <img
-                                key={gallery[active].url}
-                                src={gallery[active].url}
-                                srcSet={gallery[active].srcSet || undefined}
-                                sizes={gallery[active].srcSet ? SIZES.gallery : undefined}
-                                alt={gallery[active].alt || `${property.name} — imagen ${active + 1}`}
-                            />
-                            <span className="mo-gal-count">
-                                {pad(active + 1)} / {pad(gallery.length)}
-                            </span>
-                        </div>
-                        {gallery.length > 1 && (
-                            <div className="mo-thumbs" role="tablist" aria-label="Galería de imágenes">
-                                {gallery.map((img, i) => (
-                                    <button
-                                        key={img.url}
-                                        type="button"
-                                        role="tab"
-                                        aria-selected={i === active}
-                                        aria-label={`Ver imagen ${i + 1}`}
-                                        className={`mo-thumb${i === active ? ' is-on' : ''}`}
-                                        onClick={() => setActive(i)}
-                                    >
-                                        <img src={img.url} srcSet={img.srcSet || undefined} sizes={img.srcSet ? SIZES.thumb : undefined} alt="" loading="lazy" decoding="async" />
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <PropertyGallery images={gallery} title={property.name} />
 
                     <div className="mo-detail">
                         <div>
