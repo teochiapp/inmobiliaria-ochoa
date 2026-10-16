@@ -1,11 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
-
-// Remove /api from the end to get base URL for images
-const STRAPI_BASE_URL = (() => {
-    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
-    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-})();
+import { getMedia } from '../services/media';
 
 const useRents = () => {
     const [rentsData, setRentsData] = useState([]);
@@ -16,12 +11,11 @@ const useRents = () => {
         const fetchRents = async () => {
             try {
                 const response = await api.get('/alquileres?populate=*');
-                const data = response.data.data;
-                setRentsData(data);
-                setLoading(false);
+                setRentsData(response.data.data || []);
             } catch (err) {
                 console.error("Error fetching rents data:", err);
                 setError(err);
+            } finally {
                 setLoading(false);
             }
         };
@@ -29,45 +23,28 @@ const useRents = () => {
         fetchRents();
     }, []);
 
-    // Transform data
     const rents = useMemo(() => {
-        if (!rentsData || rentsData.length === 0) return [];
-
-        return rentsData.map(item => {
+        return (rentsData || []).map(item => {
             const attributes = item.attributes || item;
-
-            // Map image
-            const imgField = attributes.Portada;
-            let imgUrl = '';
-
-            if (imgField?.data) {
-                const imgData = imgField.data;
-                const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                imgUrl = imgObj?.attributes?.url || imgObj?.url;
-            } else if (imgField?.url) {
-                imgUrl = imgField.url;
-            }
-            const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
-
-            // Map other fields
-            // Note: 'nombre' is not in schema, using 'Ubicacion' or checking if 'Nombre' exists just in case
-            // If the user adds 'Nombre' later it will appear, otherwise fallback to Ubicacion
-            const name = attributes.Nombre || attributes.Ubicacion || 'Propiedad en Renta';
+            const cover = getMedia(attributes.Portada);
 
             return {
                 id: item.id,
                 slug: attributes.Slug,
-                imagen: fullImgUrl,
-                nombre: name,
+                imagen: cover?.url || '',
+                imagenSrcSet: cover?.srcSet || '',
+                nombre: attributes.Nombre || attributes.Ubicacion || 'Propiedad en Alquiler',
                 precio: attributes.Precio ? `$${attributes.Precio}` : '',
-                period: attributes.Periodo ? attributes.Periodo.toUpperCase() : null,
+                // Periodo del alquiler cargado en Strapi: 'mes' | 'semana' | 'dia'
+                periodo: attributes.Periodo || null,
                 habitaciones: attributes.Habitaciones || 0,
                 baños: attributes.Banos || 0,
                 m2: attributes.MetrosCuadrados || 0,
                 ubicacion: attributes.Ubicacion || '',
-                // FIX: Zona is the direct object, not wrapped in .data
-                zona: attributes.Zona?.id || null,
-                zonaSlug: attributes.Zona?.Slug || null
+                // Zona: en Strapi v5 viene como objeto directo (no envuelto en .data)
+                zona: attributes.Zona?.id || attributes.Zona?.data?.id || null,
+                zonaSlug: attributes.Zona?.Slug || attributes.Zona?.data?.attributes?.Slug || null,
+                createdAt: item.createdAt
             };
         });
     }, [rentsData]);

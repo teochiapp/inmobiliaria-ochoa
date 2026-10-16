@@ -1,11 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
+import { getMedia } from '../services/media';
 
-// Remove /api from the end to get base URL for images
-const STRAPI_BASE_URL = (() => {
-    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
-    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-})();
+// Una sola petición compartida entre header, footer y páginas
+let zonesRequest = null;
 
 const useZones = () => {
     const [zonesData, setZonesData] = useState([]);
@@ -13,20 +11,24 @@ const useZones = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchZones = async () => {
-            try {
-                const response = await api.get('/zonas?populate=*');
-                const data = response.data.data;
+        let active = true;
+        if (!zonesRequest) {
+            zonesRequest = api.get('/zonas?populate=*').then(r => r.data.data || []);
+            zonesRequest.catch(() => { zonesRequest = null; });
+        }
+        zonesRequest
+            .then(data => {
+                if (!active) return;
                 setZonesData(data);
                 setLoading(false);
-            } catch (err) {
+            })
+            .catch(err => {
+                if (!active) return;
                 console.error("Error fetching zones data:", err);
                 setError(err);
                 setLoading(false);
-            }
-        };
-
-        fetchZones();
+            });
+        return () => { active = false; };
     }, []);
 
     const extractTextFromBlocks = (blocks) => {
@@ -46,17 +48,7 @@ const useZones = () => {
         return zonesData.map(item => {
             const attributes = item.attributes || item;
 
-            // Map image
-            const imgField = attributes.Portada;
-            let imgUrl = '';
-            if (imgField?.data) {
-                const imgData = imgField.data;
-                const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                imgUrl = imgObj?.attributes?.url || imgObj?.url;
-            } else if (imgField?.url) {
-                imgUrl = imgField.url;
-            }
-            const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
+            const cover = getMedia(attributes.Portada);
 
             // Map description (blocks)
             const description = extractTextFromBlocks(attributes.Descripcion);
@@ -64,9 +56,9 @@ const useZones = () => {
             return {
                 id: item.id,
                 documentId: item.documentId, // Strapi v5 uses documentId for individual queries
-                Slug: attributes.Slug || attributes.slug, // For clean URLs
-                slug: attributes.Slug || attributes.slug, // Lowercase fallback
-                image: fullImgUrl,
+                slug: attributes.Slug || attributes.slug || null, // URLs limpias: /zona/mirador-del-lago
+                image: cover?.url || '',
+                imageSrcSet: cover?.srcSet || '',
                 title: attributes.Nombre || 'Zona desconocida',
                 subtitle: attributes.Subtitulo || '',
                 description: description

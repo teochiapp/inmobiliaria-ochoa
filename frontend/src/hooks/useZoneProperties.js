@@ -1,11 +1,28 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
+import { getMedia, getMediaList } from '../services/media';
 
-// Remove /api from the end to get base URL for images
-const STRAPI_BASE_URL = (() => {
-    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
-    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-})();
+const blocksToParagraphs = (blocks) => {
+    if (Array.isArray(blocks)) {
+        return blocks
+            .map(b => (Array.isArray(b.children) ? b.children.map(c => c.text || '').join('') : ''))
+            .filter(t => t.trim());
+    }
+    if (typeof blocks === 'string') return blocks.split(/\n{2,}/).filter(t => t.trim());
+    return [];
+};
+
+// Busca la zona por Slug (URLs limpias) y, si no la encuentra, por documentId / id.
+const fetchZone = async (zoneId) => {
+    try {
+        const bySlug = await api.get(`/zonas?filters[Slug][$eq]=${encodeURIComponent(zoneId)}&populate=*`);
+        if (bySlug.data.data?.length) return bySlug.data.data[0];
+    } catch (e) {
+        // si falla por slug, probamos por id
+    }
+    const byId = await api.get(`/zonas/${zoneId}?populate=*`);
+    return byId.data.data;
+};
 
 const useZoneProperties = (zoneId) => {
     const [salesData, setSalesData] = useState([]);
@@ -20,106 +37,91 @@ const useZoneProperties = (zoneId) => {
             return;
         }
 
+        let active = true;
         const fetchZoneProperties = async () => {
             setLoading(true);
+            setError(null);
             try {
-                // Fetch zone info using documentId for Strapi v5
-                const zoneResponse = await api.get(`/zonas/${zoneId}?populate=*`);
-                setZoneData(zoneResponse.data.data);
+                const zoneItem = await fetchZone(zoneId);
+                if (!zoneItem) throw new Error('Zona no encontrada');
 
-                // Get the numeric id from the zone response for filtering
-                const numericZoneId = zoneResponse.data.data?.id;
+                const numericZoneId = zoneItem.id;
+                const [salesResponse, rentsResponse] = await Promise.all([
+                    api.get(`/ventas?populate=*&filters[Zona][id][$eq]=${numericZoneId}`),
+                    api.get(`/alquileres?populate=*&filters[Zona][id][$eq]=${numericZoneId}`)
+                ]);
 
-                if (!numericZoneId) {
-                    throw new Error('No se pudo obtener el ID de la zona');
-                }
-
-                // Fetch sales for this zone - Using numeric ID for filtering
-                const salesResponse = await api.get(`/ventas?populate=*&filters[Zona][id][$eq]=${numericZoneId}`);
+                if (!active) return;
+                setZoneData(zoneItem);
                 setSalesData(salesResponse.data.data || []);
-
-                // Fetch rentals for this zone - Using numeric ID for filtering
-                const rentsResponse = await api.get(`/alquileres?populate=*&filters[Zona][id][$eq]=${numericZoneId}`);
                 setRentsData(rentsResponse.data.data || []);
-
-                setLoading(false);
             } catch (err) {
                 console.error("Error fetching zone properties:", err);
-                setError(err);
-                setLoading(false);
+                if (active) setError(err);
+            } finally {
+                if (active) setLoading(false);
             }
         };
 
         fetchZoneProperties();
+        return () => { active = false; };
     }, [zoneId]);
 
-    // Transform and combine data
+    // Propiedades de la zona (ventas + alquileres)
     const properties = useMemo(() => {
         const transformProperty = (item, type) => {
             const attributes = item.attributes || item;
-
-            // Map image
-            const imgField = attributes.Portada;
-            let imgUrl = '';
-            if (imgField?.data) {
-                const imgData = imgField.data;
-                const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                imgUrl = imgObj?.attributes?.url || imgObj?.url;
-            } else if (imgField?.url) {
-                imgUrl = imgField.url;
-            }
-            const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
-
-            // Map other fields
-            const name = attributes.Nombre || attributes.Ubicacion ||
-                (type === 'venta' ? 'Propiedad en Venta' : 'Propiedad en Alquiler');
+            const cover = getMedia(attributes.Portada);
 
             return {
                 id: item.id,
                 slug: attributes.Slug,
-                imagen: fullImgUrl,
-                nombre: name,
-                precio: attributes.Precio ?
-                    (type === 'venta' ? `$${attributes.Precio}` : `$${attributes.Precio}/mes`) : '',
+                imagen: cover?.url || '',
+                imagenSrcSet: cover?.srcSet || '',
+                nombre: attributes.Nombre || attributes.Ubicacion ||
+                    (type === 'venta' ? 'Propiedad en Venta' : 'Propiedad en Alquiler'),
+                precio: attributes.Precio ? `$${attributes.Precio}` : '',
+                periodo: type === 'alquiler' ? (attributes.Periodo || null) : null,
                 habitaciones: attributes.Habitaciones || 0,
                 baños: attributes.Banos || 0,
                 m2: attributes.MetrosCuadrados || 0,
                 ubicacion: attributes.Ubicacion || '',
-                type: type, // 'venta' or 'alquiler'
+                createdAt: item.createdAt,
+                type: type, // 'venta' o 'alquiler'
                 baseUrl: type === 'venta' ? '/propiedad/venta' : '/propiedad/alquiler'
             };
         };
 
-        const sales = salesData.map(item => transformProperty(item, 'venta'));
-        const rents = rentsData.map(item => transformProperty(item, 'alquiler'));
-
-        return [...sales, ...rents];
+        return [
+            ...salesData.map(item => transformProperty(item, 'venta')),
+            ...rentsData.map(item => transformProperty(item, 'alquiler'))
+        ];
     }, [salesData, rentsData]);
 
-    // Transform zone data
+    // Datos de la zona / emprendimiento exclusivo
     const zone = useMemo(() => {
         if (!zoneData) return null;
-
         const attributes = zoneData.attributes || zoneData;
-
-        // Map image
-        const imgField = attributes.Portada;
-        let imgUrl = '';
-        if (imgField?.data) {
-            const imgData = imgField.data;
-            const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-            imgUrl = imgObj?.attributes?.url || imgObj?.url;
-        } else if (imgField?.url) {
-            imgUrl = imgField.url;
-        }
-        const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
+        const portada = getMedia(attributes.Portada);
+        const cabecera = getMedia(attributes.ImagenCabecera) || portada;
+        const galeria = [portada, ...getMediaList(attributes.Galeria)]
+            .filter(Boolean)
+            .filter((img, i, all) => all.findIndex(x => x.url === img.url) === i);
 
         return {
             id: zoneData.id,
-            documentId: zoneData.documentId, // Strapi v5 uses documentId
+            documentId: zoneData.documentId,
+            slug: attributes.Slug || null,
             nombre: attributes.Nombre || 'Zona',
+            titulo: attributes.Titulo || '',
             subtitulo: attributes.Subtitulo || '',
-            imagen: fullImgUrl
+            descripcion: blocksToParagraphs(attributes.Descripcion),
+            adicionales: (attributes.AdicionalesZona || []).map(a => a?.Texto).filter(Boolean),
+            // compatibilidad: imagen = portada
+            imagen: portada?.url || '',
+            imagenSrcSet: portada?.srcSet || '',
+            cabecera,
+            galeria
         };
     }, [zoneData]);
 

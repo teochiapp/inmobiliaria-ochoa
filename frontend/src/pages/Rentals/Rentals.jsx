@@ -1,55 +1,36 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import Layout from '../../components/mo/Layout';
+import PageHero from '../../components/mo/PageHero';
+import PropertyCatalog from '../../components/mo/PropertyCatalog';
+import { ToolsBand } from '../../components/mo/Sections';
 import useRents from '../../hooks/useRents';
-import PropertyCatalog from '../../components/common/PropertyCatalog';
-import PropertyFilters from '../../components/common/PropertyFilters';
-import { usePropertyFilter } from '../../hooks/usePropertyFilter';
-import RentalsHero from '../../components/rentals/RentalsHero';
-import Header from '../../components/header/Header';
-import Footer from '../../components/footer/footer';
-import styled from 'styled-components';
+import heroBg from '../../public/galeria/Villa-del-Diquearriba.jpeg';
 
 const Rentals = () => {
     const { rents, loading, error } = useRents();
 
-    // Sort properties by newest first
-    const sortedProperties = useMemo(() => {
-        return [...(rents || [])].sort((a, b) => {
-            const dateA = new Date(a.createdAt || a.publishedAt || 0);
-            const dateB = new Date(b.createdAt || b.publishedAt || 0);
-            return dateB - dateA;
-        });
-    }, [rents]);
-
-    const { filters, handleFilterChange, filteredProperties } = usePropertyFilter(sortedProperties);
-
     return (
-        <PageWrapper>
-            <Header isSolid={false} />
-            <RentalsHero />
-            <ContentWrapper>
-                <PropertyFilters filters={filters} onFilterChange={handleFilterChange} layout="horizontal" />
-                <PropertyCatalog
-                    properties={filteredProperties}
-                    loading={loading}
-                    error={error}
-                    title="Propiedades en Alquiler"
-                    baseUrl="/propiedad/alquiler"
-                />
-            </ContentWrapper>
-            <Footer />
-        </PageWrapper>
+        <Layout title="Alquileres">
+            <PageHero
+                small
+                image={heroBg}
+                crumbs={[{ label: 'Inicio', to: '/' }, { label: 'Alquileres' }]}
+                title="Propiedades"
+                accent="en alquiler"
+                subtitle="Encontrá tu lugar ideal para vivir o vacacionar, junto a los lagos y ríos de las Sierras de Córdoba."
+                meta={[
+                    { value: loading ? '…' : rents.length, label: 'Disponibles' },
+                    { value: '15+', label: 'Años de trayectoria' },
+                ]}
+            />
+            <PropertyCatalog properties={rents} loading={loading} error={error} operation="Alquiler" baseUrl="/propiedad/alquiler" countLabel="alquileres disponibles" />
+            <section className="mo-sec mo-sec--tight mo-sec--ivory" style={{ paddingTop: 0 }}>
+                <div className="mo-wrap">
+                    <ToolsBand />
+                </div>
+            </section>
+        </Layout>
     );
 };
 
 export default Rentals;
-
-const PageWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-`;
-
-const ContentWrapper = styled.div`
-    flex: 1;
-    padding-top: 50px;
-`;

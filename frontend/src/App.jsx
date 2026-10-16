@@ -4,20 +4,17 @@ import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import PropertiesForSale from './pages/PropertiesForSale/PropertiesForSale';
 import Rentals from './pages/Rentals/Rentals';
-
 import Contact from './pages/Contact/Contact';
 import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
 import ZoneProperties from './pages/ZoneProperties/ZoneProperties';
-import ZonePropertiesExclusive from './pages/ZoneProperties/ZonePropiertiesExclusive';
 import ScrollToTop from './components/common/ScrollToTop';
-import FloatingWhatsApp from './components/common/FloatingWhatsApp';
 import NotFound from './pages/NotFound/NotFound';
 
+// El header, footer y botón de WhatsApp viven en components/mo/Layout (cada página los incluye).
 function App() {
     return (
         <Router>
             <ScrollToTop />
-            <FloatingWhatsApp />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/sobre-nosotros" element={<AboutUs />} />
@@ -25,9 +22,9 @@ function App() {
                 <Route path="/alquileres" element={<Rentals />} />
                 <Route path="/contacto" element={<Contact />} />
 
-                {/* Ruta de propiedades por zona */}
-                <Route path="/zona/:id" element={<ZonePropertiesExclusive />} />
-                <Route path="/zona-exclusiva/:id" element={<ZonePropertiesExclusive />} />
+                {/* Ruta de propiedades por zona (productos preferenciales) */}
+                <Route path="/zona/:id" element={<ZoneProperties />} />
+                <Route path="/zona-exclusiva/:id" element={<ZoneProperties />} />
 
                 {/* Rutas de detalles de propiedades */}
                 <Route path="/propiedad/venta/:id" element={<PropertyDetail type="venta" />} />

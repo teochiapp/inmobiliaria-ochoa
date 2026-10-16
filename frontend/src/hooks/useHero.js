@@ -1,12 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
-
-// Remove /api from the end to get base URL for images
-const STRAPI_BASE_URL = (() => {
-    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
-    // Remove /api suffix if present
-    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-})();
+import { getMedia } from '../services/media';
 
 const useHero = () => {
     const [heroData, setHeroData] = useState([]);
@@ -16,13 +10,8 @@ const useHero = () => {
     useEffect(() => {
         const fetchHeroData = async () => {
             try {
-                console.log('🔍 HERO DEBUG - API URL:', process.env.REACT_APP_STRAPI_URL);
-                console.log('🔍 HERO DEBUG - Base URL:', STRAPI_BASE_URL);
                 const response = await api.get('/hero-images?populate=*');
-                console.log('🔍 HERO DEBUG - Full Response:', response.data);
                 const data = response.data.data;
-                console.log('🔍 HERO DEBUG - Data array:', data);
-                console.log('🔍 HERO DEBUG - First item:', data?.[0]);
                 setHeroData(data);
                 setLoading(false);
             } catch (err) {
@@ -36,61 +25,23 @@ const useHero = () => {
         fetchHeroData();
     }, []);
 
-    // Process data from Strapi
-    const { images, titles } = useMemo(() => {
-        console.log('🎨 HERO MEMO - Processing heroData:', heroData);
-        if (!heroData || heroData.length === 0) return { images: [], titles: [] };
+    // Procesa los datos de Strapi: imagen original + srcSet con todas sus versiones
+    const { images, imageSets, titles } = useMemo(() => {
+        const items = (heroData || [])
+            .map(item => {
+                const attributes = item.attributes || item;
+                return { media: getMedia(attributes.Imagen), title: attributes.Titulo || '' };
+            })
+            .filter(item => item.media);
 
-        // 1. Filter items that have a valid image
-        const validItems = heroData.filter(item => {
-            const attributes = item.attributes || item;
-            const imgField = attributes.Imagen;
-            console.log('🖼️ HERO FILTER - Item:', item);
-            console.log('🖼️ HERO FILTER - Imagen field:', imgField);
-
-            if (imgField?.data) { // v4 check
-                const imgData = imgField.data;
-                const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                return !!(imgObj?.attributes?.url || imgObj?.url);
-            }
-            // v5 check
-            return !!imgField?.url;
-        });
-
-        console.log('✅ HERO FILTER - Valid items:', validItems);
-
-        // 2. Map filtered items
-        const imgs = validItems.map(item => {
-            const attributes = item.attributes || item;
-            const imgField = attributes.Imagen;
-
-            let imgUrl = '';
-
-            if (imgField?.data) {
-                const imgData = imgField.data;
-                const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                imgUrl = imgObj?.attributes?.url || imgObj?.url;
-            } else if (imgField?.url) {
-                imgUrl = imgField.url;
-            }
-
-            const fullUrl = `${STRAPI_BASE_URL}${imgUrl}`;
-            console.log('🌐 HERO IMAGE - URL:', fullUrl);
-            return fullUrl;
-        });
-
-        const ttls = validItems.map(item => {
-            const attributes = item.attributes || item;
-            return attributes.Titulo || '';
-        });
-
-        console.log('📸 HERO FINAL - Images:', imgs);
-        console.log('📝 HERO FINAL - Titles:', ttls);
-
-        return { images: imgs, titles: ttls };
+        return {
+            images: items.map(i => i.media.url),
+            imageSets: items.map(i => i.media.srcSet),
+            titles: items.map(i => i.title)
+        };
     }, [heroData]);
 
-    return { images, titles, loading, error };
+    return { images, imageSets, titles, loading, error };
 };
 
 export default useHero;

@@ -1,11 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import api from '../services/api';
-
-// Remove /api from the end to get base URL for images
-const STRAPI_BASE_URL = (() => {
-    const apiUrl = process.env.REACT_APP_STRAPI_URL || 'http://localhost:1337/api';
-    return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-})();
+import { getMedia } from '../services/media';
 
 const useSales = () => {
     const [salesData, setSalesData] = useState([]);
@@ -16,12 +11,11 @@ const useSales = () => {
         const fetchSales = async () => {
             try {
                 const response = await api.get('/ventas?populate=*');
-                const data = response.data.data;
-                setSalesData(data);
-                setLoading(false);
+                setSalesData(response.data.data || []);
             } catch (err) {
                 console.error("Error fetching sales data:", err);
                 setError(err);
+            } finally {
                 setLoading(false);
             }
         };
@@ -29,42 +23,26 @@ const useSales = () => {
         fetchSales();
     }, []);
 
-    // Transform data
     const sales = useMemo(() => {
-        if (!salesData || salesData.length === 0) return [];
-
-        return salesData.map(item => {
+        return (salesData || []).map(item => {
             const attributes = item.attributes || item;
-
-            // Map image
-            const imgField = attributes.Portada;
-            let imgUrl = '';
-
-            if (imgField?.data) {
-                const imgData = imgField.data;
-                const imgObj = Array.isArray(imgData) ? imgData[0] : imgData;
-                imgUrl = imgObj?.attributes?.url || imgObj?.url;
-            } else if (imgField?.url) {
-                imgUrl = imgField.url;
-            }
-            const fullImgUrl = imgUrl ? `${STRAPI_BASE_URL}${imgUrl}` : '';
-
-            // Map other fields
-            const name = attributes.Nombre || attributes.Ubicacion || 'Propiedad en Venta';
+            const cover = getMedia(attributes.Portada);
 
             return {
                 id: item.id,
                 slug: attributes.Slug,
-                imagen: fullImgUrl,
-                nombre: name,
+                imagen: cover?.url || '',
+                imagenSrcSet: cover?.srcSet || '',
+                nombre: attributes.Nombre || attributes.Ubicacion || 'Propiedad en Venta',
                 precio: attributes.Precio ? `$${attributes.Precio}` : '',
                 habitaciones: attributes.Habitaciones || 0,
                 baños: attributes.Banos || 0,
                 m2: attributes.MetrosCuadrados || 0,
                 ubicacion: attributes.Ubicacion || '',
-                // FIX: Zona is the direct object, not wrapped in .data
-                zona: attributes.Zona?.id || null,
-                zonaSlug: attributes.Zona?.Slug || null
+                // Zona: en Strapi v5 viene como objeto directo (no envuelto en .data)
+                zona: attributes.Zona?.id || attributes.Zona?.data?.id || null,
+                zonaSlug: attributes.Zona?.Slug || attributes.Zona?.data?.attributes?.Slug || null,
+                createdAt: item.createdAt
             };
         });
     }, [salesData]);
